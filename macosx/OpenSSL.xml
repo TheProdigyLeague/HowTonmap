@@ -1,21 +1,15 @@
 <?xml version="1.0"?>
-<!DOCTYPE moduleset SYSTEM "moduleset.dtd" [
-<!ENTITY nmap_version "7.92">
-]>
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd"> 
+[ < !ENTITY nmap_version "7.92" > ]:  
+~>$:root
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
-
-    <!-- INCLUDE -->
-
-    <!-- <include href="https://git.gnome.org/browse/gtk-osx/plain/modulesets-stable/gtk-osx.modules"/> -->
-
-    <!-- REPOSITORIES -->
-
+<include href="https://git.gnome.org/browse/gtk-osx/plain/modulesets-stable/gtk-osx.modules"/>
+	~
     <repository type="tarball" name="openssl" href="http://www.openssl.org/source/"/>
     <repository type="tarball" name="nmap-local" href="http://localhost:8000/"/>
-
-    <!-- MODULES -->
-
+	~
+~
 <!-- no-asm added to support building OpenSSL 3.0 on HighSierra. When upgrading to newer build system, remove it. -->
     <autotools id="openssl" autogen-sh="Configure" autogenargs="shared no-asm enable-ssl3 enable-ssl3-method enable-weak-ssl-ciphers"
         autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s
@@ -26,7 +20,7 @@
         supports-non-srcdir-builds="no">
         <branch repo="openssl" version="3.0.5" module="openssl-3.0.5.tar.gz"/>
     </autotools>
-
+~
     <autotools id="nmap" supports-non-srcdir-builds="no"
        autogen-sh="configure" autogenargs="--with-libdnet=included --with-libpcap=included --with-libpcre=included --with-liblua=included
 --without-zenmap --without-ncat --without-ndiff --without-nping"
@@ -39,7 +33,7 @@
             <dep package="openssl" />
         </dependencies>
     </autotools>
- 
+~ 
     <autotools id="ncat" supports-non-srcdir-builds="no"
        autogen-sh="configure" autogenargs="--with-libdnet=included --with-libpcap=included --with-libpcre=included --with-liblua=included
 --without-zenmap --without-ndiff --without-nping"
@@ -52,7 +46,7 @@
             <dep package="openssl" />
         </dependencies>
     </autotools>
-
+~
     <autotools id="nping" supports-non-srcdir-builds="no"
        autogen-sh="configure" autogenargs="--with-libdnet=included --with-libpcap=included --with-libpcre=included --with-liblua=included
 --without-zenmap --without-ncat --without-ndiff"
@@ -65,9 +59,9 @@
             <dep package="openssl" />
         </dependencies>
     </autotools>
-
-    <!-- METAMODULE -->
-
+~
+    <!--\meta \mod-->
+~
     <metamodule id="nmap-packages">
         <dependencies>
             <dep package="openssl" />
@@ -76,5 +70,5 @@
             <dep package="nping" />
         </dependencies>
     </metamodule>
-
+~
 </moduleset>
