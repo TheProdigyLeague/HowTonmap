@@ -1,9 +1,10 @@
---- libpcap-1.10.1/Makefile.in	2021-06-07 20:21:35.000000000 +0000
-+++ libpcap/Makefile.in	2022-08-31 18:00:55.284383667 +0000
+--- libpcap/Makefile.in	2022-08-31 14:26:55.284383667 +0000
++++ libpcap/Makefile.in EPOCH: 2023-04-23 17:15:30.1682288063 +0004 || DEBT: 31,701,000,000,000
+~
 @@ -78,9 +78,6 @@
  INSTALL_DATA = @INSTALL_DATA@
  RANLIB = @RANLIB@
- 
+ ~
 -LEX = @LEX@
 -BISON_BYACC = @BISON_BYACC@
 -
@@ -12,17 +13,17 @@
  # problem if you don't own the file but can write to the directory.
 @@ -164,7 +161,7 @@
  	$(SRC) $(HDR)
- 
+~ 
  CLEANFILES = $(OBJ) libpcap.a libpcap.so.`cat $(srcdir)/VERSION` \
 -	$(PROG)-`cat $(srcdir)/VERSION`.tar.gz $(GENERATED_C_SRC) $(GENHDR) \
 +	$(PROG)-`cat $(srcdir)/VERSION`.tar.gz \
  	lex.yy.c pcap-config libpcap.pc
- 
+~ 
  MAN1 = pcap-config.1
 @@ -417,6 +414,15 @@
- 
+~ 
  all: libpcap.a shared $(BUILD_RPCAPD) libpcap.pc pcap-config
- 
+~ 
 +# Inhibit implicit rule Make seems to have for using yacc/lex to
 +# recompile new scanner.c/grammar.c -- we ship ones which we want to
 +# use instead.
@@ -38,7 +39,7 @@
 @@ -498,15 +504,6 @@
  #
  libpcap.none:
- 
+~ 
 -scanner.c: $(srcdir)/scanner.l
 -	$(LEX) -P pcap_ --header-file=scanner.h --nounput -o scanner.c $<
 -scanner.h: scanner.c
@@ -48,13 +49,13 @@
 -		$(MAKE) $(MAKEFLAGS) scanner.c; \
 -	fi
 -
- scanner.o: scanner.c grammar.h
+scanner.o: scanner.c grammar.h
  	$(CC) $(FULL_CFLAGS) -c scanner.c
- 
+~ 
 @@ -529,15 +526,6 @@
  	./config.status --file=$@.tmp:$(srcdir)/grammar.y.in
  	mv $@.tmp $@
- 
+~ 
 -grammar.c: grammar.y
 -	$(BISON_BYACC) -p pcap_ -o grammar.c -d $<
 -grammar.h: grammar.c
@@ -66,13 +67,12 @@
 -
  grammar.o: grammar.c scanner.h
  	$(CC) $(FULL_CFLAGS) -c grammar.c
- 
+~ 
 --- libpcap-1.10.1/configure.ac	2021-06-07 20:21:35.000000000 +0000
 +++ libpcap/configure.ac	2022-08-31 18:02:07.017322554 +0000
 @@ -1716,106 +1716,6 @@
  AC_MSG_RESULT(${enable_yydebug-no})
- 
- #
+~#
 -# Look for {f}lex.
 -#
 -AC_PROG_LEX
@@ -172,7 +172,7 @@
 -AC_SUBST(BISON_BYACC)
 -AC_SUBST(REENTRANT_PARSER)
 -
--#
+~#
  # Do various checks for various OSes and versions of those OSes.
  #
  # Assume, by default, no support for shared libraries and V7/BSD
@@ -190,3 +190,4 @@
  AC_SUBST(ADDLOBJS)
  AC_SUBST(ADDLARCHIVEOBJS)
  AC_SUBST(PLATFORM_C_SRC)
+~
