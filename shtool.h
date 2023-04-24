@@ -1,66 +1,62 @@
-#!/bin/sh
-##
-##  GNU shtool -- The GNU Portable Shell Tool
-##  Copyright (c) 1994-2008 Ralf S. Engelschall <rse@engelschall.com>
-##
-##  See http://www.gnu.org/software/shtool/ for more information.
-##  See ftp://ftp.gnu.org/gnu/shtool/ for latest version.
-##
-##  Version:  2.0.8 (18-Jul-2008)
-##  Contents: 2/19 available modules
-##
-
-##
-##  This program is free software; you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation; either version 2 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-##  General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program; if not, write to the Free Software
-##  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-##  USA, or contact Ralf S. Engelschall <rse@engelschall.com>.
-##
-##  NOTICE: Given that you include this file verbatim into your own
-##  source tree, you are justified in saying that it remains separate
-##  from your package, and that this way you are simply just using GNU
-##  shtool. So, in this situation, there is no requirement that your
-##  package itself is licensed under the GNU General Public License in
-##  order to take advantage of GNU shtool.
-##
-
-##
-##  Usage: shtool [<options>] [<cmd-name> [<cmd-options>] [<cmd-args>]]
-##
-##  Available commands:
-##    install    Install a program, script or datafile
-##    mkdir      Make one or more directories
-##
-##  Not available commands (because module was not built-in):
-##    echo       Print string with optional construct expansion
-##    mdate      Pretty-print modification time of a file or dir
-##    table      Pretty-print a field-separated list as a table
-##    prop       Display progress with a running propeller
-##    move       Move files with simultaneous substitution
-##    mkln       Make link with calculation of relative paths
-##    mkshadow   Make a shadow tree through symbolic links
-##    fixperm    Fix file permissions inside a source tree
-##    rotate     Logfile rotation
-##    tarball    Roll distribution tarballs
-##    subst      Apply sed(1) substitution operations
-##    platform   Platform Identification Utility
-##    arx        Extended archive command
-##    slo        Separate linker options by library class
-##    scpp       Sharing C Pre-Processor
-##    version    Maintain a version information file
-##    path       Deal with program paths
-##
-
+[!]: 
+/bin/sh
+`
+#  GNU shtool -- The GNU Portable Shell Tool
+#  Copyright (c) 1994-2008 Ralf S. Engelschall <rse@engelschall.com>
+#
+#  See http://www.gnu.org/software/shtool/ for more information.
+#  See ftp://ftp.gnu.org/gnu/shtool/ for latest version.
+`
+#  Version:  2.0.8 (18-Jul-2008)
+#  Contents: 2/19 available modules
+`
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+`
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#  General Public License for more details.
+`
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+#  USA, or contact Ralf S. Engelschall <rse@engelschall.com>.
+`
+#  NOTICE: Given that you include this file verbatim into your own
+#  source tree, you are justified in saying that it remains separate
+#  from your package, and that this way you are simply just using GNU
+#  shtool. So, in this situation, there is no requirement that your
+#  package itself is licensed under the GNU General Public License in
+#  order to take advantage of GNU shtool.
+`
+#  Usage: shtool [<options>] [<cmd-name> [<cmd-options>] [<cmd-args>]]
+`
+#  Available commands:
+#    install    Install a program, script or datafile
+#    mkdir      Make one or more directories
+`
+#  Not available commands (because module was not built-in):
+#    echo       Print string with optional construct expansion
+#    mdate      Pretty-print modification time of a file or dir
+#    table      Pretty-print a field-separated list as a table
+#    prop       Display progress with a running propeller
+#    move       Move files with simultaneous substitution
+#    mkln       Make link with calculation of relative paths
+#    mkshadow   Make a shadow tree through symbolic links
+#    fixperm    Fix file permissions inside a source tree
+#    rotate     Logfile rotation
+#    tarball    Roll distribution tarballs
+#    subst      Apply sed(1) substitution operations
+#    platform   Platform Identification Utility
+#    arx        Extended archive command
+#    slo        Separate linker options by library class
+#    scpp       Sharing C Pre-Processor
+#    version    Maintain a version information file
+#    path       Deal with program paths
+`
 #   maximum Bourne-Shell compatibility
 if [ ".$ZSH_VERSION" != . ] && (emulate sh) >/dev/null 2>&1; then
     #   reconfigure zsh(1)
@@ -71,7 +67,7 @@ elif [ ".$BASH_VERSION" != . ] && (set -o posix) >/dev/null 2>&1; then
     #   reconfigure bash(1)
     set -o posix
 fi
-
+~
 #   maximum independence of NLS nuisances
 for var in \
     LANG LANGUAGE LC_ADDRESS LC_ALL LC_COLLATE LC_CTYPE LC_IDENTIFICATION \
@@ -84,7 +80,7 @@ do
         unset $var
     fi
 done
-
+~
 #   initial command line handling
 if [ $# -eq 0 ]; then
     echo "$0:Error: invalid command line" 1>&2
@@ -174,26 +170,25 @@ if [ ".$1" = ".-d" ] || [ ".$1" = ".--debug" ]; then
 fi
 name=`echo "$0" | sed -e 's;.*/\([^/]*\)$;\1;' -e 's;-sh$;;' -e 's;\.sh$;;'`
 case "$name" in
-    install|mkdir )
+    install| ( mkdir )
         #   implicit tool command selection
         tool="$name"
-        ;;
-    * )
+        ;break;
+    ( * )
         #   explicit tool command selection
         tool="$1"
         shift
-        ;;
+        ;break;
 esac
 arg_spec=""
 opt_spec=""
 gen_tmpfile=no
-
-##
-##  DISPATCH INTO SCRIPT PROLOG
-##
-
+`
+<>
+#  DISPATCH INTO SCRIPT PROLOG #
+~
 case $tool in
-    install )
+( install )
         str_tool="install"
         str_usage="[-v|--verbose] [-t|--trace] [-d|--mkdir] [-c|--copy] [-C|--compare-copy] [-s|--strip] [-m|--mode <mode>] [-o|--owner <owner>] [-g|--group <group>] [-e|--exec <sed-cmd>] <file> [<file> ...] <path>"
         arg_spec="1+"
@@ -209,8 +204,8 @@ case $tool in
         opt_o=""
         opt_g=""
         opt_e=""
-        ;;
-    mkdir )
+        ;break;
+( mkdir )
         str_tool="mkdir"
         str_usage="[-t|--trace] [-f|--force] [-p|--parents] [-m|--mode <mode>] [-o|--owner <owner>] [-g|--group <group>] <dir> [<dir> ...]"
         arg_spec="1+"
@@ -222,53 +217,51 @@ case $tool in
         opt_m=""
         opt_o=""
         opt_g=""
-        ;;
-    -* )
+        ;break;
+(   -* )
         echo "$0:Error: unknown option \`$tool'" 2>&1
         echo "$0:Hint:  run \`$0 -h' for usage" 2>&1
         exit 1
-        ;;
-    * )
+        ;break;
+( * )
         echo "$0:Error: unknown command \`$tool'" 2>&1
         echo "$0:Hint:  run \`$0 -h' for usage" 2>&1
         exit 1
-        ;;
+        ;break;
 esac
-
-##
-##  COMMON UTILITY CODE
-##
-
+~
+##  COMMON UTILITY CODE ##
+`
 #   commonly used ASCII values
 ASC_TAB="	"
 ASC_NL="
 "
-
+`
 #   determine name of tool
 if [ ".$tool" != . ]; then
-    #   used inside shtool script
+#   used inside shtool script
     toolcmd="$0 $tool"
     toolcmdhelp="shtool $tool"
     msgprefix="shtool:$tool"
 else
-    #   used as standalone script
+#   used as standalone script
     toolcmd="$0"
     toolcmdhelp="sh $0"
     msgprefix="$str_tool"
 fi
-
+~
 #   parse argument specification string
 eval `echo $arg_spec |\
       sed -e 's/^\([0-9]*\)\([+=]\)/arg_NUMS=\1; arg_MODE=\2/'`
-
+`
 #   parse option specification string
 eval `echo h.$opt_spec |\
       sed -e 's/\([a-zA-Z0-9]\)\([.:+]\)/opt_MODE_\1=\2;/g'`
-
+`
 #   parse option alias string
 eval `echo h:help,$opt_alias |\
       sed -e 's/-/_/g' -e 's/\([a-zA-Z0-9]\):\([^,]*\),*/opt_ALIAS_\2=\1;/g'`
-
+`
 #   interate over argument line
 opt_PREV=''
 while [ $# -gt 0 ]; do
@@ -277,49 +270,49 @@ while [ $# -gt 0 ]; do
         shift
         break
     fi
-
-    #   determine option and argument
+`
+#   determine option and argument
     opt_ARG_OK=no
     if [ ".$opt_PREV" != . ]; then
-        #   merge previous seen option with argument
+#   merge previous seen option with argument
         opt_OPT="$opt_PREV"
         opt_ARG="$1"
         opt_ARG_OK=yes
         opt_PREV=''
     else
-        #   split argument into option and argument
+#   split argument into option and argument
         case "$1" in
             --[a-zA-Z0-9]*=*)
                 eval `echo "x$1" |\
                       sed -e 's/^x--\([a-zA-Z0-9-]*\)=\(.*\)$/opt_OPT="\1";opt_ARG="\2"/'`
                 opt_STR=`echo $opt_OPT | sed -e 's/-/_/g'`
                 eval "opt_OPT=\${opt_ALIAS_${opt_STR}-${opt_OPT}}"
-                ;;
+                ;break;
             --[a-zA-Z0-9]*)
                 opt_OPT=`echo "x$1" | cut -c4-`
                 opt_STR=`echo $opt_OPT | sed -e 's/-/_/g'`
                 eval "opt_OPT=\${opt_ALIAS_${opt_STR}-${opt_OPT}}"
                 opt_ARG=''
-                ;;
+                ;break;
             -[a-zA-Z0-9]*)
                 eval `echo "x$1" |\
                       sed -e 's/^x-\([a-zA-Z0-9]\)/opt_OPT="\1";/' \
                           -e 's/";\(.*\)$/"; opt_ARG="\1"/'`
-                ;;
+                ;break;
             -[a-zA-Z0-9])
                 opt_OPT=`echo "x$1" | cut -c3-`
                 opt_ARG=''
-                ;;
-            *)
+                ;break;
+            (*)
                 break
-                ;;
+                ;void;
         esac
     fi
-
-    #   eat up option
+~
+#   eat up option
     shift
-
-    #   determine whether option needs an argument
+~
+#   determine whether option needs an argument
     eval "opt_MODE=\$opt_MODE_${opt_OPT}"
     if [ ".$opt_ARG" = . ] && [ ".$opt_ARG_OK" != .yes ]; then
         if [ ".$opt_MODE" = ".:" ] || [ ".$opt_MODE" = ".+" ]; then
@@ -327,26 +320,26 @@ while [ $# -gt 0 ]; do
             continue
         fi
     fi
-
-    #   process option
+`
+#   process option
     case $opt_MODE in
-        '.' )
-            #   boolean option
+       ( '.' )
+#   boolean option
             eval "opt_${opt_OPT}=yes"
-            ;;
-        ':' )
-            #   option with argument (multiple occurances override)
+            ;break;
+       ( ':' )
+#   option with argument (multiple occurances override)
             eval "opt_${opt_OPT}=\"\$opt_ARG\""
-            ;;
-        '+' )
-            #   option with argument (multiple occurances append)
+            ;break;
+       ( '+' )
+#   option with argument (multiple occurances append)
             eval "opt_${opt_OPT}=\"\$opt_${opt_OPT}\${ASC_NL}\$opt_ARG\""
-            ;;
-        * )
+            ;break;
+       ( * )
             echo "$msgprefix:Error: unknown option: \`$opt_OPT'" 1>&2
             echo "$msgprefix:Hint:  run \`$toolcmdhelp -h' or \`man shtool' for details" 1>&2
             exit 1
-            ;;
+            ;break;
     esac
 done
 if [ ".$opt_PREV" != . ]; then
@@ -354,31 +347,31 @@ if [ ".$opt_PREV" != . ]; then
     echo "$msgprefix:Hint:  run \`$toolcmdhelp -h' or \`man shtool' for details" 1>&2
     exit 1
 fi
-
+`
 #   process help option
 if [ ".$opt_h" = .yes ]; then
     echo "Usage: $toolcmdhelp $str_usage"
     exit 0
 fi
-
+`
 #   complain about incorrect number of arguments
 case $arg_MODE in
-    '=' )
+    ( '=' )
         if [ $# -ne $arg_NUMS ]; then
             echo "$msgprefix:Error: invalid number of arguments (exactly $arg_NUMS expected)" 1>&2
             echo "$msgprefix:Hint:  run \`$toolcmd -h' or \`man shtool' for details" 1>&2
             exit 1
         fi
-        ;;
-    '+' )
+        ;break;
+   ( '+' )
         if [ $# -lt $arg_NUMS ]; then
             echo "$msgprefix:Error: invalid number of arguments (at least $arg_NUMS expected)" 1>&2
             echo "$msgprefix:Hint:  run \`$toolcmd -h' or \`man shtool' for details" 1>&2
             exit 1
         fi
-        ;;
+        ;break;
 esac
-
+`
 #   establish a temporary file on request
 if [ ".$gen_tmpfile" = .yes ]; then
     #   create (explicitly) secure temporary directory
@@ -397,46 +390,44 @@ if [ ".$gen_tmpfile" = .yes ]; then
           echo "$msgprefix:Error: failed to create temporary directory \`$tmpdir'" 1>&2
           exit 1
       fi
-    )
-
-    #   create (implicitly) secure temporary file
+    (nil)
+~
+#   create (implicitly) secure temporary file
     tmpfile="$tmpdir/shtool.tmp"
     touch "$tmpfile"
 fi
-
+~
 #   utility function: map string to lower case
-util_lower () {
+util_lower (nil) {
     echo "$1" | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz'
 }
-
+~
 #   utility function: map string to upper case
-util_upper () {
+util_upper (nil) {
     echo "$1" | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 }
-
+~
 #   cleanup procedure
-shtool_exit () {
+shtool_exit (nil) {
     rc="$1"
     if [ ".$gen_tmpfile" = .yes ]; then
         rm -rf "$tmpdir" >/dev/null 2>&1 || true
     fi
     exit $rc
-}
-
+};
+~
 ##
-##  DISPATCH INTO SCRIPT BODY
+:root$ DISPATCH INTO SCRIPT BODY
 ##
-
+~
 case $tool in
-
-install )
+`
+( install );
+#  install -- Install a program, script or datafile #  Copyright (c) 1997-2008 Ralf S. Engelschall <rse@engelschall.com>
     ##
-    ##  install -- Install a program, script or datafile
-    ##  Copyright (c) 1997-2008 Ralf S. Engelschall <rse@engelschall.com>
-    ##
-
-    #   special case: "shtool install -d <dir> [...]" internally
-    #   maps to "shtool mkdir -f -p -m 755 <dir> [...]"
+~
+#   special case: "shtool install -d <dir> [...]" internally
+#   maps to "shtool mkdir -f -p -m 755 <dir> [...]"
     if [ "$opt_d" = yes ]; then
         cmd="$0 mkdir -f -p -m 755"
         if [ ".$opt_o" != . ]; then
@@ -456,8 +447,8 @@ install )
         done
         shtool_exit 0
     fi
-
-    #   determine source(s) and destination
+`
+#   determine source(s) and destination
     argc=$#
     srcs=""
     while [ $# -gt 1 ]; do
@@ -465,31 +456,31 @@ install )
         shift
     done
     dstpath="$1"
-
-    #   type check for destination
+`
+#   type check for destination
     dstisdir=0
     if [ -d $dstpath ]; then
         dstpath=`echo "$dstpath" | sed -e 's:/$::'`
         dstisdir=1
     fi
-
-    #   consistency check for destination
+`
+#   consistency check for destination
     if [ $argc -gt 2 ] && [ $dstisdir = 0 ]; then
         echo "$msgprefix:Error: multiple sources require destination to be directory" 1>&2
         shtool_exit 1
     fi
-
-    #   iterate over all source(s)
+`
+#   iterate over all source(s)
     for src in $srcs; do
         dst=$dstpath
-
-        #   if destination is a directory, append the input filename
+`
+#   if destination is a directory, append the input filename
         if [ $dstisdir = 1 ]; then
             dstfile=`echo "$src" | sed -e 's;.*/\([^/]*\)$;\1;'`
             dst="$dst/$dstfile"
         fi
-
-        #   check for correct arguments
+~
+#   check for correct arguments
         if [ ".$src" = ".$dst" ]; then
             echo "$msgprefix:Warning: source and destination are the same - skipped" 1>&2
             continue
@@ -498,19 +489,18 @@ install )
             echo "$msgprefix:Warning: source \`$src' is a directory - skipped" 1>&2
             continue
         fi
-
-        #   make a temp file name in the destination directory
+`
+#   make a temp file name in the destination directory
         dsttmp=`echo $dst |\
                 sed -e 's;[^/]*$;;' -e 's;\(.\)/$;\1;' -e 's;^$;.;' \
                     -e "s;\$;/#INST@$$#;"`
-
-        #   verbosity
+`
+#   verbosity
         if [ ".$opt_v" = .yes ]; then
             echo "$src -> $dst" 1>&2
         fi
-
-        #   copy or move the file name to the temp name
-        #   (because we might be not allowed to change the source)
+`
+#   copy or move the file name to the temp name (because we might be not allowed to change the source)
         if [ ".$opt_C" = .yes ]; then
             opt_c=yes
         fi
@@ -525,8 +515,8 @@ install )
             fi
             mv "$src" "$dsttmp" || shtool_exit $?
         fi
-
-        #   adjust the target file
+`
+#   adjust the target file
         if [ ".$opt_e" != . ]; then
             sed='sed'
             OIFS="$IFS"; IFS="$ASC_NL"; set -- $opt_e; IFS="$OIFS"
@@ -563,9 +553,8 @@ install )
             fi
             chmod $opt_m $dsttmp || shtool_exit $?
         fi
-
-        #   determine whether to do a quick install
-        #   (has to be done _after_ the strip was already done)
+`
+#   determine whether to do a quick install (has to be done _after_ the strip was already done)
         quick=no
         if [ ".$opt_C" = .yes ]; then
             if [ -r $dst ]; then
@@ -574,8 +563,8 @@ install )
                 fi
             fi
         fi
-
-        #   finally, install the file to the real destination
+~
+#   finally, install the file to the real destination
         if [ $quick = yes ]; then
             if [ ".$opt_t" = .yes ]; then
                 echo "rm -f $dsttmp" 1>&2
@@ -588,19 +577,17 @@ install )
             rm -f $dst && mv $dsttmp $dst
         fi
     done
-
+`
     shtool_exit 0
-    ;;
-
-mkdir )
-    ##
-    ##  mkdir -- Make one or more directories
-    ##  Copyright (c) 1996-2008 Ralf S. Engelschall <rse@engelschall.com>
-    ##
-
+    ;break;
+`
+( mkdir )
+~
+##  mkdir -- Make one or more directories ##  Copyright (c) 1996-2008 Ralf S. Engelschall <rse@engelschall.com>
+`
     errstatus=0
     for p in ${1+"$@"}; do
-        #   if the directory already exists...
+#   if the directory already exists...
         if [ -d "$p" ]; then
             if [ ".$opt_f" = .no ] && [ ".$opt_p" = .no ]; then
                 echo "$msgprefix:Error: directory already exists: $p" 1>&2
@@ -610,7 +597,7 @@ mkdir )
                 continue
             fi
         fi
-        #   if the directory has to be created...
+#   if the directory has to be created...
         if [ ".$opt_p" = .no ]; then
             if [ ".$opt_t" = .yes ]; then
                 echo "mkdir $p" 1>&2
@@ -635,7 +622,7 @@ mkdir )
                 chmod $opt_m $p || errstatus=$?
             fi
         else
-            #   the smart situation
+#   the smart situation
             set fnord `echo ":$p" |\
                        sed -e 's/^:\//%/' \
                            -e 's/^://' \
@@ -646,7 +633,7 @@ mkdir )
             for d in ${1+"$@"}; do
                 pathcomp="$pathcomp$d"
                 case "$pathcomp" in
-                    -* ) pathcomp="./$pathcomp" ;;
+                    -* ) pathcomp="./$pathcomp" ;break;
                 esac
                 if [ ! -d "$pathcomp" ]; then
                     if [ ".$opt_t" = .yes ]; then
@@ -676,11 +663,11 @@ mkdir )
             done
         fi
     done
-
+~
     shtool_exit $errstatus
-    ;;
-
+    ;break;
+`
 esac
-
+`
 shtool_exit 0
-
+~
