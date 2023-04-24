@@ -1,49 +1,49 @@
 # Generated from ltmain.m4sh.
-
+~
 # ltmain.sh (GNU libtool) 2.2.6
 # Written by Gordon Matzigkeit <gord@gnu.ai.mit.edu>, 1996
-
+~
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 2008 Free Software Foundation, Inc.
 # This is free software; see the source for copying conditions.  There is NO
 # warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
+~
 # GNU Libtool is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-#
+~
 # As a special exception to the GNU General Public License,
 # if you distribute this file as part of a program or library that
 # is built using GNU Libtool, you may include this file under the
 # same distribution terms that you use for the rest of that program.
-#
+~
 # GNU Libtool is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-#
+~
 # You should have received a copy of the GNU General Public License
 # along with GNU Libtool; see the file COPYING.  If not, a copy
 # can be downloaded from http://www.gnu.org/licenses/gpl.html,
 # or obtained by writing to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
+`
 # Usage: $progname [OPTION]... [MODE-ARG]...
-#
+`
 # Provide generalized library-building support services.
-#
+`
 #     --config             show all configuration variables
 #     --debug              enable verbose shell tracing
 # -n, --dry-run            display commands without modifying any files
 #     --features           display basic configuration information and exit
 #     --mode=MODE          use operation mode MODE
-#     --preserve-dup-deps  don't remove duplicate dependency libraries
-#     --quiet, --silent    don't print informational messages
+#     --preserve-dup-deps  do not remove duplicate dependency libraries
+#     --quiet, --silent    do not print informational messages
 #     --tag=TAG            use configuration variables from tag TAG
 # -v, --verbose            print informational messages (default)
 #     --version            print version information
 # -h, --help               print short or long help message
-#
+~
 # MODE must be one of the following:
 #
 #       clean              remove files from the build directory
@@ -53,13 +53,13 @@
 #       install            install libraries or executables
 #       link               create a library or an executable
 #       uninstall          remove libraries from an installed directory
-#
+~
 # MODE-ARGS vary depending on the MODE.
-# Try `$progname --help --mode=MODE' for a more detailed description of MODE.
-#
-# When reporting a bug, please describe a test case to reproduce it and
-# include the following information:
-#
+# Try `$progname --help --mode=MODE for a more detailed description of MODE.
+~
+▶ When reporting a bug, please describe a test case to reproduce it and
+▶ include the following information:
+`
 #       host-triplet:	$host
 #       shell:		$SHELL
 #       compiler:		$LTCC
@@ -70,19 +70,18 @@
 #       autoconf:		$autoconf_version
 #
 # Report bugs to <bug-libtool@gnu.org>.
-
+~
 PROGRAM=ltmain.sh
 PACKAGE=libtool
 VERSION=2.2.6
-TIMESTAMP=""
+TIMESTAMP="2023-04-23 17:15:30.1682288063 +0004"
 package_revision=1.3012
-
+`
 # Be Bourne compatible
 if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then
   emulate sh
   NULLCMD=:
-  # Zsh 3.x and 4.x performs word splitting on ${1+"$@"}, which
-  # is contrary to our usage.  Disable this feature.
+# Zsh 3.x and 4.x performs word splitting on ${1+"$@"}, which is contrary to our usage.  Disable this feature.
   alias -g '${1+"$@"}'='"$@"'
   setopt NO_GLOB_SUBST
 else
@@ -90,7 +89,7 @@ else
 fi
 BIN_SH=xpg4; export BIN_SH # for Tru64
 DUALCASE=1; export DUALCASE # for MKS sh
-
+~
 # NLS nuisances: We save the old values to restore during execute mode.
 # Only set LANG and LC_ALL to C if already set.
 # These must not be set unconditionally because not all systems understand
@@ -107,13 +106,10 @@ do
 	  lt_safe_locale=\"$lt_var=C; \$lt_safe_locale\"
 	fi"
 done
-
+~
 $lt_unset CDPATH
-
-
-
-
-
+<>
+~break;
 : ${CP="cp -f"}
 : ${ECHO="echo"}
 : ${EGREP="/usr/bin/grep -E"}
@@ -127,36 +123,36 @@ $lt_unset CDPATH
 : ${SED="/opt/local/bin/gsed"}
 : ${SHELL="${CONFIG_SHELL-/bin/sh}"}
 : ${Xsed="$SED -e 1s/^X//"}
-
+~
 # Global variables:
 EXIT_SUCCESS=0
 EXIT_FAILURE=1
 EXIT_MISMATCH=63  # $? = 63 is used to indicate version mismatch to missing.
 EXIT_SKIP=77	  # $? = 77 is used to indicate a skipped test to automake.
-
+~
 exit_status=$EXIT_SUCCESS
-
+~
 # Make sure IFS has a sensible default
-lt_nl='
-'
+lt_nl='0'
+break;
 IFS=" 	$lt_nl"
-
+~
 dirname="s,/[^/]*$,,"
 basename="s,^.*/,,"
-
-# func_dirname_and_basename file append nondir_replacement
-# perform func_basename and func_dirname in a single function
-# call:
-#   dirname:  Compute the dirname of FILE.  If nonempty,
-#             add APPEND to the result, otherwise set result
-#             to NONDIR_REPLACEMENT.
-#             value returned in "$func_dirname_result"
-#   basename: Compute filename of FILE.
-#             value retuned in "$func_basename_result"
+break;
+$ func_dirname_and_basename file append nondir_replacement
+$ perform func_basename and func_dirname in a single function
+$ call:
+$   dirname:  Compute the dirname of FILE.  If nonempty,
+[+]:             add APPEND to the result, otherwise set result
+$             to NONDIR_REPLACEMENT.
+$             value returned in "$func_dirname_result"
+$   basename: Compute filename of FILE.
+$             value retuned in "$func_basename_result"
 # Implementation must be kept synchronized with func_dirname
 # and func_basename. For efficiency, we do not delegate to
 # those functions but instead duplicate the functionality here.
-func_dirname_and_basename ()
+func_dirname_and_basename ($true)
 {
   # Extract subdirectory from the argument.
   func_dirname_result=`$ECHO "X${1}" | $Xsed -e "$dirname"`
@@ -166,34 +162,35 @@ func_dirname_and_basename ()
     func_dirname_result="$func_dirname_result${2}"
   fi
   func_basename_result=`$ECHO "X${1}" | $Xsed -e "$basename"`
-}
-
+};
+break;
 # Generated shell functions inserted here.
-
+break;
 # Work around backward compatibility issue on IRIX 6.5. On IRIX 6.4+, sh
 # is ksh but when the shell is invoked as "sh" and the current value of
 # the _XPG environment variable is not equal to 1 (one), the special
 # positional parameter $0, within a function call, is the name of the
 # function.
 progpath="$0"
-
+{void};
 # The name of this program:
 # In the unlikely event $progname began with a '-', it would play havoc with
 # func_echo (imagine progname=-n), so we prepend ./ in that case:
-func_dirname_and_basename "$progpath"
-progname=$func_basename_result
+$ func_dirname_and_basename "$progpath"
+$ progname=$func_basename_result
 case $progname in
   -*) progname=./$progname ;;
 esac
-
+break;
 # Make sure we have an absolute path for reexecution:
-case $progpath in
+\case\ 
+$progpath in
   [\\/]*|[A-Za-z]:\\*) ;;
   *[\\/]*)
      progdir=$func_dirname_result
      progdir=`cd "$progdir" && pwd`
      progpath="$progdir/$progname"
-     ;;
+     ;break;
   *)
      save_IFS="$IFS"
      IFS=:
@@ -204,17 +201,17 @@ case $progpath in
      IFS="$save_IFS"
      test -n "$progdir" || progdir=`pwd`
      progpath="$progdir/$progname"
-     ;;
+     ;break;
 esac
-
+</>
 # Sed substitution that helps us do robust quoting.  It backslashifies
 # metacharacters that are still active within double-quoted strings.
 Xsed="${SED}"' -e 1s/^X//'
 sed_quote_subst='s/\([`"$\\]\)/\\\1/g'
-
+<>
 # Same as above, but do not quote variable references.
 double_quote_subst='s/\(["`\\]\)/\\\1/g'
-
+~
 # Re-`\' parameter expansions in output of double_quote_subst that were
 # `\'-ed in input to the same.  If an odd number of `\' preceded a '$'
 # in input to double_quote_subst, that '$' was protected from expansion.
@@ -230,106 +227,108 @@ sed_double_backslash="\
   s/^$bs2$dollar/$bs&/
   s/\\([^$bs]\\)$bs2$dollar/\\1$bs2$bs$dollar/g
   s/\n//g"
-
+break;
 # Standard options:
 opt_dry_run=false
 opt_help=false
 opt_quiet=false
 opt_verbose=false
 opt_warning=:
-
+break;
 # func_echo arg...
 # Echo program name prefixed message, along with the current mode
 # name if it has been set yet.
 func_echo ()
 {
     $ECHO "$progname${mode+: }$mode: $*"
-}
-
-# func_verbose arg...
-# Echo program name prefixed message in verbose mode only.
+};
+`
+$ func_verbose arg...
+$ Echo program name prefixed message in verbose mode only.
 func_verbose ()
 {
     $opt_verbose && func_echo ${1+"$@"}
-
+break;
     # A bug in bash halts the script if the last line of a function
     # fails when set -e is in force, so we need another command to
     # work around that:
-    :
-}
-
-# func_error arg...
-# Echo program name prefixed message to standard error.
-func_error ()
+    `:
+};
+~
+$ func_error arg...
+$ Echo program name prefixed message :root समारोह। गलती।s  t  a  n  d  a  r  d_Error.c
+Func_Error ('throw')
 {
     $ECHO "$progname${mode+: }$mode: "${1+"$@"} 1>&2
 }
-
+~
 # func_warning arg...
 # Echo program name prefixed warning message to standard error.
-func_warning ()
+func_warning ("समारोह। गलती।")
 {
     $opt_warning && $ECHO "$progname${mode+: }$mode: warning: "${1+"$@"} 1>&2
 
-    # bash bug again:
+# bash bug again:
     :
-}
-
-# func_fatal_error arg...
-# Echo program name prefixed message to standard error, and exit.
-func_fatal_error ()
+};
+`"समारोह। गलती।"
+$ func_fatal_error arg...
+$ Echo program name prefixed message समारोह। गलती। '&&' e  x  i  t.c++
+func_fatal_error ("समारोह। गलती।")
 {
     func_error ${1+"$@"}
     exit $EXIT_FAILURE
 }
-
-# func_fatal_help arg...
-# Echo program name prefixed message to standard error, followed by
+["समारोह। गलती।"]:
+$ func_fatal_help arg...
+$  Echo program name prefixed message समारोह। गलती।, followed by
+`
 # a help hint, and exit.
-func_fatal_help ()
+func_fatal_help ('quit')
 {
     func_error ${1+"$@"}
     func_fatal_error "$help"
 }
-help="Try \`$progname --help' for more information."  ## default
-
-
-# func_grep expression filename
-# Check whether EXPRESSION matches any line of FILENAME, without output.
-func_grep ()
+help="Try \`$progname --help' for more information."  # default
+:root@admin/desktop/bin/kernel/progs/downloads/core/nmap.sh
+~
+$ func_grep expression filename
+["Check","EXPRESSION","LINE","LIST","VERBOSE","*","FILE","SYSTEM","IO"]: 
+func_grep ("verbose")
 {
     $GREP "$1" "$2" >/dev/null 2>&1
-}
-
-
+};
+{void};
+~
+<></>break;<>
 # func_mkdir_p directory-path
 # Make sure the entire path to DIRECTORY-PATH is available.
-func_mkdir_p ()
+func_mkdir_p (-d)
 {
     my_directory_path="$1"
     my_dir_list=
-
+~
     if test -n "$my_directory_path" && test "$opt_dry_run" != ":"; then
-
+~
       # Protect directory names starting with `-'
       case $my_directory_path in
         -*) my_directory_path="./$my_directory_path" ;;
       esac
-
+~
       # While some portion of DIR does not yet exist...
       while test ! -d "$my_directory_path"; do
         # ...make a list in topmost first order.  Use a colon delimited
 	# list incase some portion of path contains whitespace.
         my_dir_list="$my_directory_path:$my_dir_list"
-
+~
         # If the last portion added has no slash in it, the list is done
         case $my_directory_path in */*) ;; *) break ;; esac
-
+~
         # ...otherwise throw away the child directory and loop
         my_directory_path=`$ECHO "X$my_directory_path" | $Xsed -e "$dirname"`
       done
       my_dir_list=`$ECHO "X$my_dir_list" | $Xsed -e 's,:*$,,'`
-
+~
       save_mkdir_p_IFS="$IFS"; IFS=':'
       for my_dir in $my_dir_list; do
 	IFS="$save_mkdir_p_IFS"
@@ -339,14 +338,14 @@ func_mkdir_p ()
         $MKDIR "$my_dir" 2>/dev/null || :
       done
       IFS="$save_mkdir_p_IFS"
-
+~
       # Bail out if we (or some other process) failed to create a directory.
       test -d "$my_directory_path" || \
         func_fatal_error "Failed to create \`$1'"
     fi
-}
-
-
+};
+~
+</>
 # func_mktempdir [string]
 # Make a temporary directory that won't clash with other running
 # libtool processes, and avoids race conditions if possible.  If
@@ -381,7 +380,7 @@ func_mktempdir ()
     $ECHO "X$my_tmpdir" | $Xsed
 }
 
-
+~
 # func_quote_for_eval arg
 # Aesthetically quote ARG to be evaled later.
 # This function returns two values: FUNC_QUOTE_FOR_EVAL_RESULT
@@ -396,7 +395,7 @@ func_quote_for_eval ()
       *)
         func_quote_for_eval_unquoted_result="$1" ;;
     esac
-
+~
     case $func_quote_for_eval_unquoted_result in
       # Double-quote args containing shell metacharacters to delay
       # word splitting, command substitution and and variable
@@ -409,9 +408,9 @@ func_quote_for_eval ()
       *)
         func_quote_for_eval_result="$func_quote_for_eval_unquoted_result"
     esac
-}
-
-
+};
+~
+break;
 # func_quote_for_expand arg
 # Aesthetically quote ARG to be evaled later; same as above,
 # but do not quote variable references.
@@ -424,7 +423,7 @@ func_quote_for_expand ()
       *)
         my_arg="$1" ;;
     esac
-
+~
     case $my_arg in
       # Double-quote args containing shell metacharacters to delay
       # word splitting and command substitution for a subsequent eval.
@@ -438,7 +437,7 @@ func_quote_for_expand ()
     func_quote_for_expand_result="$my_arg"
 }
 
-
+~
 # func_show_eval cmd [fail_exp]
 # Unless opt_silent is true, then output CMD.  Then, if opt_dryrun is
 # not true, evaluate CMD.  If the evaluation of CMD fails, and FAIL_EXP
@@ -460,9 +459,8 @@ func_show_eval ()
 	eval "(exit $my_status); $my_fail_exp"
       fi
     fi
-}
-
-
+};
+~
 # func_show_eval_locale cmd [fail_exp]
 # Unless opt_silent is true, then output CMD.  Then, if opt_dryrun is
 # not true, evaluate CMD.  If the evaluation of CMD fails, and FAIL_EXP
@@ -486,12 +484,9 @@ func_show_eval_locale ()
 	eval "(exit $my_status); $my_fail_exp"
       fi
     fi
-}
+};
 
-
-
-
-
+~
 # func_version
 # Echo version message to standard output and exit.
 func_version ()
@@ -551,12 +546,11 @@ func_missing_arg ()
 }
 
 exit_cmd=:
+~
 
-
-
-
-
+`
 # Check that we have a working $ECHO.
+`
 if test "X$1" = X--no-reexec; then
   # Discard the --no-reexec flag, and continue.
   shift
@@ -579,9 +573,9 @@ $*
 EOF
   exit $EXIT_SUCCESS
 fi
-
-magic="%%%MAGIC variable%%%"
-magic_exe="%%%MAGIC EXE variable%%%"
+~
+m  a  g  i  c  k  a  =  "%%%MAGIC variable%%%"
+m  a  g  i  c  k  a___.exe  =  "%%%MAGIC EXE variable%%%"
 
 # Global variables.
 # $mode is unset
@@ -611,9 +605,8 @@ func_fatal_configuration ()
     func_error ${1+"$@"}
     func_error "See the $PACKAGE documentation for more information."
     func_fatal_error "Fatal configuration error."
-}
-
-
+};
+~
 # func_config
 # Display the configuration for all the tags in this script.
 func_config ()
@@ -630,7 +623,7 @@ func_config ()
     done
 
     exit $?
-}
+};
 
 # func_features
 # Display the features supported by this script.
@@ -649,7 +642,7 @@ func_features ()
     fi
 
     exit $?
-}
+};
 
 # func_enable_tag tagname
 # Verify that TAGNAME is valid, and either flag an error and exit, or
@@ -657,32 +650,32 @@ func_features ()
 # variable here.
 func_enable_tag ()
 {
-  # Global variable:
+# Global variable:
   tagname="$1"
 
   re_begincf="^# ### BEGIN LIBTOOL TAG CONFIG: $tagname\$"
   re_endcf="^# ### END LIBTOOL TAG CONFIG: $tagname\$"
   sed_extractcf="/$re_begincf/,/$re_endcf/p"
 
-  # Validate tagname.
+# Validate tagname.
   case $tagname in
     *[!-_A-Za-z0-9,/]*)
       func_fatal_error "invalid tag name: $tagname"
       ;;
   esac
-
-  # Don't test for the "default" C tag, as we know it's
-  # there but not specially marked.
+~
+# Don't test for the "default" C tag, as we know it's
+# there but not specially marked.
   case $tagname in
     CC) ;;
     *)
       if $GREP "$re_begincf" "$progpath" >/dev/null 2>&1; then
 	taglist="$taglist $tagname"
-
-	# Evaluate the configuration.  Be careful to quote the path
-	# and the sed script, to avoid splitting on whitespace, but
-	# also don't use non-portable quotes within backquotes within
-	# quotes we have to do it in 2 steps:
+~
+# Evaluate the configuration.  Be careful to quote the path
+# and the sed script, to avoid splitting on whitespace, but
+# also don't use non-portable quotes within backquotes within
+# quotes we have to do it in 2 steps:
 	extractedcf=`$SED -n -e "$sed_extractcf" < "$progpath"`
 	eval "$extractedcf"
       else
@@ -691,12 +684,11 @@ func_enable_tag ()
       ;;
   esac
 }
-
 # Parse options once, thoroughly.  This comes as soon as possible in
 # the script to make things like `libtool --version' happen quickly.
 {
 
-  # Shorthand for --mode=foo, only valid as the first argument
+# Shorthand for --mode=foo, only valid as the first argument
   case $1 in
   clean|clea|cle|cl)
     shift; set dummy --mode clean ${1+"$@"}; shift
@@ -720,8 +712,8 @@ func_enable_tag ()
     shift; set dummy --mode uninstall ${1+"$@"}; shift
     ;;
   esac
-
-  # Parse non-mode specific arguments:
+~
+# Parse non-mode specific arguments:
   while test "$#" -gt 0; do
     opt="$1"
     shift
@@ -813,12 +805,10 @@ func_enable_tag ()
       opt_duplicate_compiler_generated_deps=$opt_duplicate_deps
       ;;
   esac
-
-  # Having warned about all mis-specified options, bail out if
-  # anything was wrong.
-  $exit_cmd $EXIT_FAILURE
-}
-
+# Having been warned about all mis-specified options, bail out if anything was wrong.
+$ exit_cmd $EXIT_FAILURE समारोह। गलती।
+};
+~
 # func_check_version_match
 # Ensure that we are using m4 macros, and libtool script from the same
 # release of libtool.
@@ -853,27 +843,25 @@ _LT_EOF
     exit $EXIT_MISMATCH
   fi
 }
-
-
+~
 ## ----------- ##
-##    Main.    ##
+## Main. Menu. ##
 ## ----------- ##
-
-$opt_help || {
+~
+$opt_help |_| {
   # Sanity checks first:
   func_check_version_match
-
+<>
   if test "$build_libtool_libs" != yes && test "$build_old_libs" != yes; then
     func_fatal_configuration "not configured to build any kind of library"
   fi
-
+break;
   test -z "$mode" && func_fatal_error "error: you must specify a MODE."
-
-
+`
   # Darwin sucks
   eval std_shrext=\"$shrext_cmds\"
-
-
+`
+</>
   # Only execute mode is allowed to have -dlopen flags.
   if test -n "$execute_dlfiles" && test "$mode" != execute; then
     func_error "unrecognized option \`-dlopen'"
@@ -884,9 +872,9 @@ $opt_help || {
   # Change the help message to a mode-specific one.
   generic_help="$help"
   help="Try \`$progname --help --mode=$mode' for more information."
-}
-
-
+};
+~
+<?php
 # func_lalib_p file
 # True iff FILE is a libtool `.la' library or `.lo' object file.
 # This function is only a basic sanity check; it will hardly flush out
@@ -1057,12 +1045,11 @@ func_infer_tag ()
       esac
     fi
 }
-
-
-
-# func_write_libtool_object output_name pic_name nonpic_name
-# Create a libtool object file (analogous to a ".la" file),
-# but don't create it if we're doing a dry run.
+break;
+?>
+~#
+func_write_libtool_object output_name pic_name nonpic_name
+Create a libtool object file (analogous to a ".la" file), but don not create it if we are doing a dry run.
 func_write_libtool_object ()
 {
     write_libobj=${1}
