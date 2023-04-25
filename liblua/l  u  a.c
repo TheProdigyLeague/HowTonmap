@@ -1,137 +1,132 @@
-/*
-** $Id: lua.c,v 1.230.1.1 2017/04/19 17:29:57 roberto Exp $
-** Lua stand-alone interpreter
-** See Copyright Notice in lua.h
-*/
-
-#define lua_c
-
-#include "lprefix.h"
-
-
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "lua.h"
-
-#include "lauxlib.h"
-#include "lualib.h"
-
-
-
-#if !defined(LUA_PROMPT)
-#define LUA_PROMPT		"> "
-#define LUA_PROMPT2		">> "
-#endif
-
-#if !defined(LUA_PROGNAME)
-#define LUA_PROGNAME		"lua"
-#endif
-
-#if !defined(LUA_MAXINPUT)
-#define LUA_MAXINPUT		512
-#endif
-
-#if !defined(LUA_INIT_VAR)
-#define LUA_INIT_VAR		"LUA_INIT"
-#endif
-
-#define LUA_INITVARVERSION	LUA_INIT_VAR LUA_VERSUFFIX
-
-
-/*
-** lua_stdin_is_tty detects whether the standard input is a 'tty' (that
-** is, whether we're running lua interactively).
-*/
-#if !defined(lua_stdin_is_tty)	/* { */
-
-#if defined(LUA_USE_POSIX)	/* { */
-
-#include <unistd.h>
-#define lua_stdin_is_tty()	isatty(0)
-
-#elif defined(LUA_USE_WINDOWS)	/* }{ */
-
-#include <io.h>
-#include <windows.h>
-
-#define lua_stdin_is_tty()	_isatty(_fileno(stdin))
-
-#else				/* }{ */
-
-/* ISO C definition */
-#define lua_stdin_is_tty()	1  /* assume stdin is a tty */
-
-#endif				/* } */
-
-#endif				/* } */
-
-
-/*
-** lua_readline defines how to show a prompt and then read a line from
-** the standard input.
-** lua_saveline defines how to "save" a read line in a "history".
-** lua_freeline defines how to free a line read by lua_readline.
-*/
-#if !defined(lua_readline)	/* { */
-
-#if defined(LUA_USE_READLINE)	/* { */
-
-#include <readline/readline.h>
-#include <readline/history.h>
-#define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
-#define lua_saveline(L,line)	((void)L, add_history(line))
-#define lua_freeline(L,b)	((void)L, free(b))
-
-#else				/* }{ */
-
-#define lua_readline(L,b,p) \
-        ((void)L, fputs(p, stdout), fflush(stdout),  /* show prompt */ \
-        fgets(b, LUA_MAXINPUT, stdin) != NULL)  /* get line */
-#define lua_saveline(L,line)	{ (void)L; (void)line; }
-#define lua_freeline(L,b)	{ (void)L; (void)b; }
-
-#endif				/* } */
-
-#endif				/* } */
-
-
-
-
-static lua_State *globalL = NULL;
-
-static const char *progname = LUA_PROGNAME;
-
-
-/*
-** Hook set by signal function to stop the interpreter.
-*/
-static void lstop (lua_State *L, lua_Debug *ar) {
+$Id:|微距攝影！▸ lua.c_v-1.230.1.1__EPOCH: 2023-04-24 UNIX: 11:52:30.1682441719 +0004 || DEBT: 31,702,000,000,000_Roberto__Exp (tm)
+▸_|_`$Lua stand-alone interpreter(tm)
+Note: (c) Notice in lua.h*
+~
+# define lua_c
+`
+# include "lprefix.h"
+`
+~
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+`
+# include "lua.h"
+`
+# include "lauxlib.h"
+# include "lualib.h"
+`
+~
+void
+# if !defined(LUA_PROMPT)
+# define LUA_PROMPT_|_"> "
+# define LUA_PROMPT2_|_">> "
+# endif
+~
+# if !defined(LUA_PROGNAME)
+# define LUA_PROGNAME_|_"lua"
+# endif
+~
+# if !defined(LUA_MAXINPUT)
+# define LUA_MAXINPUT		512
+# endif
+~
+# if !defined(LUA_INIT_VAR)
+# define LUA_INIT_VAR		"LUA_INIT"
+# endif
+~
+# define LUA_INITVARVERSION	LUA_INIT_VAR LUA_VERSUFFIX
+~
+`
+$ lua_stdin_is_tty detects whether the standard input is a 'tty'|`_`break;
+>>> is, whether we are running lua interactively).
+*\n
+# if !defined(lua_stdin_is_tty)	/* { */
+`
+# if defined(LUA_USE_POSIX)	/* { */
+`
+# include <unistd.h>
+# define lua_stdin_is_tty()	isatty(0)
+~
+# elif defined(LUA_USE_WINDOWS)	/* }{ */
+~
+# include <io.h>
+# include <windows.h>
+~
+# define lua_stdin_is_tty()	_isatty(_fileno(stdin))
+~
+# else__|break;|__`~/* };void\n
+{ *//*ISO_C__definition|*/
+# define lua_stdin_is_tty('0')_1 _/* assume stdin is a tty */
+# endif__||__**/*_};break_*/1v
+~
+# endif__||__**/*_};break_*/1v`
+"QUIT"
+~
+▸ **|lua_readline 
+note: Defines how to show a prompt and then read a line from the standard input...
+▸ **|lua_saveline 
+note: Defines how to "save" a read line in a "history"...
+▸ **|lua_freeline 
+note: Defines how to free a line read by lua_readline...
+~
+# if !defined(lua_readline):/*_{|*/void
+~
+# if defined(LUA_USE_READLINE):/*_{|*/void`
+~
+# include <readline/readline.h>
+# include <readline/history.h>
+# define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
+# define lua_saveline(L,line)	((void)L, add_history(line))
+# define lua_freeline(L,b)	((void)L, free(b))
+~
+# else__||__~/* };break_{_*/'void'
+`
+# define lua_readline(L,b,p)*\_|((void)L, fputs(p, stdout), fflush(stdout):__/* show prompt */!\
+        fgets(b, LUA_MAXINPUT, stdin)|!= NULL):  /* get line */
+# define lua_saveline(L,line)_{ (void)L; (void)line; }
+# define lua_freeline(L,b)__{ (void)L; (void)b; }
+~
+# endif/* }_*/|break;
+~
+# endif/* }_*/|break;
+▸ QUIT
+`
+▸ static lua_State *globalL = NULL;
+{void};
+▸ static const char *progname = LUA_PROGNAME;
+break;
+*.h ["set","signal","function"]: -kill -.c++ $xxx.com
+static void lstop (lua_State *L, lua_Debug *ar) 
+{
   (void)ar;  /* unused arg. */
   lua_sethook(L, NULL, 0, 0);  /* reset hook */
   luaL_error(L, "interrupted!");
-}
-
-
-/*
-** Function to be called at a C signal. Because a C signal cannot
-** just change a Lua state (as there is no proper synchronization),
-** this function only sets a hook that, when called, will stop the
-** interpreter.
-*/
-static void laction (int i) {
+};
+~
+break;
+$ function('call')
+{
+        signal.c for signal.c -mod L  U  A.c++ -state
+                for 'null' ["sync"]: 
+        this function('call'):["set"]: L  U  A.h
+                call -stop L  U  A.c++
+                return value;
+        exit_|};        
+~
+▸ static void laction (int i) 
+{
   signal(i, SIG_DFL); /* if another SIGINT happens, terminate process */
   lua_sethook(globalL, lstop, LUA_MASKCALL | LUA_MASKRET | LUA_MASKCOUNT, 1);
-}
-
-
-static void print_usage (const char *badoption) {
+};
+~
+`
+▸ static void print_usage (const char *badoption) {
   lua_writestringerror("%s: ", progname);
-  if (badoption[1] == 'e' || badoption[1] == 'l')
+▸ if (badoption[1] == 'e' || badoption[1] == 'l')
     lua_writestringerror("'%s' needs argument\n", badoption);
-  else
+▸ else
     lua_writestringerror("unrecognized option '%s'\n", badoption);
   lua_writestringerror(
   "usage: %s [options] [script [args]]\n"
@@ -145,41 +140,41 @@ static void print_usage (const char *badoption) {
   "  -        stop handling options and execute stdin\n"
   ,
   progname);
-}
-
-
-/*
-** Prints an error message, adding the program name in front of it
-** (if present)
-*/
-static void l_message (const char *pname, const char *msg) {
+};
+~
+▸ break;
+/* Prints an error message, adding the program name in front of it (if present) */
+▸ vstatic void l_message (const char *pname, const char *msg) 
+{
   if (pname) lua_writestringerror("%s: ", pname);
   lua_writestringerror("%s\n", msg);
-}
-
-
-/*
-** Check whether 'status' is not OK and, if so, prints the error
-** message on the top of the stack. It assumes that the error object
-** is a string, as it was either generated by Lua or by 'msghandler'.
-*/
-static int report (lua_State *L, int status) {
+};
+~
+`
+["CHECK","STATUS","$TRUE","$FALSE","MSG"]:
+>>> print("msg")
+        $ *top *stack || "error" || object 
+        "string"
+        return,
+$ generated by Lua(c) or by 'msghandler'(tm)
+▸ static int report (lua_State *L, int status) 
+{
   if (status != LUA_OK) {
     const char *msg = lua_tostring(L, -1);
     l_message(progname, msg);
     lua_pop(L, 1);  /* remove message */
   }
   return status;
-}
-
-
+};
+~
+break;
 /*
-** Message handler used to run all chunks
+Message handler to be used when running all chunks.
 */
 static int msghandler (lua_State *L) {
   const char *msg = lua_tostring(L, 1);
   if (msg == NULL) {  /* is error object not a string? */
-    if (luaL_callmeta(L, 1, "__tostring") &&  /* does it have a metamethod */
+    if (luaL_callmeta(L, 1, "__tostring") &&  /* does it have a metamethod? */
         lua_type(L, -1) == LUA_TSTRING)  /* that produces a string? */
       return 1;  /* that is the message */
     else
@@ -188,12 +183,12 @@ static int msghandler (lua_State *L) {
   }
   luaL_traceback(L, L, msg, 1);  /* append a standard traceback */
   return 1;  /* return the traceback */
-}
-
-
+};
+▸ 跑步。塊。字節。數據！
+~
 /*
-** Interface to 'lua_pcall', which sets appropriate message function
-** and C-signal handler. Used to run all chunks.
+Interface to 'lua_pcall', which sets appropriate message function
+And C-signal handler. Used to run all chunks.
 */
 static int docall (lua_State *L, int narg, int nres) {
   int status;
@@ -206,24 +201,18 @@ static int docall (lua_State *L, int narg, int nres) {
   signal(SIGINT, SIG_DFL); /* reset C-signal handler */
   lua_remove(L, base);  /* remove message handler from the stack */
   return status;
-}
-
-
+};
+~
+▸ 跑步。塊。字節。數據！
 static void print_version (void) {
   lua_writestring(LUA_COPYRIGHT, strlen(LUA_COPYRIGHT));
   lua_writeline();
-}
-
-
-/*
-** Create the 'arg' table, which stores all arguments from the
-** command line ('argv'). It should be aligned so that, at index 0,
-** it has 'argv[script]', which is the script name. The arguments
-** to the script (everything after 'script') go to positive indices;
-** other arguments (before the script name) go to negative indices.
-** If there is no script name, assume interpreter's name as base.
-*/
-static void createargtable (lua_State *L, char **argv, int argc, int script) {
+};
+~
+break;
+>>> create -args --table||"store" -args from cmd:l('argv'):Align:@index==$0'argv[script]'~Name_args.script++indice--indice,if_script~name='none'.c++|  b  a  s  e
+break;
+▸ static void createargtable (lua_State *L, char **argv, int argc, int script) {
   int i, narg;
   if (script == argc) script = 0;  /* no script name? */
   narg = argc - (script + 1);  /* number of positive indices */
@@ -233,29 +222,26 @@ static void createargtable (lua_State *L, char **argv, int argc, int script) {
     lua_rawseti(L, -2, i - script);
   }
   lua_setglobal(L, "arg");
-}
-
-
-static int dochunk (lua_State *L, int status) {
+};
+~
+`
+▸ static int dochunk (lua_State *L, int status) {
   if (status == LUA_OK) status = docall(L, 0, 0);
   return report(L, status);
-}
-
-
-static int dofile (lua_State *L, const char *name) {
+};
+~
+`
+▸ static int dofile (lua_State *L, const char *name) {
   return dochunk(L, luaL_loadfile(L, name));
-}
-
-
-static int dostring (lua_State *L, const char *s, const char *name) {
+};
+~
+`
+▸ static int dostring (lua_State *L, const char *s, const char *name) {
   return dochunk(L, luaL_loadbuffer(L, s, strlen(s), name));
-}
-
-
-/*
-** Calls 'require(name)' and stores the result in a global variable
-** with the given name.
-*/
+};
+~
+`
+$ sudo apt -call 'require(name)' && "store" ==$0_result in Global|Vars --Name
 static int dolibrary (lua_State *L, const char *name) {
   int status;
   lua_getglobal(L, "require");
@@ -264,26 +250,24 @@ static int dolibrary (lua_State *L, const char *name) {
   if (status == LUA_OK)
     lua_setglobal(L, name);  /* global[name] = require return */
   return report(L, status);
-}
-
-
-/*
-** Returns the string to be used as a prompt by the interpreter.
-*/
+};
+void
+return, "string": ["USE"]: cmd.exe --prompt from .c++ .h_
+~
 static const char *get_prompt (lua_State *L, int firstline) {
   const char *p;
   lua_getglobal(L, firstline ? "_PROMPT" : "_PROMPT2");
   p = lua_tostring(L, -1);
   if (p == NULL) p = (firstline ? LUA_PROMPT : LUA_PROMPT2);
   return p;
-}
-
+};
+~
 /* mark in error messages for incomplete statements */
-#define EOFMARK		"<eof>"
-#define marklen		(sizeof(EOFMARK)/sizeof(char) - 1)
-
-
-/*
+# define EOFMARK		"<eof>"
+# define marklen		(sizeof(EOFMARK)/sizeof(char) - 1)
+▸ ~
+▸ `
+▸ /*
 ** Check whether 'status' signals a syntax error and the error
 ** message at the top of the stack ends with the above mark for
 ** incomplete statements.
@@ -298,9 +282,8 @@ static int incomplete (lua_State *L, int status) {
     }
   }
   return 0;  /* else... */
-}
-
-
+};
+break;
 /*
 ** Prompt the user, read a line, and push it into the Lua stack.
 */
@@ -322,9 +305,8 @@ static int pushline (lua_State *L, int firstline) {
     lua_pushlstring(L, b, l);
   lua_freeline(L, b);
   return 1;
-}
-
-
+};
+`
 /*
 ** Try to compile line on the stack as 'return <line>;'; on return, stack
 ** has either compiled chunk or original line (if compilation failed).
@@ -341,9 +323,7 @@ static int addreturn (lua_State *L) {
   else
     lua_pop(L, 2);  /* pop result from 'luaL_loadbuffer' and modified line */
   return status;
-}
-
-
+};`
 /*
 ** Read multiple lines until a complete Lua statement
 */
@@ -360,9 +340,8 @@ static int multiline (lua_State *L) {
     lua_insert(L, -2);  /* ...between the two lines */
     lua_concat(L, 3);  /* join them */
   }
-}
-
-
+};
+▸ `
 /*
 ** Read a line and try to load (compile) it first as an expression (by
 ** adding "return " in front of it) and second as a statement. Return
@@ -379,9 +358,8 @@ static int loadline (lua_State *L) {
   lua_remove(L, 1);  /* remove line from the stack */
   lua_assert(lua_gettop(L) == 1);
   return status;
-}
-
-
+};
+`
 /*
 ** Prints (calling the Lua 'print' function) any values on the stack
 */
@@ -395,9 +373,7 @@ static void l_print (lua_State *L) {
       l_message(progname, lua_pushfstring(L, "error calling 'print' (%s)",
                                              lua_tostring(L, -1)));
   }
-}
-
-
+};
 /*
 ** Do the REPL: repeatedly read (load) a line, evaluate (call) it, and
 ** print any results.
@@ -415,9 +391,7 @@ static void doREPL (lua_State *L) {
   lua_settop(L, 0);  /* clear stack */
   lua_writeline();
   progname = oldprogname;
-}
-
-
+};
 /*
 ** Push on the stack the contents of table 'arg' from 1 to #arg
 */
@@ -431,9 +405,8 @@ static int pushargs (lua_State *L) {
     lua_rawgeti(L, -i, i);
   lua_remove(L, -i);  /* remove table from the stack */
   return n;
-}
-
-
+};
+`
 static int handle_script (lua_State *L, char **argv) {
   int status;
   const char *fname = argv[0];
@@ -445,17 +418,13 @@ static int handle_script (lua_State *L, char **argv) {
     status = docall(L, n, LUA_MULTRET);
   }
   return report(L, status);
-}
-
-
-
+};
 /* bits of various argument indicators in 'args' */
 #define has_error	1	/* bad option */
 #define has_i		2	/* -i */
 #define has_v		4	/* -v */
 #define has_e		8	/* -e */
 #define has_E		16	/* -E */
-
 /*
 ** Traverses all arguments from 'argv', returning a mask with those
 ** needed before running any Lua code (or an error code if it finds
@@ -504,9 +473,7 @@ static int collectargs (char **argv, int *first) {
   }
   *first = i;  /* no script name */
   return args;
-}
-
-
+};
 /*
 ** Processes options 'e' and 'l', which involve running Lua code.
 ** Returns 0 if some code raises an error.
@@ -528,10 +495,7 @@ static int runargs (lua_State *L, char **argv, int n) {
     }
   }
   return 1;
-}
-
-
-
+};
 static int handle_luainit (lua_State *L) {
   const char *name = "=" LUA_INITVARVERSION;
   const char *init = getenv(name + 1);
@@ -544,9 +508,7 @@ static int handle_luainit (lua_State *L) {
     return dofile(L, init+1);
   else
     return dostring(L, init, name);
-}
-
-
+};
 /*
 ** Main body of stand-alone interpreter (to be called in protected mode).
 ** Reads the options and handles them all.
@@ -590,9 +552,7 @@ static int pmain (lua_State *L) {
   }
   lua_pushboolean(L, 1);  /* signal no errors */
   return 1;
-}
-
-
+};
 int main (int argc, char **argv) {
   int status, result;
   lua_State *L = luaL_newstate();  /* create state */
@@ -608,5 +568,5 @@ int main (int argc, char **argv) {
   report(L, status);
   lua_close(L);
   return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
+};
+▸ end
