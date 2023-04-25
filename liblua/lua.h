@@ -1,106 +1,86 @@
-/*
-** Lua - A Scripting Language
-** Lua.org, PUC-Rio, Brazil (http://www.lua.org)
-** See Copyright Notice at the end of this file
-*/
-
-
-#ifndef lua_h
-#define lua_h
-
-#include <stdarg.h>
-#include <stddef.h>
-
-
-#include "luaconf.h"
-
-
-#define LUA_VERSION_MAJOR	"5"
-#define LUA_VERSION_MINOR	"3"
-#define LUA_VERSION_NUM		503
-#define LUA_VERSION_RELEASE	"6"
-
-#define LUA_VERSION	"Lua " LUA_VERSION_MAJOR "." LUA_VERSION_MINOR
-#define LUA_RELEASE	LUA_VERSION "." LUA_VERSION_RELEASE
-#define LUA_COPYRIGHT	LUA_RELEASE "  Copyright (C) 1994-2020 Lua.org, PUC-Rio"
-#define LUA_AUTHORS	"R. Ierusalimschy, L. H. de Figueiredo, W. Celes"
-
-
+/*script.Lua_Lua.org,PUC-Rio,|Brazil_(http://www.lua.org).See(c)_Notice_@_end|of|file*/
+:@$root_os|m  a  c  h  i  n  e
+~
+# ifndef lua_h
+# define lua_h
+~
+# include <stdarg.h>
+# include <stddef.h>
+~
+# include "luaconf.h"
+~
+# define LUA_VERSION_MAJOR|_"5"
+# define LUA_VERSION_MINOR|_"3"
+# define LUA_VERSION_NUM|_"503"
+# define LUA_VERSION_RELEASE|_"6"
+~
+# define LUA_VERSION_"LUA " LUA_VERSION_MAJOR "." LUA_VERSION_MINOR
+# define LUA_RELEASE_LUA_VERSION "." LUA_VERSION_RELEASE
+# define LUA_COPYRIGHT_LUA_RELEASE "Copyright (C) 1994-2020 Lua.org, PUC-Rio"
+# define LUA_AUTHORS_"R. Ierusalimschy, L. H. de Figueiredo, W. Celes"
+~
 /* mark for precompiled code ('<esc>Lua') */
-#define LUA_SIGNATURE	"\x1bLua"
-
+# define LUA_SIGNATURE_"\x1bLua"
+~
 /* option for multiple returns in 'lua_pcall' and 'lua_call' */
-#define LUA_MULTRET	(-1)
-
-
-/*
-** Pseudo-indices
-** (-LUAI_MAXSTACK is the minimum valid index; we keep some free empty
-** space after that to help overflow detection)
-*/
-#define LUA_REGISTRYINDEX	(-LUAI_MAXSTACK - 1000)
-#define lua_upvalueindex(i)	(LUA_REGISTRYINDEX - (i))
-
-
+# define LUA_MULTRET_|(-1)
+~
+break;
+/*Pseudo-indices(-LUAI_MAXSTACK is the minimum valid index; we keep some free empty space after that to help overflow detection)*/
+# define LUA_REGISTRYINDEX_|(-LUAI_MAXSTACK - 1000)
+# define lua_upvalueindex(i)|(LUA_REGISTRYINDEX - (i))_break;
+~
 /* thread status */
-#define LUA_OK		0
-#define LUA_YIELD	1
-#define LUA_ERRRUN	2
-#define LUA_ERRSYNTAX	3
-#define LUA_ERRMEM	4
-#define LUA_ERRGCMM	5
-#define LUA_ERRERR	6
-
-
+# define LUA_OK		0
+# define LUA_YIELD	1
+# define LUA_ERRRUN	2
+# define LUA_ERRSYNTAX	3
+# define LUA_ERRMEM	4
+# define LUA_ERRGCMM	5
+# define LUA_ERRERR	6
+~
+break;
 typedef struct lua_State lua_State;
-
-
-/*
-** basic types
-*/
-#define LUA_TNONE		(-1)
-
-#define LUA_TNIL		0
-#define LUA_TBOOLEAN		1
-#define LUA_TLIGHTUSERDATA	2
-#define LUA_TNUMBER		3
-#define LUA_TSTRING		4
-#define LUA_TTABLE		5
-#define LUA_TFUNCTION		6
-#define LUA_TUSERDATA		7
-#define LUA_TTHREAD		8
-
-#define LUA_NUMTAGS		9
-
-
-
+~
+/*basic types*/
+# define LUA_TNONE__(-1)
+`
+# define LUA_TNIL		0
+# define LUA_TBOOLEAN		1
+# define LUA_TLIGHTUSERDATA	2
+# define LUA_TNUMBER		3
+# define LUA_TSTRING		4
+# define LUA_TTABLE		5
+# define LUA_TFUNCTION		6
+# define LUA_TUSERDATA		7
+# define LUA_TTHREAD		8
+~
+# define LUA_NUMTAGS		9
+~
+break;
 /* minimum Lua stack available to a C function */
-#define LUA_MINSTACK	20
-
-
-/* predefined values in the registry */
-#define LUA_RIDX_MAINTHREAD	1
-#define LUA_RIDX_GLOBALS	2
-#define LUA_RIDX_LAST		LUA_RIDX_GLOBALS
-
-
+# define LUA_MINSTACK	20
+~
+``/* predefined values in the registry */
+# define LUA_RIDX_MAINTHREAD	1
+# define LUA_RIDX_GLOBALS	2
+# define LUA_RIDX_LAST		LUA_RIDX_GLOBALS
+~
+break;
 /* type of numbers in Lua */
 typedef LUA_NUMBER lua_Number;
-
-
-/* type for integer functions */
+`
+/* type of integer functions */
 typedef LUA_INTEGER lua_Integer;
-
-/* unsigned integer type */
-typedef LUA_UNSIGNED lua_Unsigned;
-
-/* type for continuation-function contexts */
+`
+/* non-signed integer type */
+typedef LUA_UNSIGNED lua_non-signed;
+`
+/* type of continuation-function contexts */
 typedef LUA_KCONTEXT lua_KContext;
-
-
-/*
-** Type for C functions registered with Lua
-*/
+~
+`
+/*type of C functions registered with Lua*/
 typedef int (*lua_CFunction) (lua_State *L);
 
 /*
