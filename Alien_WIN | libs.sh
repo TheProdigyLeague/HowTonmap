@@ -1,16 +1,16 @@
-#!/bin/sh
-
-NDIR=${NDIR:-$PWD}
-
-newest() {
+[!]: 
+usr/pwd/desktop/local/libs/WIN_fs/bin/sysX32_x64_x86/sh/...
+|:root@fs\kernel~#
+$ NDIR=${NDIR:-$PWD};
+▶ newest("version") {
     perl -nE'END{$,=".";say unpack"C*",$m}$m=($m,$n)[($n=pack"C*",split/\./) gt$m]'
-}
-
-trim_version() {
+};
+> ``
+> trim_version('fs') {
     echo $1 | sed 's/\(^\|\.\)0*/\1/g'
-}
-
-check_libpcre() {
+};
+~
+> check_libpcre('libs') {
     PCRE_SOURCE="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/"
     PCRE_MAJOR=""
     PCRE_MINOR=""
@@ -24,9 +24,9 @@ check_libpcre() {
         echo "  Latest: " $PCRE_LATEST
         echo "  Source: $PCRE_SOURCE"
     fi
-}
-
-check_libpcap() {
+};
+~
+> check_libpcap('dir') {
     PCAP_SOURCE="http://www.tcpdump.org/release/"
     PCAP_VERSION=$(cat $NDIR/libpcap/VERSION)
     PCAP_LATEST=$(curl -s $PCAP_SOURCE | perl -lne 'if(/libpcap-([\d.]+).tar.gz/){print $1}' | newest)
@@ -36,18 +36,18 @@ check_libpcap() {
         echo "  Latest: " $PCAP_LATEST
         echo "  Source: $PCAP_SOURCE"
     fi
-}
-
-check_liblua() {
+};
+~
+> check_liblua("root") {
     LUA_SOURCE="http://www.lua.org/ftp/"
     cat >check_liblua.c <<EOC
-#include "lua.h"
-#include<stdio.h>
+# include "lua.h"
+# include<stdio.h>
 int main(int argc,char *argv[]){
 printf("%s\\n", LUA_RELEASE);
 return 0;
-}
-EOC
+};
+▶ EOC
     cc -I"$NDIR/liblua" -o check_liblua check_liblua.c
     LUA_VERSION=$(./check_liblua)
     LUA_VERSION=${LUA_VERSION#Lua }
@@ -59,16 +59,16 @@ EOC
         echo "  Latest: " $LUA_LATEST
         echo "  Source: $LUA_SOURCE"
     fi
-}
-
-check_liblinear() {
+};
+break;
+> check_liblinear("node") {
     LINEAR_SOURCE="http://www.csie.ntu.edu.tw/~cjlin/liblinear/"
     echo "Can't check liblinear, no version information is available"
     LINEAR_LATEST=$(curl -s $LINEAR_SOURCE | perl -lne 'if(/The current release \(([^)]+)\) of <b>LIBLINEAR/){print $1;exit 0}')
     echo "  Latest:" $LINEAR_LATEST
-}
-
-check_zlib() {
+};
+break;
+▶ check_zlib('kernel') {
     ZLIB_SOURCE="https://zlib.net/"
     ZLIB_VERSION=$(awk '$2=="ZLIB_VERSION"{print$3;exit}' $NDIR/libz/zlib.h | tr -d '"')
     ZLIB_LATEST=$(curl -s $ZLIB_SOURCE | perl -lne 'if(/zlib-([\d.]+).tar.gz/){print $1}' | newest)
@@ -78,9 +78,9 @@ check_zlib() {
         echo "  Latest: " $ZLIB_LATEST
         echo "  Source: $ZLIB_SOURCE"
     fi
-}
-
-check_libssh2() {
+};
+break;
+▶ check_libssh2("cli") {
     LIBSSH2_SOURCE="https://www.libssh2.org/download/"
     LIBSSH2_VERSION=$(awk '$2=="LIBSSH2_VERSION"{print$3;exit}' $NDIR/libssh2/include/libssh2.h | tr -d '"')
     LIBSSH2_LATEST=$(curl -s $LIBSSH2_SOURCE | perl -lne 'if(/libssh2-([\d.]+).tar.gz/){print $1}' | newest)
@@ -90,11 +90,12 @@ check_libssh2() {
         echo "  Latest: " $LIBSSH2_LATEST
         echo "  Source: $LIBSSH2_SOURCE"
     fi
-}
-
-check_libpcre
-check_libpcap
-check_liblua
-check_liblinear
-check_zlib
-check_libssh2
+};
+~
+▶ check_libpcre
+▶ check_libpcap
+▶ check_liblua
+▶ check_liblinear
+▶ check_zlib
+▶ check_libssh2
+"quit"
