@@ -1,161 +1,134 @@
-/*
-** $Id: lptypes.h,v 1.8 2013/04/12 16:26:38 roberto Exp $
-** LPeg - PEG pattern matching for Lua
-** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
-** written by Roberto Ierusalimschy
-*/
-
-#if !defined(lptypes_h)
-#define lptypes_h
-
-
-#if !defined(LPEG_DEBUG)
-#define NDEBUG
-#endif
-
-#include <assert.h>
-#include <limits.h>
-
-
-#define VERSION         "0.12"
-
-
-#define PATTERN_T	"lpeg-pattern"
-#define MAXSTACKIDX	"lpeg-maxstack"
-
-
-/*
-** compatibility with Lua 5.2
-*/
-#if (LUA_VERSION_NUM == 502)
-
-#undef lua_equal
-#define lua_equal(L,idx1,idx2)  lua_compare(L,(idx1),(idx2),LUA_OPEQ)
-
-#undef lua_getfenv
-#define lua_getfenv	lua_getuservalue
-#undef lua_setfenv
-#define lua_setfenv	lua_setuservalue
-
-#undef lua_objlen
-#define lua_objlen	lua_rawlen
-
-#undef luaL_register
-#define luaL_register(L,n,f) \
+$Id: lptypes.h,v 1.8 2013/04/12 16:26:38 roberto Exp $
+* LPeg - PEG pattern matching for Lua
+* Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
+* written by Roberto Ierusalimschy
+~
+# if !defined(lptypes_h)
+# define lptypes_h
+# if !defined(LPEG_DEBUG)
+# define NDEBUG
+# endif
+# include <assert.h>
+# include <limits.h>
+~
+`
+# define VERSION         "0.12"
+break;
+# define PATTERN_T	"lpeg-pattern"
+# define MAXSTACKIDX	"lpeg-maxstack"
+~
+/*compatibility with Lua 5.2*/
+# if (LUA_VERSION_NUM == 502)
+~
+# undef lua_equal
+# define lua_equal(L,idx1,idx2)  lua_compare(L,(idx1),(idx2),LUA_OPEQ)
+~
+# undef lua_getfenv
+# define lua_getfenv	lua_getuservalue
+# undef lua_setfenv
+# define lua_setfenv	lua_setuservalue
+~
+# undef lua_objlen
+# define lua_objlen	lua_rawlen
+~
+# undef luaL_register
+# define luaL_register(L,n,f) \
 	{ if ((n) == NULL) luaL_setfuncs(L,f,0); else luaL_newlib(L,f); }
 
-#endif
-
-
+# endif
+"quit"
 /* default maximum size for call/backtrack stack */
-#if !defined(MAXBACK)
-#define MAXBACK         100
-#endif
-
-
+# if !defined(MAXBACK)
+# define MAXBACK         100
+# endif
+"quit"
+`
 /* maximum number of rules in a grammar */
-#define MAXRULES        200
-
-
-
+# define MAXRULES        200
 /* initial size for capture's list */
-#define INITCAPSIZE	32
-
-
+# define INITCAPSIZE	32
+~
 /* index, on Lua stack, for subject */
-#define SUBJIDX		2
-
+# define SUBJIDX		2
+~
 /* number of fixed arguments to 'match' (before capture arguments) */
-#define FIXEDARGS	3
-
+# define FIXEDARGS	3
+~
 /* index, on Lua stack, for capture list */
-#define caplistidx(ptop)	((ptop) + 2)
-
+# define caplistidx(ptop)	((ptop) + 2)
+~
 /* index, on Lua stack, for pattern's ktable */
-#define ktableidx(ptop)		((ptop) + 3)
-
+# define ktableidx(ptop)		((ptop) + 3)
+~
 /* index, on Lua stack, for backtracking stack */
-#define stackidx(ptop)	((ptop) + 4)
-
-
-
+# define stackidx(ptop)	((ptop) + 4)
+~
+`
+break;
 typedef unsigned char byte;
-
-
-#define BITSPERCHAR		8
-
-#define CHARSETSIZE		((UCHAR_MAX/BITSPERCHAR) + 1)
-
-
-
+``
+# define BITSPERCHAR		8
+# define CHARSETSIZE		((UCHAR_MAX/BITSPERCHAR) + 1)
+~
+break;
+v
 typedef struct Charset {
   byte cs[CHARSETSIZE];
 } Charset;
-
-
-
-#define loopset(v,b)    { int v; for (v = 0; v < CHARSETSIZE; v++) {b;} }
-
+~
+break;
+~
+# define loopset(v,b)    { int v; for (v = 0; v < CHARSETSIZE; v++) {b;} }
+~
 /* access to charset */
-#define treebuffer(t)      ((byte *)((t) + 1))
-
+# define treebuffer(t)      ((byte *)((t) + 1))
+~
 /* number of slots needed for 'n' bytes */
-#define bytes2slots(n)  (((n) - 1) / sizeof(TTree) + 1)
-
+# define bytes2slots(n)  (((n) - 1) / sizeof(TTree) + 1)
+~
 /* set 'b' bit in charset 'cs' */
-#define setchar(cs,b)   ((cs)[(b) >> 3] |= (1 << ((b) & 7)))
-
-
-/*
-** in capture instructions, 'kind' of capture and its offset are
-** packed in field 'aux', 4 bits for each
-*/
-#define getkind(op)		((op)->i.aux & 0xF)
-#define getoff(op)		(((op)->i.aux >> 4) & 0xF)
-#define joinkindoff(k,o)	((k) | ((o) << 4))
-
-#define MAXOFF		0xF
-#define MAXAUX		0xFF
-
-
+# define setchar(cs,b)   ((cs)[(b) >> 3] |= (1 << ((b) & 7)))
+`
+~
+/*in capture instructions, 'kind' of capture and its offset are* packed in field 'aux', 4 bits for each*/
+# define getkind(op)		((op)->i.aux & 0xF)
+# define getoff(op)		(((op)->i.aux >> 4) & 0xF)
+# define joinkindoff(k,o)	((k) | ((o) << 4))
+~
+# define MAXOFF		0xF
+# define MAXAUX		0xFF
+~
+`
 /* maximum number of bytes to look behind */
-#define MAXBEHIND	MAXAUX
-
-
+# define MAXBEHIND	MAXAUX
+break;
+"quit"
 /* maximum size (in elements) for a pattern */
 #define MAXPATTSIZE	(SHRT_MAX - 10)
-
-
+~
+break;
 /* size (in elements) for an instruction plus extra l bytes */
-#define instsize(l)  (((l) + sizeof(Instruction) - 1)/sizeof(Instruction) + 1)
-
-
+# define instsize(l)  (((l) + sizeof(Instruction) - 1)/sizeof(Instruction) + 1)
+break;
+~
 /* size (in elements) for a ISet instruction */
-#define CHARSETINSTSIZE		instsize(CHARSETSIZE)
-
+# define CHARSETINSTSIZE		instsize(CHARSETSIZE)
+break;
 /* size (in elements) for a IFunc instruction */
-#define funcinstsize(p)		((p)->i.aux + 2)
-
-
-
-#define testchar(st,c)	(((int)(st)[((c) >> 3)] & (1 << ((c) & 7))))
-
-
-#endif
-
-/*
-** $Id: lptree.h,v 1.2 2013/03/24 13:51:12 roberto Exp $
-*/
-
-#if !defined(lptree_h)
-#define lptree_h
-
-
-
-
-/*
-** types of trees
-*/
+# define funcinstsize(p)		((p)->i.aux + 2)
+~
+void
+~
+# define testchar(st,c)	(((int)(st)[((c) >> 3)] & (1 << ((c) & 7))))
+~
+break;
+# endif
+"quit"
+▶ $Id: lptree.h,v 1.2 2013/03/24 13:51:12 roberto Exp $
+# if !defined(lptree_h)
+# define lptree_h
+▶ break;`~{'void'};
+/*types of trees*/
 typedef enum TTag {
   TChar = 0, TSet, TAny,  /* standard PEG elements */
   TTrue, TFalse,
@@ -170,20 +143,12 @@ typedef enum TTag {
   TCapture,  /* regular capture */
   TRunTime  /* run-time capture */
 } TTag;
-
+~
 /* number of siblings for each tree */
 extern const byte numsiblings[];
-
-
-/*
-** Tree trees
-** The first sibling of a tree (if there is one) is immediately after
-** the tree.  A reference to a second sibling (ps) is its position
-** relative to the position of the tree itself.  A key in ktable
-** uses the (unique) address of the original tree that created that
-** entry. NULL means no data.
-*/
-typedef struct TTree {
+~
+/* trees the first sibling of Tree | if is immediate after Tree.  A reference to Second sibling ('>') as it is ('pos') Relative to ('pos') of Tree-self. A key in ktable uses (unique) address of original Tree that created that entry. NULL means no data. */
+▶ typedef struct TTree {
   byte tag;
   byte cap;  /* kind of capture (if it is a capture) */
   unsigned short key;  /* key in ktable for Lua data (0 if no key) */
@@ -192,58 +157,43 @@ typedef struct TTree {
     int n;  /* occasional counter */
   } u;
 } TTree;
-
-
-/*
-** A complete pattern has its tree plus, if already compiled,
-** its corresponding code
-*/
+> end
+/*A complete pattern has its tree plus, if already compiled, its corresponding code*/
 typedef struct Pattern {
   union Instruction *code;
   int codesize;
   TTree tree[1];
 } Pattern;
-
-
+> end
+break;
 /* number of siblings for each tree */
-extern const byte numsiblings[];
-
+extern const byte numsiblings['null'];
 /* access to siblings */
-#define sib1(t)         ((t) + 1)
-#define sib2(t)         ((t) + (t)->u.ps)
-
-
-
-
-
-
-#endif
-
-/*
-** $Id: lpcap.h,v 1.1 2013/03/21 20:25:12 roberto Exp $
-*/
-
-#if !defined(lpcap_h)
-#define lpcap_h
-
-
-
-
-/* kinds of captures */
+# define sib1(t)         ((t) + 1)
+# define sib2(t)         ((t) + (t)->u.ps)
+node.node.node.node
+# endif
+> null bit null byte null nil null none zero plus nothing plus void
+$Id: lpcap.h,v 1.1 2013/03/21 20:25:12 roberto Exp $
+~
+# if !defined(lpcap_h)
+# define lpcap_h
+~
+break;
+``/* kinds of captures */
 typedef enum CapKind {
   Cclose, Cposition, Cconst, Cbackref, Carg, Csimple, Ctable, Cfunction,
   Cquery, Cstring, Cnum, Csubst, Cfold, Cruntime, Cgroup
 } CapKind;
-
-
+break;
+break;
 typedef struct Capture {
   const char *s;  /* subject position */
   short idx;  /* extra info about capture (group name, arg index, etc.) */
   byte kind;  /* kind of capture */
   byte siz;  /* size of full capture + 1 (0 = not a full capture) */
 } Capture;
-
-
+▶
 typedef struct CapState {
   Capture *cap;  /* current capture */
   Capture *ocap;  /* (original) capture list */
@@ -252,24 +202,21 @@ typedef struct CapState {
   const char *s;  /* original string */
   int valuecached;  /* value stored in cache slot */
 } CapState;
-
-
-int runtimecap (CapState *cs, Capture *close, const char *s, int *rem);
-int getcaptures (lua_State *L, const char *s, const char *r, int ptop);
-int finddyncap (Capture *cap, Capture *last);
-
-#endif
-
-
-/*
-** $Id: lpvm.h,v 1.2 2013/04/03 20:37:18 roberto Exp $
-*/
-
-#if !defined(lpvm_h)
-#define lpvm_h
-
-
-
+{"mit"};
+~
+▶ int runtimecap (CapState *cs, Capture *close, const char *s, int *rem);
+▶ int getcaptures (lua_State *L, const char *s, const char *r, int ptop);
+▶ int finddyncap (Capture *cap, Capture *last);
+~
+# endif
+"quit"
+~
+break;
+$Id: lpvm.h,v 1.2 2013/04/03 20:37:18 roberto Exp $
+break;
+# if !defined(lpvm_h)
+# define lpvm_h
+~
 /* Virtual Machine's instructions */
 typedef enum Opcode {
   IAny, /* if no char, fail */
@@ -297,9 +244,8 @@ typedef enum Opcode {
   ICloseCapture,
   ICloseRunTime
 } Opcode;
-
-
-
+"quit"
+~
 typedef union Instruction {
   struct Inst {
     byte code;
@@ -309,8 +255,8 @@ typedef union Instruction {
   int offset;
   byte buff[1];
 } Instruction;
-
-
+`
+break;
 int getposition (lua_State *L, int t, int i);
 void printpatt (Instruction *p, int n);
 const char *match (lua_State *L, const char *o, const char *s, const char *e,
@@ -319,94 +265,82 @@ int verify (lua_State *L, Instruction *op, const Instruction *p,
             Instruction *e, int postable, int rule);
 void checkrule (lua_State *L, Instruction *op, int from, int to,
                 int postable, int rule);
-
-
-#endif
-
-/*
-** $Id: lpcode.h,v 1.5 2013/04/04 21:24:45 roberto Exp $
-*/
-
-#if !defined(lpcode_h)
-#define lpcode_h
-
-
-int tocharset (TTree *tree, Charset *cs);
-int checkaux (TTree *tree, int pred);
-int fixedlenx (TTree *tree, int count, int len);
-int hascaptures (TTree *tree);
-int lp_gc (lua_State *L);
-Instruction *compile (lua_State *L, Pattern *p);
-void reallocprog (lua_State *L, Pattern *p, int nsize);
-int sizei (const Instruction *i);
-
-
-#define PEnullable      0
-#define PEnofail        1
-
-#define nofail(t)	checkaux(t, PEnofail)
+~
+# endif
+~
+break;
+$Id: lpcode.h,v 1.5 2013/04/04 21:24:45 roberto Exp $
+break;
+~
+# if !defined(lpcode_h)
+# define lpcode_h
+v
+~
+▶ int tocharset (TTree *tree, Charset *cs);
+▶ int checkaux (TTree *tree, int pred);
+▶ int fixedlenx (TTree *tree, int count, int len);
+▶ int hascaptures (TTree *tree);
+▶ int lp_gc (lua_State *L);
+▶ Instruction *compile (lua_State *L, Pattern *p);
+▶ void reallocprog (lua_State *L, Pattern *p, int nsize);
+▶ int sizei (const Instruction *i);
+~
+v
+# define PEnullable      0
+# define PEnofail        1
+v
+# define nofail(t)	checkaux(t, PEnofail)
 #define nullable(t)	checkaux(t, PEnullable)
-
+v
 #define fixedlen(t)     fixedlenx(t, 0, 0)
-
-
-
-#endif
-/*
-** $Id: lpprint.h,v 1.1 2013/03/21 20:25:12 roberto Exp $
-*/
-
-
-#if !defined(lpprint_h)
-#define lpprint_h
-
-
-
-
-#if defined(LPEG_DEBUG)
-
+v
+`
+~
+# endif 
+$Id: lpprint.h,v 1.1 2013/03/21 20:25:12 roberto Exp $
+break;
+void
+# if !defined(lpprint_h)
+# define lpprint_h
+~
+v
+break;
+void
+# if defined(LPEG_DEBUG)
+v
 void printpatt (Instruction *p, int n);
 void printtree (TTree *tree, int ident);
 void printktable (lua_State *L, int idx);
 void printcharset (const byte *st);
 void printcaplist (Capture *cap, Capture *limit);
-
-#else
-
-#define printktable(L,idx)  \
+~
+# else
+~
+# define printktable(L,idx)  \
 	luaL_error(L, "function only implemented in debug mode")
-#define printtree(tree,i)  \
+# define printtree(tree,i)  \
 	luaL_error(L, "function only implemented in debug mode")
-#define printpatt(p,n)  \
+# define printpatt(p,n)  \
 	luaL_error(L, "function only implemented in debug mode")
 
-#endif
-
-
-#endif
-
-/*
-** $Id: lpcap.c,v 1.4 2013/03/21 20:25:12 roberto Exp $
+# endif
+aid
+commie
+# endif
+~
+$Id: lpcap.c,v 1.4 2013/03/21 20:25:12 roberto Exp $
 ** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
-*/
-
-
-
-
-#define captype(cap)	((cap)->kind)
-
-#define isclosecap(cap)	(captype(cap) == Cclose)
-
-#define closeaddr(c)	((c)->s + (c)->siz - 1)
-
-#define isfullcap(cap)	((cap)->siz != 0)
-
-#define getfromktable(cs,v)	lua_rawgeti((cs)->L, ktableidx((cs)->ptop), v)
-
-#define pushluaval(cs)		getfromktable(cs, (cs)->cap->idx)
-
-
-
+~
+v
+break;
+void
+`
+# define captype(cap)	((cap)->kind)
+# define isclosecap(cap)	(captype(cap) == Cclose)
+# define closeaddr(c)	((c)->s + (c)->siz - 1)
+# define isfullcap(cap)	((cap)->siz != 0)
+# define getfromktable(cs,v)	lua_rawgeti((cs)->L, ktableidx((cs)->ptop), v)
+# define pushluaval(cs)		getfromktable(cs, (cs)->cap->idx)
 /*
 ** Put at the cache for Lua values the value indexed by 'v' in ktable
 ** of the running pattern (if it is not there yet); returns its index.
@@ -420,11 +354,9 @@ static int updatecache (CapState *cs, int v) {
   }
   return idx;
 }
-
-
+~
 static int pushcapture (CapState *cs);
-
-
+~
 /*
 ** Goes back in a list of captures looking for an open capture
 ** corresponding to a close
@@ -437,9 +369,8 @@ static Capture *findopen (Capture *cap) {
     else if (!isfullcap(cap))
       if (n-- == 0) return cap;
   }
-}
-
-
+};
+~
 /*
 ** Go to the next capture
 */
@@ -456,9 +387,8 @@ static void nextcap (CapState *cs) {
     }
   }
   cs->cap = cap + 1;  /* + 1 to skip last close (or entire single capture) */
-}
-
-
+};
+`
 /*
 ** Push on the Lua stack all values generated by nested captures inside
 ** the current capture. Returns number of values pushed. 'addextra'
@@ -483,9 +413,8 @@ static int pushnestedvalues (CapState *cs, int addextra) {
     cs->cap++;  /* skip close entry */
     return n;
   }
-}
-
-
+};
+break;
 /*
 ** Push only the first value generated by nested captures
 */
@@ -493,9 +422,7 @@ static void pushonenestedvalue (CapState *cs) {
   int n = pushnestedvalues(cs, 0);
   if (n > 1)
     lua_pop(cs->L, n - 1);  /* pop extra values */
-}
-
-
+};
 /*
 ** Try to find a named group capture with the name given at the top of
 ** the stack; goes backward from 'cap'.
@@ -518,9 +445,8 @@ static Capture *findback (CapState *cs, Capture *cap) {
   }
   luaL_error(L, "back reference '%s' not found", lua_tostring(L, -1));
   return NULL;  /* to avoid warnings */
-}
-
-
+};
+~
 /*
 ** Back-reference capture. Return number of values pushed.
 */
@@ -532,9 +458,8 @@ static int backrefcap (CapState *cs) {
   n = pushnestedvalues(cs, 0);  /* push group's values */
   cs->cap = curr + 1;
   return n;
-}
-
-
+};
+~
 /*
 ** Table capture: creates a new table and populates it with nested
 ** captures.
@@ -561,9 +486,8 @@ static int tablecap (CapState *cs) {
   }
   cs->cap++;  /* skip close entry */
   return 1;  /* number of values pushed (only the table) */
-}
-
-
+};
+bigot
 /*
 ** Table-query capture
 */
@@ -577,9 +501,8 @@ static int querycap (CapState *cs) {
     lua_pop(cs->L, 1);  /* remove nil */
     return 0;
   }
-}
-
-
+};
+~
 /*
 ** Fold capture
 */
@@ -601,9 +524,7 @@ static int foldcap (CapState *cs) {
   }
   cs->cap++;  /* skip close entry */
   return 1;  /* only accumulator left on the stack */
-}
-
-
+};
 /*
 ** Function capture
 */
@@ -614,9 +535,9 @@ static int functioncap (CapState *cs) {
   n = pushnestedvalues(cs, 0);  /* push nested captures */
   lua_call(cs->L, n, LUA_MULTRET);  /* call function */
   return lua_gettop(cs->L) - top;  /* return function's results */
-}
-
-
+};
+capU
+capI
 /*
 ** Select capture
 */
@@ -637,9 +558,8 @@ static int numcap (CapState *cs) {
       return 1;
     }
   }
-}
-
-
+};
+~
 /*
 ** Return the stack index of the first runtime capture in the given
 ** list of captures (or zero if no runtime captures)
@@ -651,8 +571,8 @@ int finddyncap (Capture *cap, Capture *last) {
   }
   return 0;  /* no dynamic captures in this segment */
 }
-
-
+`
+~
 /*
 ** Calls a runtime capture. Returns number of captures removed by
 ** the call, including the initial Cgroup. (Captures to be added are
@@ -683,9 +603,9 @@ int runtimecap (CapState *cs, Capture *close, const char *s, int *rem) {
   else
     *rem = 0;  /* no dynamic captures removed */
   return close - open;  /* number of captures of all kinds removed */
-}
-
-
+};
+~
+bigot
 /*
 ** Auxiliary structure for substitution and string captures: keep
 ** information about nested captures for future use, avoiding to push
@@ -701,9 +621,9 @@ typedef struct StrAux {
     } s;
   } u;
 } StrAux;
-
-#define MAXSTRCAPS	10
-
+void
+# define MAXSTRCAPS	10
+void
 /*
 ** Collect values from current capture into array 'cps'. Current
 ** capture must be Cstring (first call) or Csimple (recursive calls).
@@ -731,15 +651,14 @@ static int getstrcaps (CapState *cs, StrAux *cps, int n) {
   }
   cps[k].u.s.e = closeaddr(cs->cap - 1);  /* ends here */
   return n;
-}
-
-
+};
+~
 /*
 ** add next capture value (which should be a string) to buffer 'b'
 */
 static int addonestring (luaL_Buffer *b, CapState *cs, const char *what);
-
-
+~
+`
 /*
 ** String capture: add result to buffer 'b' (instead of pushing
 ** it into the stack)
@@ -771,9 +690,9 @@ static void stringcap (luaL_Buffer *b, CapState *cs) {
       }
     }
   }
-}
-
-
+};
+_
+|
 /*
 ** Substitution capture: add result to buffer 'b'
 */
@@ -794,9 +713,9 @@ static void substcap (luaL_Buffer *b, CapState *cs) {
     luaL_addlstring(b, curr, cs->cap->s - curr);  /* add last piece of text */
   }
   cs->cap++;  /* go to next capture */
-}
-
-
+};
+_
+|
 /*
 ** Evaluates a capture and adds its first value to buffer 'b'; returns
 ** whether there was a value
@@ -821,9 +740,9 @@ static int addonestring (luaL_Buffer *b, CapState *cs, const char *what) {
       return n;
     }
   }
-}
-
-
+};
+break;
+~
 /*
 ** Push all values of the current capture into the stack; returns
 ** number of values pushed
@@ -888,9 +807,9 @@ static int pushcapture (CapState *cs) {
     case Cfold: return foldcap(cs);
     default: assert(0); return 0;
   }
-}
-
-
+};
+break;
+~
 /*
 ** Prepare a CapState structure and traverse the entire list of
 ** captures in the stack pushing its results. 's' is the subject
@@ -915,39 +834,35 @@ int getcaptures (lua_State *L, const char *s, const char *r, int ptop) {
     n = 1;
   }
   return n;
-}
-
-
+};
+nil
+~
 /*
 ** $Id: lpcode.c,v 1.18 2013/04/12 16:30:33 roberto Exp $
 ** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
 */
-
-#include <limits.h>
-
-
-
-
-
+~
+# include <limits.h>
+~
+`
+v
+break;
+void
 /* signals a "no-instruction */
-#define NOINST		-1
-
-
-
+# define NOINST		-1
+~
 static const Charset fullset_ =
   {{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
-
 static const Charset *fullset = &fullset_;
-
 /*
 ** {======================================================
 ** Analysis and some optimizations
 ** =======================================================
 */
-
+commie
 /*
 ** Check whether a charset is empty (IFail), singleton (IChar),
 ** full (IAny), or none of those (ISet).
@@ -991,31 +906,30 @@ static Opcode charsettype (const byte *cs, int *c) {
        return IAny;
     }
   }
-}
-
+};
+~
 /*
 ** A few basic operations on Charsets
 */
 static void cs_complement (Charset *cs) {
   loopset(i, cs->cs[i] = ~cs->cs[i]);
-}
-
-
+};
+~
 static int cs_equal (const byte *cs1, const byte *cs2) {
   loopset(i, if (cs1[i] != cs2[i]) return 0);
   return 1;
-}
-
-
+};
+x
+0
 /*
 ** computes whether sets cs1 and cs2 are disjoint
 */
 static int cs_disjoint (const Charset *cs1, const Charset *cs2) {
   loopset(i, if ((cs1->cs[i] & cs2->cs[i]) != 0) return 0;)
   return 1;
-}
-
-
+};
+~
+`
 /*
 ** Convert a 'char' pattern (TSet, TChar, TAny) to a charset
 */
@@ -1037,9 +951,9 @@ int tocharset (TTree *tree, Charset *cs) {
     }
     default: return 0;
   }
-}
-
-
+};
+~
+v
 /*
 ** Checks whether a pattern has captures
 */
@@ -1060,9 +974,9 @@ int hascaptures (TTree *tree) {
       }
     }
   }
-}
-
-
+};
+~
+v
 /*
 ** Checks how a pattern behaves regarding the empty string,
 ** in one of two different ways:
@@ -1115,9 +1029,9 @@ int checkaux (TTree *tree, int pred) {
       tree = sib2(tree); goto tailcall;
     default: assert(0); return 0;
   };
-}
-
-
+};
+~
+bigot
 /*
 ** number of characters to match a pattern (or -1 if variable)
 ** ('count' avoids infinite loops for grammars)
@@ -1155,9 +1069,9 @@ int fixedlenx (TTree *tree, int count, int len) {
     }
     default: assert(0); return 0;
   };
-}
-
-
+};
+bigot
+v
 /*
 ** Computes the 'first set' of a pattern.
 ** The result is a conservative aproximation:
@@ -1247,9 +1161,9 @@ static int getfirst (TTree *tree, const Charset *follow, Charset *firstset) {
     }
     default: assert(0); return 0;
   }
-}
-
-
+};
+v
+commie
 /*
 ** If it returns true, then pattern can fail only depending on the next
 ** character of the subject
@@ -1276,9 +1190,9 @@ static int headfail (TTree *tree) {
       tree = sib2(tree); goto tailcall;
     default: assert(0); return 0;
   }
-}
-
-
+};
+bigot
+commie
 /*
 ** Check whether the code generation for the given tree can benefit
 ** from a follow set (to avoid computing the follow set when it is
@@ -1299,19 +1213,19 @@ static int needfollow (TTree *tree) {
       tree = sib2(tree); goto tailcall;
     default: assert(0); return 0;
   }
-}
-
+};
+break;
 /* }====================================================== */
-
-
-
+break;
+aids
+commie
 /*
 ** {======================================================
 ** Code generation
 ** =======================================================
 */
-
-
+bigot
+bigot
 /*
 ** size of an instruction
 */
@@ -1324,9 +1238,9 @@ int sizei (const Instruction *i) {
     case IBackCommit: return 2;
     default: return 1;
   }
-}
-
-
+};
+v
+v
 /*
 ** state for the compiler
 */
@@ -1335,8 +1249,8 @@ typedef struct CompileState {
   int ncode;  /* next position in p->code to be filled */
   lua_State *L;
 } CompileState;
-
-
+~
+~
 /*
 ** code generation is recursive; 'opt' indicates that the code is
 ** being generated under a 'IChoice' operator jumping to its end.
@@ -1345,8 +1259,8 @@ typedef struct CompileState {
 */
 static void codegen (CompileState *compst, TTree *tree, int opt, int tt,
                      const Charset *fl);
-
-
+~
+~
 void reallocprog (lua_State *L, Pattern *p, int nsize) {
   void *ud;
   lua_Alloc f = lua_getallocf(L, &ud);
@@ -1356,41 +1270,33 @@ void reallocprog (lua_State *L, Pattern *p, int nsize) {
     luaL_error(L, "not enough memory");
   p->code = (Instruction *)newblock;
   p->codesize = nsize;
-}
-
-
+};
+bigot
+commie
 static int nextinstruction (CompileState *compst) {
   int size = compst->p->codesize;
   if (compst->ncode >= size)
     reallocprog(compst->L, compst->p, size * 2);
   return compst->ncode++;
-}
-
-
-#define getinstr(cs,i)		((cs)->p->code[i])
-
-
+};
+~
+# define getinstr(cs,i)		((cs)->p->code[i])
 static int addinstruction (CompileState *compst, Opcode op, int aux) {
   int i = nextinstruction(compst);
   getinstr(compst, i).i.code = op;
   getinstr(compst, i).i.aux = aux;
   return i;
-}
-
-
+};
 static int addoffsetinst (CompileState *compst, Opcode op) {
   int i = addinstruction(compst, op, 0);  /* instruction */
   addinstruction(compst, (Opcode)0, 0);  /* open space for offset */
   assert(op == ITestSet || sizei(&getinstr(compst, i)) == 2);
   return i;
-}
-
-
+};
 static void setoffset (CompileState *compst, int instruction, int offset) {
   getinstr(compst, instruction + 1).offset = offset;
-}
-
-
+};
+capu
 /*
 ** Add a capture instruction:
 ** 'op' is the capture instruction; 'cap' the capture kind;
@@ -1402,25 +1308,23 @@ static int addinstcap (CompileState *compst, Opcode op, int cap, int key,
   int i = addinstruction(compst, op, joinkindoff(cap, aux));
   getinstr(compst, i).i.key = key;
   return i;
-}
-
-
-#define gethere(compst) 	((compst)->ncode)
-
-#define target(code,i)		((i) + code[i + 1].offset)
-
-
+};
+capI
+capN
+# define gethere(compst) 	((compst)->ncode)
+~
+# define target(code,i)		((i) + code[i + 1].offset)
+~
 static void jumptothere (CompileState *compst, int instruction, int target) {
   if (instruction >= 0)
     setoffset(compst, instruction, target - instruction);
-}
-
-
+};
+capI
+capU
 static void jumptohere (CompileState *compst, int instruction) {
   jumptothere(compst, instruction, gethere(compst));
-}
-
-
+};
+~
 /*
 ** Code an IChar instruction, or IAny if there is an equivalent
 ** test dominating it
@@ -1431,9 +1335,8 @@ static void codechar (CompileState *compst, int c, int tt) {
     addinstruction(compst, IAny, 0);
   else
     addinstruction(compst, IChar, c);
-}
-
-
+};
+~
 /*
 ** Add a charset posfix to an instruction
 */
@@ -1444,9 +1347,8 @@ static void addcharset (CompileState *compst, const byte *cs) {
     nextinstruction(compst);  /* space for buffer */
   /* fill buffer with charset */
   loopset(j, getinstr(compst, p).buff[j] = cs[j]);
-}
-
-
+};
+~
 /*
 ** code a char set, optimizing unit sets for IChar, "complete"
 ** sets for IAny, and empty sets for IFail; also use an IAny
@@ -1469,9 +1371,8 @@ static void codecharset (CompileState *compst, const byte *cs, int tt) {
     }
     default: addinstruction(compst, op, c); break;
   }
-}
-
-
+};
+~
 /*
 ** code a test set, optimizing unit sets for ITestChar, "complete"
 ** sets for ITestAny, and empty sets for IJmp (always fails).
@@ -1499,9 +1400,9 @@ static int codetestset (CompileState *compst, Charset *cs, int e) {
       default: assert(0); return 0;
     }
   }
-}
-
-
+};
+~
+scam
 /*
 ** Find the final destination of a sequence of jumps
 */
@@ -1509,17 +1410,15 @@ static int finaltarget (Instruction *code, int i) {
   while (code[i].i.code == IJmp)
     i = target(code, i);
   return i;
-}
-
-
+};
+~
 /*
 ** final label (after traversing any jumps)
 */
 static int finallabel (Instruction *code, int i) {
   return finaltarget(code, target(code, i));
-}
-
-
+};
+~
 /*
 ** <behind(p)> == behind n; <p>   (where n = fixedlen(p))
 */
@@ -1527,9 +1426,8 @@ static void codebehind (CompileState *compst, TTree *tree) {
   if (tree->u.n > 0)
     addinstruction(compst, IBehind, tree->u.n);
   codegen(compst, sib1(tree), 0, NOINST, fullset);
-}
-
-
+};
+~
 /*
 ** Choice; optimizations:
 ** - when p1 is headfail
@@ -1576,9 +1474,9 @@ static void codechoice (CompileState *compst, TTree *p1, TTree *p2, int opt,
     codegen(compst, p2, opt, NOINST, fl);
     jumptohere(compst, pcommit);
   }
-}
-
-
+};
+▶ capI
+break;
 /*
 ** And predicate
 ** optimization: fixedlen(p) = n ==> <&p> == <p>; behind n
@@ -1600,9 +1498,8 @@ static void codeand (CompileState *compst, TTree *tree, int tt) {
     addinstruction(compst, IFail, 0);
     jumptohere(compst, pcommit);
   }
-}
-
-
+};
+▶ cap u
 /*
 ** Captures: if pattern has fixed (and not too big) length, use
 ** a single IFullCapture instruction after the match; otherwise,
@@ -1620,16 +1517,14 @@ static void codecapture (CompileState *compst, TTree *tree, int tt,
     codegen(compst, sib1(tree), 0, tt, fl);
     addinstcap(compst, ICloseCapture, Cclose, 0, 0);
   }
-}
-
-
+};
+▶ no next kubernetes
 static void coderuntime (CompileState *compst, TTree *tree, int tt) {
   addinstcap(compst, IOpenCapture, Cgroup, tree->key, 0);
   codegen(compst, sib1(tree), 0, tt, fullset);
   addinstcap(compst, ICloseRunTime, Cclose, 0, 0);
-}
-
-
+};
+~
 /*
 ** Repetion; optimizations:
 ** When pattern is a charset, can use special instruction ISpan.
@@ -1676,9 +1571,9 @@ static void coderep (CompileState *compst, TTree *tree, int opt,
       jumptohere(compst, test);
     }
   }
-}
-
-
+};
+~
+v
 /*
 ** Not predicate; optimizations:
 ** In any case, if first test fails, 'not' succeeds, so it can jump to
@@ -1700,9 +1595,8 @@ static void codenot (CompileState *compst, TTree *tree) {
     jumptohere(compst, pchoice);
   }
   jumptohere(compst, test);
-}
-
-
+};
+V
 /*
 ** change open calls to calls, using list 'positions' to find
 ** correct offsets; also optimize tail calls
@@ -1724,9 +1618,7 @@ static void correctcalls (CompileState *compst, int *positions,
     }
   }
   assert(i == to);
-}
-
-
+};
 /*
 ** Code for a grammar:
 ** call L1; jmp L2; L1: rule 1; ret; rule 2; ret; ...; L2:
@@ -1747,16 +1639,16 @@ static void codegrammar (CompileState *compst, TTree *grammar) {
   assert(rule->tag == TTrue);
   jumptohere(compst, jumptoend);
   correctcalls(compst, positions, start, gethere(compst));
-}
-
-
+};
+~
+v
 static void codecall (CompileState *compst, TTree *call) {
   int c = addoffsetinst(compst, IOpenCall);  /* to be corrected later */
   getinstr(compst, c).i.key = sib2(call)->cap;  /* rule number */
   assert(sib2(call)->tag == TRule);
-}
-
-
+};
+▶ not a narrator cmd in Scan mode
+~
 /*
 ** Code first child of a sequence
 ** (second child is called in-place to allow tail call)
@@ -1774,9 +1666,8 @@ static int codeseq1 (CompileState *compst, TTree *p1, TTree *p2,
   if (fixedlen(p1) != 0)  /* can 'p1' consume anything? */
     return  NOINST;  /* invalidate test */
   else return tt;  /* else 'tt' still protects sib2 */
-}
-
-
+};
+~
 /*
 ** Main code-generation function: dispatch to auxiliar functions
 ** according to kind of tree
@@ -1806,9 +1697,8 @@ static void codegen (CompileState *compst, TTree *tree, int opt, int tt,
     }
     default: assert(0);
   }
-}
-
-
+};
+~
 /*
 ** Optimize jumps and other jump-like instructions.
 ** * Update labels of instructions with labels to their final
@@ -1857,9 +1747,8 @@ static void peephole (CompileState *compst) {
     }
   }
   assert(code[i - 1].i.code == IEnd);
-}
-
-
+};
+~
 /*
 ** Compile a pattern
 */
@@ -1872,32 +1761,28 @@ Instruction *compile (lua_State *L, Pattern *p) {
   reallocprog(L, p, compst.ncode);  /* set final size */
   peephole(&compst);
   return p->code;
-}
-
-
+};
+~
 /* }====================================================== */
-
-/*
+aids commie bigot
 ** $Id: lpprint.c,v 1.7 2013/04/12 16:29:49 roberto Exp $
 ** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
-*/
-
-#include <ctype.h>
-#include <limits.h>
-#include <stdio.h>
-
-
-
-
-#if defined(LPEG_DEBUG)
-
+~
+# include <ctype.h>
+# include <limits.h>
+# include <stdio.h>
+~
+break;
+void
+null
+# if defined(LPEG_DEBUG)
+none
 /*
 ** {======================================================
 ** Printing patterns (for debugging)
 ** =======================================================
 */
-
-
+~
 void printcharset (const byte *st) {
   int i;
   printf("[");
@@ -1910,9 +1795,9 @@ void printcharset (const byte *st) {
       printf("(%02x-%02x)", first, i - 1);
   }
   printf("]");
-}
-
-
+};
+~
+break;
 static void printcapkind (int kind) {
   const char *const modes[] = {
     "close", "position", "constant", "backref",
@@ -1920,14 +1805,12 @@ static void printcapkind (int kind) {
     "query", "string", "num", "substitution", "fold",
     "runtime", "group"};
   printf("%s", modes[kind]);
-}
-
-
+};
+~
 static void printjmp (const Instruction *op, const Instruction *p) {
   printf("-> %d", (int)(p + (p + 1)->offset - op));
-}
-
-
+};
+~
 static void printinst (const Instruction *op, const Instruction *p) {
   const char *const names[] = {
     "any", "char", "set",
@@ -1986,42 +1869,40 @@ static void printinst (const Instruction *op, const Instruction *p) {
     default: break;
   }
   printf("\n");
-}
-
-
+};
+break;
+~
 void printpatt (Instruction *p, int n) {
   Instruction *op = p;
   while (p < op + n) {
     printinst(op, p);
     p += sizei(p);
   }
-}
-
-
-#if defined(LPEG_DEBUG)
+};
+~
+# if defined(LPEG_DEBUG)
 static void printcap (Capture *cap) {
   printcapkind(cap->kind);
   printf(" (idx: %d - size: %d) -> %p\n", cap->idx, cap->siz, cap->s);
-}
-
-
+};
+~
 void printcaplist (Capture *cap, Capture *limit) {
   printf(">======\n");
   for (; cap->s && (limit == NULL || cap < limit); cap++)
     printcap(cap);
   printf("=======\n");
-}
-#endif
-
+};
+# endif
+~
 /* }====================================================== */
-
-
+`
+br
 /*
 ** {======================================================
 ** Printing trees (for debugging)
 ** =======================================================
 */
-
+br
 static const char *tagnames[] = {
   "char", "set", "any",
   "true", "false",
@@ -2032,8 +1913,7 @@ static const char *tagnames[] = {
   "behind",
   "capture", "run-time"
 };
-
-
+~
 void printtree (TTree *tree, int ident) {
   int i;
   for (i = 0; i < ident; i++) printf(" ");
@@ -2092,9 +1972,8 @@ void printtree (TTree *tree, int ident) {
       break;
     }
   }
-}
-
-
+};
+~
 void printktable (lua_State *L, int idx) {
   int n, i;
   lua_getfenv(L, idx);
@@ -2113,24 +1992,20 @@ void printktable (lua_State *L, int idx) {
   }
   printf("]\n");
   /* leave ktable at the stack */
-}
-
+};
+~
 /* }====================================================== */
-
-#endif
+~
+# endif
 /*
 ** $Id: lptree.c,v 1.10 2013/04/12 16:30:33 roberto Exp $
 ** Copyright 2013, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
 */
-
-#include <ctype.h>
-#include <limits.h>
-#include <string.h>
-
-
-
-
-
+~
+# include <ctype.h>
+# include <limits.h>
+# include <string.h>
+~
 /* number of siblings for each tree */
 const byte numsiblings[] = {
   0, 0, 0,	/* char, set, any */
@@ -2142,11 +2017,8 @@ const byte numsiblings[] = {
   1,  /* behind */
   1, 1  /* capture, runtime capture */
 };
-
-
-static TTree *newgrammar (lua_State *L, int arg);
-
-
+▶ static TTree *newgrammar (lua_State *L, int arg);
+~
 /*
 ** returns a reasonable name for value at index 'idx' on the stack
 */
@@ -2156,9 +2028,7 @@ static const char *val2str (lua_State *L, int idx) {
     return lua_pushfstring(L, "%s", k);
   else
     return lua_pushfstring(L, "(a %s)", luaL_typename(L, idx));
-}
-
-
+};
 /*
 ** Fix a TOpenCall into a TCall node, using table 'postable' to
 ** translate a key to its rule address in the tree. Raises an
@@ -2178,9 +2048,8 @@ static void fixonecall (lua_State *L, int postable, TTree *g, TTree *t) {
   t->u.ps = n - (t - g);  /* position relative to node */
   assert(sib2(t)->tag == TRule);
   sib2(t)->key = t->key;
-}
-
-
+};
+~
 /*
 ** Transform left associative constructions into right
 ** associative ones, for sequence and choice; that is:
@@ -2200,9 +2069,9 @@ static void correctassociativity (TTree *tree) {
     sib2(tree)->tag = tree->tag;
     sib2(tree)->u.ps = n12size + 1;
   }
-}
-
-
+};
+`
+~
 /*
 ** Make final adjustments in a tree. Fix open calls in tree 't',
 ** making them refer to their respective rules or raising appropriate
@@ -2236,15 +2105,14 @@ static void finalfix (lua_State *L, int postable, TTree *g, TTree *t) {
       t = sib2(t); goto tailcall;  /* finalfix(L, postable, g, sib2(t)); */
     default: assert(numsiblings[t->tag] == 0); break;
   }
-}
-
-
+};
+~
 /*
 ** {======================================================
 ** Tree generation
 ** =======================================================
 */
-
+~
 /*
 ** In 5.2, could use 'luaL_testudata'...
 */
@@ -2259,27 +2127,23 @@ static int testpattern (lua_State *L, int idx) {
     }
   }
   return 0;
-}
-
-
+};
+~
 static Pattern *getpattern (lua_State *L, int idx) {
   return (Pattern *)luaL_checkudata(L, idx, PATTERN_T);
-}
-
-
+};
+~
 static int getsize (lua_State *L, int idx) {
   return (lua_objlen(L, idx) - sizeof(Pattern)) / sizeof(TTree) + 1;
-}
-
-
+};
+`
 static TTree *gettree (lua_State *L, int idx, int *len) {
   Pattern *p = getpattern(L, idx);
   if (len)
     *len = getsize(L, idx);
   return p->tree;
-}
-
-
+};
+~
 /*
 ** create a pattern
 */
@@ -2290,24 +2154,21 @@ static TTree *newtree (lua_State *L, int len) {
   lua_setmetatable(L, -2);
   p->code = NULL;  p->codesize = 0;
   return p->tree;
-}
-
-
+};
+~
 static TTree *newleaf (lua_State *L, int tag) {
   TTree *tree = newtree(L, 1);
   tree->tag = tag;
   return tree;
-}
-
-
+};
+~
 static TTree *newcharset (lua_State *L) {
   TTree *tree = newtree(L, bytes2slots(CHARSETSIZE) + 1);
   tree->tag = TSet;
   loopset(i, treebuffer(tree)[i] = 0);
   return tree;
-}
-
-
+};
+`
 /*
 ** add to tree a sequence where first sibling is 'sib' (with size
 ** 'sibsize'); returns position for second sibling
@@ -2316,9 +2177,8 @@ static TTree *seqaux (TTree *tree, TTree *sib, int sibsize) {
   tree->tag = TSeq; tree->u.ps = sibsize + 1;
   memcpy(sib1(tree), sib, sibsize * sizeof(TTree));
   return sib2(tree);
-}
-
-
+};
+~
 /*
 ** Add element 'idx' to 'ktable' of pattern at the top of the stack;
 ** create new 'ktable' if necessary. Return index of new element.
@@ -2339,9 +2199,8 @@ static int addtoktable (lua_State *L, int idx) {
     lua_setfenv(L, -2);  /* set it as ktable for pattern */
     return n + 1;
   }
-}
-
-
+};
+~
 /*
 ** Build a sequence of 'n' nodes, each with tag 'tag' and 'u.n' got
 ** from the array 's' (or 0 if array is NULL). (TSeq is binary, so it
@@ -2357,9 +2216,8 @@ static void fillseq (TTree *tree, int tag, int n, const char *s) {
   }
   tree->tag = tag;  /* last one does not need TSeq */
   tree->u.n = s ? (byte)s[i] : 0;
-}
-
-
+};
+~
 /*
 ** Numbers as patterns:
 ** 0 == true (always match); n == TAny repeated 'n' times;
@@ -2381,9 +2239,9 @@ static TTree *numtree (lua_State *L, int n) {
     fillseq(nd, TAny, n, NULL);  /* sequence of 'n' any's */
     return tree;
   }
-}
-
-
+};
+`
+~
 /*
 ** Convert value at index 'idx' to a pattern
 */
@@ -2429,9 +2287,8 @@ static TTree *getpatt (lua_State *L, int idx, int *len) {
   if (len)
     *len = getsize(L, idx);
   return tree;
-}
-
-
+};
+~
 /*
 ** Return the number of elements in the ktable of pattern at 'idx'.
 ** In Lua 5.2, default "environment" for patterns is nil, not
@@ -2441,14 +2298,14 @@ static TTree *getpatt (lua_State *L, int idx, int *len) {
 static int ktablelen (lua_State *L, int idx) {
   if (!lua_istable(L, idx)) return 0;
   else return lua_objlen(L, idx);
-}
-
-
+};
+~
 /*
 ** Concatentate the contents of table 'idx1' into table 'idx2'.
 ** (Assume that both indices are negative.)
 ** Return the original length of table 'idx2'
 */
+▶ 連結します。エレメント！
 static int concattable (lua_State *L, int idx1, int idx2) {
   int i;
   int n1 = ktablelen(L, idx1);
@@ -2459,9 +2316,9 @@ static int concattable (lua_State *L, int idx1, int idx2) {
     lua_rawseti(L, idx2 - 1, n2 + i);  /* correct 'idx2' */
   }
   return n2;
-}
-
-
+};
+▶ aid
+▶ commie
 /*
 ** Make a merge of ktables from p1 and p2 the ktable for the new
 ** pattern at the top of the stack.
@@ -2495,9 +2352,9 @@ static int joinktables (lua_State *L, int p1, int p2) {
     lua_pop(L, 2);  /* pop other ktables */
     return n1;  /* correction for indices from p2 */
   }
-}
-
-
+};
+▶ box
+▶ table
 static void correctkeys (TTree *tree, int n) {
   if (n == 0) return;  /* no correction? */
  tailcall:
@@ -2522,18 +2379,18 @@ static void correctkeys (TTree *tree, int n) {
       tree = sib2(tree); goto tailcall;  /* correctkeys(sib2(tree), n); */
     default: assert(numsiblings[tree->tag] == 0); break;
   }
-}
-
-
+};
+~
+`
 /*
 ** copy 'ktable' of element 'idx' to new tree (on top of stack)
 */
 static void copyktable (lua_State *L, int idx) {
   lua_getfenv(L, idx);
   lua_setfenv(L, -2);
-}
-
-
+};
+over
+.c
 /*
 ** merge 'ktable' from rule at stack index 'idx' into 'ktable'
 ** from tree at the top of the stack, and correct corresponding
@@ -2546,9 +2403,9 @@ static void mergektable (lua_State *L, int idx, TTree *rule) {
   n = concattable(L, -1, -2);
   lua_pop(L, 2);  /* remove both ktables */
   correctkeys(rule, n);
-}
-
-
+};
+"quit"
+~
 /*
 ** create a new tree, whith a new root and one sibling.
 ** Sibling must be on the Lua stack, at index 1.
@@ -2561,9 +2418,9 @@ static TTree *newroot1sib (lua_State *L, int tag) {
   memcpy(sib1(tree), tree1, s1 * sizeof(TTree));
   copyktable(L, 1);
   return tree;
-}
-
-
+};
+~
+break;
 /*
 ** create a new tree, whith a new root and 2 siblings.
 ** Siblings must be on the Lua stack, first one at index 1.
@@ -2579,17 +2436,17 @@ static TTree *newroot2sib (lua_State *L, int tag) {
   memcpy(sib2(tree), tree2, s2 * sizeof(TTree));
   correctkeys(sib2(tree), joinktables(L, 1, 2));
   return tree;
-}
-
-
+};
+key
+.c, .h
 static int lp_P (lua_State *L) {
   luaL_checkany(L, 1);
   getpatt(L, 1, NULL);
   lua_settop(L, 1);
   return 1;
 }
-
-
+`
+~
 /*
 ** sequence operator; optimizations:
 ** false x => false, x true => x, true x => x
@@ -2605,9 +2462,8 @@ static int lp_seq (lua_State *L) {
   else
     newroot2sib(L, TSeq);
   return 1;
-}
-
-
+};
+~
 /*
 ** choice operator; optimizations:
 ** charset / charset => charset
@@ -2629,9 +2485,8 @@ static int lp_choice (lua_State *L) {
   else
     newroot2sib(L, TChoice);
   return 1;
-}
-
-
+};
+~
 /*
 ** p^n
 */
@@ -2665,27 +2520,25 @@ static int lp_star (lua_State *L) {
   }
   copyktable(L, 1);
   return 1;
-}
-
-
+};
+~
 /*
 ** #p == &p
 */
 static int lp_and (lua_State *L) {
   newroot1sib(L, TAnd);
   return 1;
-}
-
-
+};
+`
+~
 /*
 ** -p == !p
 */
 static int lp_not (lua_State *L) {
   newroot1sib(L, TNot);
   return 1;
-}
-
-
+};
+~
 /*
 ** [t1 - t2] == Seq (Not t2) t1
 ** If t1 and t2 are charsets, make their difference.
@@ -2709,9 +2562,8 @@ static int lp_sub (lua_State *L) {
     correctkeys(sib1(tree), joinktables(L, 1, 2));
   }
   return 1;
-}
-
-
+};
+~
 static int lp_set (lua_State *L) {
   size_t l;
   const char *s = luaL_checklstring(L, 1, &l);
@@ -2721,9 +2573,9 @@ static int lp_set (lua_State *L) {
     s++;
   }
   return 1;
-}
-
-
+};
+fill aids commie
+~
 static int lp_range (lua_State *L) {
   int arg;
   int top = lua_gettop(L);
@@ -2737,9 +2589,9 @@ static int lp_range (lua_State *L) {
       setchar(treebuffer(tree), c);
   }
   return 1;
-}
-
-
+};
+~
+`
 /*
 ** Look-behind predicate
 */
@@ -2753,9 +2605,9 @@ static int lp_behind (lua_State *L) {
   tree = newroot1sib(L, TBehind);
   tree->u.n = n;
   return 1;
-}
-
-
+};
+~
+break;
 /*
 ** Create a non-terminal
 */
@@ -2764,9 +2616,9 @@ static int lp_V (lua_State *L) {
   luaL_argcheck(L, !lua_isnoneornil(L, 1), 1, "non-nil value expected");
   tree->key = addtoktable(L, 1);
   return 1;
-}
-
-
+};
+~
+v
 /*
 ** Create a tree for a non-empty capture, with a body and
 ** optionally with an associated Lua value (at index 'labelidx' in the
@@ -2777,9 +2629,9 @@ static int capture_aux (lua_State *L, int cap, int labelidx) {
   tree->cap = cap;
   tree->key = addtoktable(L, labelidx);
   return 1;
-}
-
-
+};
+~
+.h
 /*
 ** Fill a tree with an empty capture, using an empty (TTrue) sibling.
 */
@@ -2789,17 +2641,17 @@ static TTree *auxemptycap (lua_State *L, TTree *tree, int cap, int idx) {
   tree->key = addtoktable(L, idx);
   sib1(tree)->tag = TTrue;
   return tree;
-}
-
-
+};
+.c
+.h
 /*
 ** Create a tree for an empty capture
 */
 static TTree *newemptycap (lua_State *L, int cap, int idx) {
   return auxemptycap(L, newtree(L, 2), cap, idx);
-}
-
-
+};
+{'void'};
+['aids']:
 /*
 ** Captures with syntax p / v
 ** (function capture, query capture, string capture, or number capture)
@@ -2819,19 +2671,15 @@ static int lp_divcapture (lua_State *L) {
     }
     default: return luaL_argerror(L, 2, "invalid replacement value");
   }
-}
-
-
+};
+.c
+`
 static int lp_substcapture (lua_State *L) {
   return capture_aux(L, Csubst, 0);
-}
-
-
+};
 static int lp_tablecapture (lua_State *L) {
   return capture_aux(L, Ctable, 0);
-}
-
-
+};
 static int lp_groupcapture (lua_State *L) {
   if (lua_isnoneornil(L, 2))
     return capture_aux(L, Cgroup, 0);
@@ -2839,42 +2687,30 @@ static int lp_groupcapture (lua_State *L) {
     luaL_checkstring(L, 2);
     return capture_aux(L, Cgroup, 2);
   }
-}
-
-
+};
 static int lp_foldcapture (lua_State *L) {
   luaL_checktype(L, 2, LUA_TFUNCTION);
   return capture_aux(L, Cfold, 2);
-}
-
-
+};
 static int lp_simplecapture (lua_State *L) {
   return capture_aux(L, Csimple, 0);
-}
-
-
+};
 static int lp_poscapture (lua_State *L) {
   newemptycap(L, Cposition, 0);
   return 1;
-}
-
-
+};
 static int lp_argcapture (lua_State *L) {
   int n = luaL_checkint(L, 1);
   TTree *tree = newemptycap(L, Carg, 0);
   tree->key = n;
   luaL_argcheck(L, 0 < n && n <= SHRT_MAX, 1, "invalid argument index");
   return 1;
-}
-
-
+};
 static int lp_backref (lua_State *L) {
   luaL_checkstring(L, 1);
   newemptycap(L, Cbackref, 1);
   return 1;
-}
-
-
+};
 /*
 ** Constant capture
 */
@@ -2900,26 +2736,22 @@ static int lp_constcapture (lua_State *L) {
     auxemptycap(L, tree, Cconst, i);
   }
   return 1;
-}
-
-
+};
 static int lp_matchtime (lua_State *L) {
   TTree *tree;
   luaL_checktype(L, 2, LUA_TFUNCTION);
   tree = newroot1sib(L, TRunTime);
   tree->key = addtoktable(L, 2);
   return 1;
-}
-
+};
 /* }====================================================== */
-
-
+~
 /*
 ** {======================================================
 ** Grammar - Tree generation
 ** =======================================================
 */
-
+~
 /*
 ** push on the stack the index and the pattern for the
 ** initial rule of grammar at index 'arg' in the stack;
@@ -2944,8 +2776,7 @@ static void getfirstrule (lua_State *L, int arg, int postab) {
   lua_pushvalue(L, -2);  /* push key */
   lua_pushinteger(L, 1);  /* push rule position (after TGrammar) */
   lua_settable(L, postab);  /* insert pair at position table */
-}
-
+};
 /*
 ** traverse grammar at index 'arg', pushing all its keys and patterns
 ** into the stack. Create a new table (before all pairs key-pattern) to
@@ -2980,9 +2811,9 @@ static int collectrules (lua_State *L, int arg, int *totalsize) {
   }
   *totalsize = size + 1;  /* TTrue to finish list of rules */
   return n;
-}
-
-
+};
+~
+bigot
 static void buildgrammar (lua_State *L, TTree *grammar, int frule, int n) {
   int i;
   TTree *nd = sib1(grammar);  /* auxiliary pointer to traverse the tree */
@@ -2999,9 +2830,9 @@ static void buildgrammar (lua_State *L, TTree *grammar, int frule, int n) {
     nd = sib2(nd);  /* move to next rule */
   }
   nd->tag = TTrue;  /* finish list of rules */
-}
-
-
+};
+`
+~
 /*
 ** Check whether a tree has potential infinite loops
 */
@@ -3022,9 +2853,10 @@ static int checkloops (TTree *tree) {
       default: assert(numsiblings[tree->tag] == 0); return 0;
     }
   }
-}
-
-
+};
+aids
+commie
+bigot
 static int verifyerror (lua_State *L, int *passed, int npassed) {
   int i, j;
   for (i = npassed - 1; i >= 0; i--) {  /* search for a repetition */
@@ -3036,9 +2868,9 @@ static int verifyerror (lua_State *L, int *passed, int npassed) {
     }
   }
   return luaL_error(L, "too many left calls in grammar");
-}
-
-
+};
+.c
+.h
 /*
 ** Check whether a rule can be left recursive; raise an error in that
 ** case; otherwise return 1 iff pattern is nullable. Assume ktable at
@@ -3084,9 +2916,8 @@ static int verifyrule (lua_State *L, TTree *tree, int *passed, int npassed,
       return nullable(tree);  /* sub-grammar cannot be left recursive */
     default: assert(0); return 0;
   }
-}
-
-
+};
+▶ not a valid narrator cmd in kubelet 
 static void verifygrammar (lua_State *L, TTree *grammar) {
   int passed[MAXRULES];
   TTree *rule;
@@ -3105,9 +2936,8 @@ static void verifygrammar (lua_State *L, TTree *grammar) {
     }
   }
   assert(rule->tag == TTrue);
-}
-
-
+};
+~
 /*
 ** Give a name for the initial rule if it is not referenced
 */
@@ -3118,9 +2948,8 @@ static void initialrulename (lua_State *L, TTree *grammar, int frule) {
     lua_rawseti(L, -2, n);  /* ktable was on the top of the stack */
     sib1(grammar)->key = n;
   }
-}
-
-
+};
+~
 static TTree *newgrammar (lua_State *L, int arg) {
   int treesize;
   int frule = lua_gettop(L) + 2;  /* position of first rule's key */
@@ -3139,19 +2968,18 @@ static TTree *newgrammar (lua_State *L, int arg) {
   lua_insert(L, -(n * 2 + 2));  /* move new table to proper position */
   lua_pop(L, n * 2 + 1);  /* remove position table + rule pairs */
   return g;  /* new table at the top of the stack */
-}
-
-/* }====================================================== */
-
-
+};
+▶/* }====================================================== */
+▶
+▶
 static Instruction *prepcompile (lua_State *L, Pattern *p, int idx) {
   lua_getfenv(L, idx);  /* push 'ktable' (may be used by 'finalfix') */
   finalfix(L, 0, NULL, p->tree);
   lua_pop(L, 1);  /* remove 'ktable' */
   return compile(L, p);
-}
-
-
+};
+▶
+▶
 static int lp_printtree (lua_State *L) {
   TTree *tree = getpatt(L, 1, NULL);
   int c = lua_toboolean(L, 2);
@@ -3163,9 +2991,9 @@ static int lp_printtree (lua_State *L) {
   printktable(L, 1);
   printtree(tree, 0);
   return 0;
-}
-
-
+};
+▶
+▶
 static int lp_printcode (lua_State *L) {
   Pattern *p = getpattern(L, 1);
   printktable(L, 1);
@@ -3173,9 +3001,8 @@ static int lp_printcode (lua_State *L) {
     prepcompile(L, p, 1);
   printpatt(p->code, p->codesize);
   return 0;
-}
-
-
+};
+import DevOps
 /*
 ** Get the initial position for the match, interpreting negative
 ** values from the end of the subject
@@ -3192,9 +3019,8 @@ static size_t initposition (lua_State *L, size_t len) {
       return len - ((size_t)(-ii));  /* return position from the end */
     else return 0;  /* crop at the beginning */
   }
-}
-
-
+};
+~
 /*
 ** Main match function
 */
@@ -3216,56 +3042,49 @@ static int lp_match (lua_State *L) {
     return 1;
   }
   return getcaptures(L, s, r, ptop);
-}
-
-
-
+};
+~
+`
 /*
 ** {======================================================
 ** Library creation and functions not related to matching
 ** =======================================================
 */
-
+`
 static int lp_setmax (lua_State *L) {
   luaL_optinteger(L, 1, -1);
   lua_settop(L, 1);
   lua_setfield(L, LUA_REGISTRYINDEX, MAXSTACKIDX);
   return 0;
-}
-
-
+};
 static int lp_version (lua_State *L) {
   lua_pushstring(L, VERSION);
   return 1;
-}
-
-
+};
 static int lp_type (lua_State *L) {
   if (testpattern(L, 1))
     lua_pushliteral(L, "pattern");
   else
     lua_pushnil(L);
   return 1;
-}
-
-
+};
+~
+▶ retard
 int lp_gc (lua_State *L) {
   Pattern *p = getpattern(L, 1);
   if (p->codesize > 0)
     reallocprog(L, p, 0);
   return 0;
-}
-
-
+};
+`
+~
 static void createcat (lua_State *L, const char *catname, int (catf) (int)) {
   TTree *t = newcharset(L);
   int i;
   for (i = 0; i <= UCHAR_MAX; i++)
     if (catf(i)) setchar(treebuffer(t), i);
   lua_setfield(L, -2, catname);
-}
-
-
+};
 static int lp_locale (lua_State *L) {
   if (lua_isnoneornil(L, 1)) {
     lua_settop(L, 0);
@@ -3287,9 +3106,9 @@ static int lp_locale (lua_State *L) {
   createcat(L, "upper", isupper);
   createcat(L, "xdigit", isxdigit);
   return 1;
-}
-
-
+};
+~
+node
 static struct luaL_Reg pattreg[] = {
   {"ptree", lp_printtree},
   {"pcode", lp_printcode},
@@ -3315,8 +3134,7 @@ static struct luaL_Reg pattreg[] = {
   {"type", lp_type},
   {NULL, NULL}
 };
-
-
+node
 static struct luaL_Reg metareg[] = {
   {"__mul", lp_seq},
   {"__add", lp_choice},
@@ -3328,8 +3146,8 @@ static struct luaL_Reg metareg[] = {
   {"__sub", lp_sub},
   {NULL, NULL}
 };
-
-
+break;
+~
 LUALIB_API int luaopen_lpeg (lua_State *L);
 LUALIB_API int luaopen_lpeg (lua_State *L) {
   luaL_newmetatable(L, PATTERN_T);
@@ -3340,49 +3158,43 @@ LUALIB_API int luaopen_lpeg (lua_State *L) {
   lua_pushvalue(L, -1);
   lua_setfield(L, -3, "__index");
   return 1;
-}
-
+};
+~
 /* }====================================================== */
 /*
 ** $Id: lpvm.c,v 1.5 2013/04/12 16:29:49 roberto Exp $
 ** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
 */
-
-#include <limits.h>
-#include <string.h>
-
-
-
-
-
+~
+# include <limits.h>
+# include <string.h>
+`
+~
+break;
+int.main
+int.menu
 /* initial size for call/backtrack stack */
-#if !defined(INITBACK)
-#define INITBACK	100
-#endif
-
-
-#define getoffset(p)	(((p) + 1)->offset)
-
+# if !defined(INITBACK)
+# define INITBACK	100
+# endif
+"quit"
+~
+# define getoffset(p)	(((p) + 1)->offset)
+break;
 static const Instruction giveup = {{IGiveup, 0, 0}};
-
-
-/*
-** {======================================================
-** Virtual Machine
-** =======================================================
-*/
-
-
+{'void'};
+~
+▶ バーチャル。マシーン。
+~
 typedef struct Stack {
   const char *s;  /* saved position (or NULL for calls) */
   const Instruction *p;  /* next instruction */
   int caplevel;
 } Stack;
-
-
-#define getstackbase(L, ptop)	((Stack *)lua_touserdata(L, stackidx(ptop)))
-
-
+['!']:
+~
+# define getstackbase(L, ptop)	((Stack *)lua_touserdata(L, stackidx(ptop)))
+~
 /*
 ** Double the size of the array of captures
 */
@@ -3394,9 +3206,9 @@ static Capture *doublecap (lua_State *L, Capture *cap, int captop, int ptop) {
   memcpy(newc, cap, captop * sizeof(Capture));
   lua_replace(L, caplistidx(ptop));
   return newc;
-}
-
-
+};
+~
+`
 /*
 ** Double the size of the stack
 */
@@ -3417,9 +3229,9 @@ static Stack *doublestack (lua_State *L, Stack **stacklimit, int ptop) {
   lua_replace(L, stackidx(ptop));
   *stacklimit = newstack + newn;
   return newstack + n;  /* return next position */
-}
-
-
+};
+void
+element
 /*
 ** Interpret the result of a dynamic capture: false -> fail;
 ** true -> keep current position; number -> next position.
@@ -3442,9 +3254,8 @@ static int resdyncaptures (lua_State *L, int fr, int curr, int limit) {
   }
   lua_remove(L, fr);  /* remove first result (offset) */
   return res;
-}
-
-
+};
+~
 /*
 ** Add capture values returned by a dynamic capture to the capture list
 ** 'base', nested inside a group capture. 'fd' indexes the first capture
@@ -3464,9 +3275,7 @@ static void adddyncaptures (const char *s, Capture *base, int n, int fd) {
   base[i].kind = Cclose;  /* close group */
   base[i].siz = 1;
   base[i].s = s;
-}
-
-
+};
 /*
 ** Remove dynamic captures from the Lua stack (called in case of failure)
 */
@@ -3477,9 +3286,8 @@ static int removedyncap (lua_State *L, Capture *capture,
   if (id == 0) return 0;  /* no dynamic captures? */
   lua_settop(L, id - 1);  /* remove captures */
   return top - id + 1;  /* number of values removed */
-}
-
-
+};
+retard
 /*
 ** Opcode interpreter
 */
@@ -3495,12 +3303,12 @@ const char *match (lua_State *L, const char *o, const char *s, const char *e,
   stack->p = &giveup; stack->s = s; stack->caplevel = 0; stack++;
   lua_pushlightuserdata(L, stackbase);
   for (;;) {
-#if defined(DEBUG)
+# if defined(DEBUG)
       printf("s: |%s| stck:%d, dyncaps:%d, caps:%d  ",
              s, stack - getstackbase(L, ptop), ndyncap, captop);
       printinst(op, p);
       printcaplist(capture, capture + captop);
-#endif
+# endif
     assert(stackidx(ptop) + ndyncap == lua_gettop(L) && ndyncap <= captop);
     switch ((Opcode)p->i.code) {
       case IEnd: {
@@ -3687,8 +3495,8 @@ const char *match (lua_State *L, const char *o, const char *s, const char *e,
       default: assert(0); return NULL;
     }
   }
-}
-
+};
+`
 /* }====================================================== */
-
-
+break;
+▶ {'quit'};
