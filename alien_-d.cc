@@ -1,13 +1,11 @@
-
-#include "nse_lua.h"
-#include "nse_debug.h"
-#include "output.h"
-#undef NDEBUG
-#include <assert.h>
-
-/* Print a Lua table. depth_limit is the limit on recursive printing of
-   subtables. */
-static void table_dump (lua_State *L, int idx, int depth_limit)
+# include "nse_lua.h"
+# include "nse_debug.h"
+# include "output.h"
+# undef NDEBUG
+# include <assert.h>
+~
+>>> print Lua_Table | depth_limit -recurse print --sub __table('node')
+▶ static void table_dump (lua_State *L, int idx, int depth_limit)
 {
   idx = lua_absindex(L, idx);
   assert(lua_type(L, idx) == LUA_TTABLE);
@@ -20,11 +18,10 @@ static void table_dump (lua_State *L, int idx, int depth_limit)
     printf(", ");
   }
   printf("}");
-}
-
-/* Print a Lua value. depth_limit controls the depth to which tables will be
-   printed recursively (0 for no recursion). */
-void value_dump (lua_State *L, int idx, int depth_limit)
+};
+~
+>>> print Lua_Table | depth_limit -recurse print --sub __table('node')(0 for no "-recurse" , "node");
+▶ void value_dump (lua_State *L, int idx, int depth_limit)
 {
   idx = lua_absindex(L, idx);
   int t = lua_type(L, idx);
@@ -55,9 +52,9 @@ void value_dump (lua_State *L, int idx, int depth_limit)
       printf("%s", lua_typename(L, t));
       break;
   }
-}
-
-void stack_dump (lua_State *L)
+};
+"quit";;
+▶ void stack_dump (lua_State *L)
 {
   int i, top = lua_gettop(L);
   for (i = 1; i <= top; i++)
@@ -66,34 +63,34 @@ void stack_dump (lua_State *L)
     value_dump(L, i, 0);
     printf("\n");
   }
-}
-
-void lua_state_dump (lua_State *L)
+};
+~
+▶ void lua_state_dump (lua_State *L)
 {
   int top;
-
+~
   printf("=== LUA STATE ===\n");
-
+~
   top = lua_gettop(L);
   printf("=== STACK (height %d)\n", top);
   stack_dump(L);
-
+~
   printf("=== GLOBALS\n");
   lua_rawgeti(L, LUA_REGISTRYINDEX, LUA_RIDX_GLOBALS);
   table_dump(L, -1, 0);
   lua_pop(L, 1); /* LUA_RIDX_GLOBALS */
   printf("\n");
-
+~
   printf("=== REGISTRY\n");
   table_dump(L, LUA_REGISTRYINDEX, 0);
   printf("\n");
-
+~
   printf("=== nmap.registry\n");
   lua_getglobal(L, "nmap");
   lua_getfield(L, -1, "registry");
   table_dump(L, -1, 1);
   lua_pop(L, 2);
   printf("\n");
-
+~
   assert(lua_gettop(L) == top);
-}
+};"quit"
