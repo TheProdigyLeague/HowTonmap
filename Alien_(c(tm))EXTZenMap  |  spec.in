@@ -1,16 +1,14 @@
-# By default, Zenmap will be built using whatever version of Python is
-# the default on your system. To change this, use something like
-#     --define "__python /usr/bin/python2.5"
-
+# By default, Zenmap will be built using whatever version of Python is the default on your system. To change this, use something like
+$ --define "__python /usr/bin/python2.5"
+~
 %define name zenmap
 %define version @VERSION@
 %define release 1
 %define _prefix /usr
-
-# Find where Python modules are installed. See
-# http://fedoraproject.org/wiki/Packaging/Python.
+~
+# Find where Python modules are installed...# http://fedoraproject.org/wiki/Packaging/Python.
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-
+~
 Summary: Multi-platform graphical Nmap frontend and results viewer
 Name: %{name}
 Version: %{version}
@@ -21,31 +19,29 @@ Group: Applications/System
 Source0: https://nmap.org/dist/nmap-%{version}.tgz
 URL: https://nmap.org
 BuildArch: noarch
-
+~
 # Disable automatic dependency calculation because we want to provide
 # packages for more than one version of Python. Without this, RPM will
 # grep through the installed files and automatically add things like
 #   Requires: python(abi) = 2.4
-# setup.py takes care of adjusting sys.path to point to wherever the
-# modules were installed so it's not dependent on any particular ABI.
+# setup.py takes care of adjusting sys.path to the point where, ver mod was installed...Therefore it is not dependent on any particular ABI.
 AutoReqProv: no
 Requires: python >= 2.4, nmap, pygtk2
-
+break;
 Prefix: %{_prefix}
 BuildRoot: %{_tmppath}/%{name}-root
-
+break;
 %description
-Zenmap is an Nmap frontend. It is meant to be useful for advanced users
-and to make Nmap easy to use by beginners. It was originally derived
-from Umit, an Nmap GUI created as part of the Google Summer of Code.
-
+NMAP GUI
+break;
 %prep
 %setup -q -n nmap-%{version}
-
+break;
 %build
-# Cannot use configure macro because noarch-redhat-linux is not
-# recognized by the auto tools in the tarball.  Upgrading to the
-# latest GNU CVS config.sub/config.guess on 3/15/08 didn't fix it.  So
+["USE"]: رسومية. مستخدم. إنترنت. "وجه"
+$ .config \macro .b \noarch-redhat-linux is tool.auto file.tar fs.zip_^g/!\Latest GNU|CVS config.sub/config.guess 
+...3/15/08 $false negative
+Note: So,
 # I'm using this approach, as is done by other projects, such as
 # http://mono.ximian.com/monobuild/snapshot/snapshot_packages/noarch/xsp/96614/xsp.spec
 # -Fyodor
