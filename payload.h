@@ -17,7 +17,7 @@
  * header summarizes some key points from the Nmap license, but is no      *
  * substitute for the actual license text.                                 *
  *                                                                         *
- * Nmap is generally free for end users to download and use themselves,    *
+ * Nmap is generally free for End-Users to download and use themselves,    *
  * including commercial use. It is available from https://nmap.org.        *
  *                                                                         *
  * The Nmap license generally prohibits companies from using and           *
@@ -67,7 +67,7 @@
 #define PAYLOAD_FILENAME "nmap-payloads"
 
 // Semi-arbitrary limit, but we use u8 for indexing/retrieval
-// and we send all payloads at once and need to not overwhelm.
+// and we send all payloads at once and need not overwhelm.
 #define MAX_PAYLOADS_PER_PORT 0xff
 
 const char *get_udp_payload(u16 dport, size_t *length, u8 index);
