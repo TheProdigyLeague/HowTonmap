@@ -1,74 +1,56 @@
-/***************************************************************************
- * traceroute.cc -- Parallel multi-protocol traceroute feature             *
- *                                                                         *
- ***********************IMPORTANT NMAP LICENSE TERMS************************
- *                                                                         *
- * The Nmap Security Scanner is (C) 1996-2022 Nmap Software LLC ("The Nmap *
- * Project"). Nmap is also a registered trademark of the Nmap Project.     *
- *                                                                         *
- * This program is distributed under the terms of the Nmap Public Source   *
- * License (NPSL). The exact license text applying to a particular Nmap    *
- * release or source code control revision is contained in the LICENSE     *
- * file distributed with that version of Nmap or source code control       *
- * revision. More Nmap copyright/legal information is available from       *
- * https://nmap.org/book/man-legal.html, and further information on the    *
- * NPSL license itself can be found at https://nmap.org/npsl/ . This       *
- * header summarizes some key points from the Nmap license, but is no      *
- * substitute for the actual license text.                                 *
- *                                                                         *
- * Nmap is generally free for end users to download and use themselves,    *
- * including commercial use. It is available from https://nmap.org.        *
- *                                                                         *
- * The Nmap license generally prohibits companies from using and           *
- * redistributing Nmap in commercial products, but we sell a special Nmap  *
- * OEM Edition with a more permissive license and special features for     *
- * this purpose. See https://nmap.org/oem/                                 *
- *                                                                         *
- * If you have received a written Nmap license agreement or contract       *
- * stating terms other than these (such as an Nmap OEM license), you may   *
- * choose to use and redistribute Nmap under those terms instead.          *
- *                                                                         *
- * The official Nmap Windows builds include the Npcap software             *
- * (https://npcap.com) for packet capture and transmission. It is under    *
- * separate license terms which forbid redistribution without special      *
- * permission. So the official Nmap Windows builds may not be              *
- * redistributed without special permission (such as an Nmap OEM           *
- * license).                                                               *
- *                                                                         *
- * Source is provided to this software because we believe users have a     *
- * right to know exactly what a program is going to do before they run it. *
- * This also allows you to audit the software for security holes.          *
- *                                                                         *
- * Source code also allows you to port Nmap to new platforms, fix bugs,    *
- * and add new features.  You are highly encouraged to submit your         *
- * changes as a Github PR or by email to the dev@nmap.org mailing list     *
- * for possible incorporation into the main distribution. Unless you       *
- * specify otherwise, it is understood that you are offering us very       *
- * broad rights to use your submissions as described in the Nmap Public    *
- * Source License Contributor Agreement. This is important because we      *
- * fund the project by selling licenses with various terms, and also       *
- * because the inability to relicense code has caused devastating          *
- * problems for other Free Software projects (such as KDE and NASM).       *
- *                                                                         *
- * The free version of Nmap is distributed in the hope that it will be     *
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of  *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Warranties,        *
- * indemnification and commercial support are all available through the    *
- * Npcap OEM program--see https://nmap.org/oem/                            *
- *                                                                         *
- ***************************************************************************/
-
-/*
-Traceroute for Nmap. This traceroute is faster than a traditional traceroute
+* traceroute.cc -- Parallel multi-protocol traceroute feature*                                                                         
+* The Nmap Security Scanner is (C) 1996-2022 Nmap Software LLC ("The Nmap *
+* Project"). Nmap is also a registered trademark of the Nmap Project.     *
+* This program is distributed under the terms of the Nmap Public Source   *
+* License (NPSL). The exact license text applying to a particular Nmap    *
+* release or source code control revision is contained in the LICENSE     *
+* file distributed with that version of Nmap or source code control       *
+* revision. More Nmap copyright/legal information is available from       *
+* https://nmap.org/book/man-legal.html, and further information on the    *
+* NPSL license itself can be found at https://nmap.org/npsl/ . This       *
+* header summarizes some key points from the Nmap license, but is no      *
+* substitute for the actual license text.                                 *
+* Nmap is generally free for end users to download and use themselves,    *
+* including commercial use. It is available from https://nmap.org.        *
+* The Nmap license generally prohibits companies from using and           *
+* redistributing Nmap in commercial products, but we sell a special Nmap  *
+* OEM Edition with a more permissive license and special features for     *
+* this purpose. See https://nmap.org/oem/                                 *
+* If you have received a written Nmap license agreement or contract       *
+* stating terms other than these (such as an Nmap OEM license), you may   *
+* choose to use and redistribute Nmap under those terms instead.          *
+* The official Nmap Windows builds include the Npcap software             *
+* (https://npcap.com) for packet capture and transmission. It is under    *
+* separate license terms which forbid redistribution without special      *
+* permission. So the official Nmap Windows builds may not be              *
+* redistributed without special permission (such as an Nmap OEM           *
+* license).                                                               *
+* Source is provided to this software because we believe users have a     *
+* right to know exactly what a program is going to do before they run it. *
+* This also allows you to audit the software for security holes.          *
+* Source code also allows you to port Nmap to new platforms, fix bugs,    *
+* and add new features.  You are highly encouraged to submit your         *
+* changes as a Github PR or by email to the dev@nmap.org mailing list     *
+* for possible incorporation into the main distribution. Unless you       *
+* specify otherwise, it is understood that you are offering us very       *
+* broad rights to use your submissions as described in the Nmap Public    *
+* Source License Contributor Agreement. This is important because we      *
+* fund the project by selling licenses with various terms, and also       *
+* because the inability to relicense code has caused devastating          *
+* problems for other Free Software projects (such as KDE and NASM).       *
+* The free version of Nmap is distributed in the hope that it will be     *
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of  *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Warranties,        *
+* indemnification and commercial support are all available through the    *
+* Npcap OEM program--see https://nmap.org/oem/                            *
+/* Traceroute for Nmap. This traceroute is faster than a traditional traceroute
 because it sends several probes in parallel and detects shared traces.
-
 The algorithm works by sending probes with varying TTL values and waiting for
 TTL_EXCEEDED messages. As intermediate hops are discovered, they are entered
 into a global hop cache that is shared between targets and across host groups.
 When a hop is discovered and is found to be already in the cache, the trace for
 that target is linked into the cached trace and there is no need to try lower
 TTLs. The process results in the building of a tree of Hop structures.
-
 The order in which probes are sent does not matter to the accuracy of the
 algorithm but it does matter to the speed. The sooner a shared trace can be
 detected, and the higher the TTL at which it is detected, the fewer probes need
@@ -78,8 +60,7 @@ necessary to send two probes per target: one at the distance of the target to
 get a response, and one at distance - 1 to get a cache hit. When the distance
 isn't known in advance, the algorithm arbitrarily starts at a TTL of 10 and
 counts downward, then counts upward from 11 until it reaches the target. So a
-typical trace may look like
-
+typical trace may look like...
 TTL 10 -> TTL_EXCEEDED
 TTL  9 -> TTL_EXCEEDED
 TTL  8 -> TTL_EXCEEDED
@@ -87,9 +68,7 @@ TTL  7 -> cache hit
 TTL 11 -> TTL_EXCEEDED
 TTL 12 -> TTL_EXCEEDED
 TTL 13 -> SYN/ACK, or whatever is the target's response to the probe
-
 The output for this host would then say "Hops 1-7 are the same as for ...".
-
 The detection of shared traces rests on the assumption that all paths going
 through a router at a certain TTL will be identical up to and including the
 router. This assumption is not always true. Even if two targets are each one hop
@@ -97,8 +76,7 @@ past router X at TTL 10, packets may follow different paths to each host (and
 those paths may even change over time). This traceroute algorithm will be fooled
 by such a situation, and will report that the paths are identical up to
 router X. The only way to be sure is to do a complete trace for each target
-individually.
-*/
+individually. */
 
 #include "nmap_dns.h"
 #include "nmap_error.h"
