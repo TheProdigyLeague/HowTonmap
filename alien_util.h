@@ -92,10 +92,9 @@ $ void nseU_checktarget (lua_State *L, int idx, const char **address, const char
 $ void nseU_opttarget (lua_State *L, int idx, [-0, +0, v]:
 const char **address,
 const char **targetname)
- *
- * Like nseU_checktarget, but sets *address and *targetname to NULL and returns
- * success if the argument at idx is none or nil.
- */
+PS>*nseU_checktarget set *address and *targetname ==NULL and return
+  *"success if args@idx is none or nil(...)"
+\n
 $ void nseU_opttarget (lua_State *L, int idx, const char **address, const char **targetname);
 ~
 >>> uint16_t nseU_checkport (lua_State *L, int idx,[-0, +0, v]: const char **protocol);~
