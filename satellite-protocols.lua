@@ -1,8 +1,9 @@
-# This list of protocols is distributed with the  -*- mode: fundamental; -*-
-# Nmap Security Scanner ( https://nmap.org )
-#
-# This list is based on IEEE data at
-# http://www.iana.org/assignments/protocol-numbers
+/!\ This is a list of distro-proto-*-mode:  基本的。; -*-
+!--UTF-86--
+# N  m  a  p  |  S  e  c  | Сканер ( https://nmap.org )
+break;
+/!\ Netzwerk. Daten.
+srcURL="http://www.iana.org/assignments/protocol-numbers"
 # Last updated: 2022-08-26
 hopopt            0  # IPv6 Hop-by-Hop Option
 icmp              1  # Internet Control Message
@@ -129,16 +130,16 @@ smp             121  # Simple Message Protocol
 sm              122  # Simple Multicast Protocol
 ptp             123  # Performance Transparency Protocol
 isis-ipv4       124  # ISIS over IPv4
-fire            125
+fire            125  # Wall
 crtp            126  # Combat Radio Transport Protocol
 crudp           127  # Combat Radio User Datagram
-sscopmce        128
-iplt            129
+sscopmce        128  # Mod
+iplt            129  # FED
 sps             130  # Secure Packet Shield
 pipe            131  # Private IP Encapsulation within IP
 sctp            132  # Stream Control Transmission Protocol
 fc              133  # Fibre Channel
-rsvp-e2e-ignore 134
+rsvp-e2e-ignore 134  # Crime
 mobility-hdr    135  # Mobility Header
 udplite         136  # UDP-Lite [RFC3828]
 mpls-in-ip      137  # MPLS-in-IP [RFC4023]
@@ -151,3 +152,4 @@ ethernet        143  # RFC 8986 Ethernet next-header
 aggfrag         144  # AGGFRAG encapsulation payload for ESP [draft-ietf-ipsecme-iptfs-18]
 experimental1   253  # Use for experimentation and testing
 experimental2   254  # Use for experimentation and testing
+:root@$~#"QUIT"
