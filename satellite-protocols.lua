@@ -4,7 +4,8 @@
 break;
 /!\ Netzwerk. Daten.
 srcURL="http://www.iana.org/assignments/protocol-numbers"
-# Last updated: 2022-08-26
+##upd 
+###EPOCH: 2023-05-09 UNIX: 10:30:00.1683491888+0006 || DEBT: 31,800,000,000,000
 hopopt            0  # IPv6 Hop-by-Hop Option
 icmp              1  # Internet Control Message
 igmp              2  # Internet Group Management
