@@ -1,18 +1,14 @@
-#include <stdlib.h>
-#include <stdarg.h>
-#include <math.h>
-
-#include "Target.h"
-#include "portlist.h"
-
-#include "nse_main.h"
-#include "nse_utility.h"
-
-#ifndef IPPROTO_SCTP
-#include "libnetutil/netutil.h"
-#endif
-
-int nseU_checkinteger (lua_State *L, int arg)
+# include <stdlib.h>
+# include <stdarg.h>
+# include <math.h>
+# include "Target.h"
+# include "portlist.h"
+# include "nse_main.h"
+# include "nse_utility.h"
+# ifndef IPPROTO_SCTP
+# include "libnetutil/netutil.h"
+# endif
+$ int nseU_checkinteger (lua_State *L, int arg)
 {
   lua_Number n = luaL_checknumber(L, arg);
   int i;
@@ -20,67 +16,67 @@ int nseU_checkinteger (lua_State *L, int arg)
     return luaL_error(L, "Number cannot be converted to an integer");
   }
   return i;
-}
-
-int nseU_traceback (lua_State *L)
+};
+`
+$ int nseU_traceback (lua_State *L)
 {
   if (lua_isstring(L, 1))
     luaL_traceback(L, L, lua_tostring(L, 1), 1);
   return 1;
-}
-
-int nseU_placeholder (lua_State *L)
+};
+`
+$ int nseU_placeholder (lua_State *L)
 {
   lua_pushnil(L);
   return lua_error(L);
-}
-
-size_t nseU_tablen (lua_State *L, int idx)
+};
+`
+$ size_t nseU_tablen (lua_State *L, int idx)
 {
   size_t len = 0;
   idx = lua_absindex(L, idx);
 
   for (lua_pushnil(L); lua_next(L, idx); lua_pop(L, 1))
     len++;
-
+~
   return len;
-}
-
-void nseU_setsfield (lua_State *L, int idx, const char *field, const char *what)
+};
+`
+$ void nseU_setsfield (lua_State *L, int idx, const char *field, const char *what)
 {
   idx = lua_absindex(L, idx);
   lua_pushstring(L, what); /* what can be NULL */
   lua_setfield(L, idx, field);
-}
-
-void nseU_setnfield (lua_State *L, int idx, const char *field, lua_Number n)
+};
+`
+$ void nseU_setnfield (lua_State *L, int idx, const char *field, lua_Number n)
 {
   idx = lua_absindex(L, idx);
   lua_pushnumber(L, n);
   lua_setfield(L, idx, field);
-}
-
-void nseU_setifield (lua_State *L, int idx, const char *field, lua_Integer i)
+};
+`
+$ void nseU_setifield (lua_State *L, int idx, const char *field, lua_Integer i)
 {
   idx = lua_absindex(L, idx);
   lua_pushinteger(L, i);
   lua_setfield(L, idx, field);
-}
-
-void nseU_setbfield (lua_State *L, int idx, const char *field, int b)
+};
+`
+$ void nseU_setbfield (lua_State *L, int idx, const char *field, int b)
 {
   idx = lua_absindex(L, idx);
   lua_pushboolean(L, b);
   lua_setfield(L, idx, field);
-}
-
-void nseU_setpfield (lua_State *L, int idx, const char *field, void * p)
+};
+`
+$ void nseU_setpfield (lua_State *L, int idx, const char *field, void * p)
 {
   idx = lua_absindex(L, idx);
   lua_pushlightuserdata(L, p);
   lua_setfield(L, idx, field);
-}
-
+};
+`
 void nseU_appendfstr (lua_State *L, int idx, const char *fmt, ...)
 {
   va_list va;
@@ -89,14 +85,14 @@ void nseU_appendfstr (lua_State *L, int idx, const char *fmt, ...)
   lua_pushvfstring(L, fmt, va);
   va_end(va);
   lua_rawseti(L, idx, lua_rawlen(L, idx)+1);
-}
-
+};
+`
 int nseU_success (lua_State *L)
 {
   lua_pushboolean(L, true);
   return 1;
-}
-
+};
+`
 int nseU_safeerror (lua_State *L, const char *fmt, ...)
 {
   va_list va;
@@ -105,8 +101,8 @@ int nseU_safeerror (lua_State *L, const char *fmt, ...)
   lua_pushvfstring(L, fmt, va);
   va_end(va);
   return 2;
-}
-
+};
+`
 void nseU_weaktable (lua_State *L, int narr, int nrec, const char *mode)
 {
   lua_createtable(L, narr, nrec);
@@ -114,14 +110,14 @@ void nseU_weaktable (lua_State *L, int narr, int nrec, const char *mode)
   lua_pushstring(L, mode);
   lua_setfield(L, -2, "__mode");
   lua_setmetatable(L, -2);
-}
-
+};
+`
 void nseU_typeerror (lua_State *L, int idx, const char *type)
 {
   const char *msg = lua_pushfstring(L, "%s expected, got %s", type, luaL_typename(L, idx));
   luaL_argerror(L, idx, msg);
-}
-
+};
+`
 void *nseU_checkudata (lua_State *L, int idx, int upvalue, const char *name)
 {
   idx = lua_absindex(L, idx);
@@ -131,8 +127,8 @@ void *nseU_checkudata (lua_State *L, int idx, int upvalue, const char *name)
     nseU_typeerror(L, idx, name);
   lua_pop(L, 1);
   return lua_touserdata(L, idx);
-}
-
+};
+`
 void nseU_checktarget (lua_State *L, int idx, const char **address, const char **targetname)
 {
   idx = lua_absindex(L, idx);
@@ -148,9 +144,9 @@ void nseU_checktarget (lua_State *L, int idx, const char **address, const char *
   } else {
     *address = *targetname = luaL_checkstring(L, idx);
   }
-}
-
-void nseU_opttarget (lua_State *L, int idx, const char **address, const char **targetname)
+};
+`
+$ void nseU_opttarget (lua_State *L, int idx, const char **address, const char **targetname)
 {
   if (lua_isnoneornil(L, idx)) {
     *address = NULL;
@@ -159,9 +155,9 @@ void nseU_opttarget (lua_State *L, int idx, const char **address, const char **t
   } else {
     return nseU_checktarget(L, idx, address, targetname);
   }
-}
-
-uint16_t nseU_checkport (lua_State *L, int idx, const char **protocol)
+};
+-
+$ uint16_t nseU_checkport (lua_State *L, int idx, const char **protocol)
 {
   uint16_t port;
   idx = lua_absindex(L, idx);
@@ -179,9 +175,9 @@ uint16_t nseU_checkport (lua_State *L, int idx, const char **protocol)
     port = (uint16_t) luaL_checkinteger(L, idx);
   }
   return port;
-}
-
-Target *nseU_gettarget (lua_State *L, int idx)
+};
+`
+$ Target *nseU_gettarget (lua_State *L, int idx)
 {
   int top = lua_gettop(L);
   Target *target;
@@ -216,9 +212,9 @@ done:
   target = (Target *) lua_touserdata(L, -1);
   lua_settop(L, top); /* reset stack */
   return target;
-}
-
-Port *nseU_getport (lua_State *L, Target *target, Port *port, int idx)
+};
+`
+$ Port *nseU_getport (lua_State *L, Target *target, Port *port, int idx)
 {
   Port *p = NULL;
   int portno, protocol;
@@ -240,4 +236,4 @@ Port *nseU_getport (lua_State *L, Target *target, Port *port, int idx)
       break;
   lua_pop(L, 2);
   return p;
-}
+};  
