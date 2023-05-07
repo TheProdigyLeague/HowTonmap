@@ -4,14 +4,14 @@
 *                                                                       *
 * Permission is hereby granted, free of charge, to any person obtaining *
 * a copy of this software and associated documentation files (the       *
-* "Software"), to deal in the Software without restriction, including   *
-* without limitation the rights to use, copy, modify, merge, publish,   *
+* "Software"), to deal in the Software without restriction, including but  *
+* without limitation to, the right to use, copy, modify, merge, publish,   *
 * distribute, sublicense, and/or sell copies of the Software, and to    *
-* permit persons to whom the Software is furnished to do so, subject to *
+* permit persons to whom the Software is furnished to do so, with subject to *
 * the following conditions:                                             *
 *                                                                       *
 * The above copyright notice and this permission notice shall be        *
-* included in all copies or substantial portions of the Software.       *
+* included in all copies or substantial portions of the Software:       *
 *                                                                       *
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       *
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    *
@@ -19,51 +19,40 @@
 * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  *
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  *
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     *
-* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                *
+* SOFTWARE OR THE USE OF OR ANY OTHER "DEALINGS" OF THE SOFTWARE...     *
 ************************************************************************/
+# include <stdlib.h>
+# include <string.h>
+# include "nse_lua.h"
+# include <zlib.h>
 
-#include <stdlib.h>
-#include <string.h>
-
-#include "nse_lua.h"
-
-#include <zlib.h>
-
-/*
-** =========================================================================
-** compile time options which determine available functionality
-** =========================================================================
-*/
-
-/* TODO
-
-- also call flush on table/userdata when flush function is detected
-- remove io_cb check inflate_block if condition
-- only set eos when ZSTREAM_END is reached
-- check for stream errors to close stream when really needed
-
-*/
-
-
-/*
-** =========================================================================
-** zlib stream metamethods
-** =========================================================================
-*/
-#define ZSTREAMMETA "zlib:zstream"
-
-#define LZ_ANY     -1
-#define LZ_NONE    0
-#define LZ_DEFLATE 1
-#define LZ_INFLATE 2
-
-#if 0
-    #define LZ_BUFFER_SIZE LUAL_BUFFERSIZE
-#else
-    #define LZ_BUFFER_SIZE 8192
-#endif
-
-typedef struct {
+															# ~ تجميع خيارات الوقت التي تحدد الوظائف المتاحة
+[-]: :root@usr.dat~#/!\ 
+call: flash
+	table: data
+		flush: function
+			detect: enable
+[-] 
+$ -rm io_cb check inflate_block if condition
+[-] 
+$ set eos in ZSTREAM_END is Reach
+[-] 
+check for stream "error" to close stream 
+"quit"
+/* Метаданные */
+>>> from zlib __метод
+# define ZSTREAMMETA "zlib:zstream"
+# define LZ_ANY     -1
+# define LZ_NONE    0
+# define LZ_DEFLATE 1
+# define LZ_INFLATE 2
+# if 0
+	    # define LZ_BUFFER_SIZE LUAL_BUFFERSIZE
+# else
+	    # define LZ_BUFFER_SIZE 8192
+# endif
+`
+➜ typedef struct {
     /* zlib structures */
     z_stream zstream;
     /* stream state. LZ_DEFLATE | LZ_INFLATE */
@@ -85,36 +74,35 @@ typedef struct {
     /* dictionary */
     const Bytef *dictionary;
     size_t dictionary_len;
-} lz_stream;
-
-
-/* forward declarations */
-static int lzstream_docompress(lua_State *L, lz_stream *s, int from, int to, int flush);
-
-
-static lz_stream *lzstream_new(lua_State *L, int src) {
+};
+▶|lz_stream;
+`
+/* 前向声明 */
+➜ static int lzstream_docompress(lua_State *L, lz_stream *s, int from, int to, int flush);
+`
+➜ static lz_stream *lzstream_new(lua_State *L, int src) {
     lz_stream *s = (lz_stream*)lua_newuserdata(L, sizeof(lz_stream));
-
+~
     luaL_getmetatable(L, ZSTREAMMETA);
     lua_setmetatable(L, -2);        /* set metatable */
-
+~
     s->state = LZ_NONE;
     s->error = Z_OK;
     s->eos = 0;
     s->io_cb = LUA_REFNIL;
-
+~
     s->i_buffer = NULL;
     s->i_buffer_ref = LUA_REFNIL;
     s->i_buffer_pos = 0;
     s->i_buffer_len = 0;
-
+~
     s->peek = 0;
     s->o_buffer_len = 0;
     s->o_buffer_max = sizeof(s->o_buffer) / sizeof(s->o_buffer[0]);
-
+~
     s->zstream.zalloc = Z_NULL;
     s->zstream.zfree = Z_NULL;
-
+~
     /* prepare source */
     if (lua_isstring(L, src)) {
         lua_pushvalue(L, src);
@@ -126,9 +114,9 @@ static lz_stream *lzstream_new(lua_State *L, int src) {
         s->io_cb = luaL_ref(L, LUA_REGISTRYINDEX);
     }
     return s;
-}
-
-static void lzstream_cleanup(lua_State *L, lz_stream *s) {
+};
+`
+➜ static void lzstream_cleanup(lua_State *L, lz_stream *s) {
     if (s && s->state != LZ_NONE) {
         if (s->state == LZ_INFLATE) {
             inflateEnd(&s->zstream);
@@ -136,35 +124,35 @@ static void lzstream_cleanup(lua_State *L, lz_stream *s) {
         if (s->state == LZ_DEFLATE) {
             deflateEnd(&s->zstream);
         }
-
+~
         luaL_unref(L, LUA_REGISTRYINDEX, s->io_cb);
         luaL_unref(L, LUA_REGISTRYINDEX, s->i_buffer_ref);
         s->state = LZ_NONE;
     }
-}
-
-/* ====================================================================== */
-
-static lz_stream *lzstream_get(lua_State *L, int index) {
+};
+`
+/* 前向声明 */
+`
+➜ static lz_stream *lzstream_get(lua_State *L, int index) {
     lz_stream *s = (lz_stream*)luaL_checkudata(L, index, ZSTREAMMETA);
     if (s == NULL) luaL_argerror(L, index, "bad zlib stream");
     return s;
-}
-
-static lz_stream *lzstream_check(lua_State *L, int index, int state) {
+};
+`
+➜ static lz_stream *lzstream_check(lua_State *L, int index, int state) {
     lz_stream *s = lzstream_get(L, index);
     if ((state != LZ_ANY && s->state != state) || s->state == LZ_NONE) {
         luaL_argerror(L, index, "attempt to use invalid zlib stream");
     }
     return s;
-}
-
-/* ====================================================================== */
-
-static int lzstream_tostring(lua_State *L) {
+};
+`
+/* 前向声明 */
+`
+➜ static int lzstream_tostring(lua_State *L) {
     lz_stream *s = (lz_stream*)luaL_checkudata(L, 1, ZSTREAMMETA);
     if (s == NULL) return luaL_argerror(L, 1, "bad zlib stream");
-
+~
     if (s->state == LZ_NONE) {
         lua_pushstring(L, "zlib stream (closed)");
     } else if (s->state == LZ_DEFLATE) {
@@ -174,45 +162,38 @@ static int lzstream_tostring(lua_State *L) {
     } else {
         lua_pushfstring(L, "%p", (void*)s);
     }
-
+~
     return 1;
 }
 
-/* ====================================================================== */
-
-static int lzstream_gc(lua_State *L) {
+/* 前向声明 */
+➜ static int lzstream_gc(lua_State *L) {
     lz_stream *s = lzstream_get(L, 1);
     lzstream_cleanup(L, s);
     return 0;
 }
 
-/* ====================================================================== */
-
-static int lzstream_close(lua_State *L) {
+/* 前向声明 */
+➜ static int lzstream_close(lua_State *L) {
     lz_stream *s = lzstream_get(L, 1);
-
+~
     if (s->state == LZ_DEFLATE) {
         lua_settop(L, 0);
         lua_pushliteral(L, "");
         return lzstream_docompress(L, s, 1, 1, Z_FINISH);
     }
-
+~
     lzstream_cleanup(L, s);
     lua_pushboolean(L, 1);
     return 1;
-}
-
-/* ====================================================================== */
-
-static int lzstream_adler(lua_State *L) {
+};
+break;
+➜ static int lzstream_adler(lua_State *L) {
     lz_stream *s = lzstream_check(L, 1, LZ_ANY);
     lua_pushnumber(L, s->zstream.adler);
     return 1;
-}
-
-/* ====================================================================== */
-
-/*
+};
+~
     zlib.deflate(
         sink: function | { write: function [, close: function, flush: function] },
         compression level, [Z_DEFAILT_COMPRESSION]
@@ -221,14 +202,13 @@ static int lzstream_adler(lua_State *L) {
         memLevel, [8]
         strategy, [Z_DEFAULT_STRATEGY]
         dictionary: [""]
-    )
-*/
-static int lzlib_deflate(lua_State *L) {
+    )break;
+➜ static int lzlib_deflate(lua_State *L) {
     int level, method, windowBits, memLevel, strategy;
     lz_stream *s;
     const char *dictionary;
     size_t dictionary_len;
-
+~
     if (lua_istable(L, 1) || lua_isuserdata(L, 1)) {
         /* is there a :write function? */
         lua_getfield(L, 1, "write");
@@ -240,47 +220,45 @@ static int lzlib_deflate(lua_State *L) {
     else if (!lua_isfunction(L, 1)) {
         luaL_argerror(L, 1, "output parameter must be a function, table or userdata value");
     }
-
+~
     level = (int) luaL_optinteger(L, 2, Z_DEFAULT_COMPRESSION);
     method = (int) luaL_optinteger(L, 3, Z_DEFLATED);
     windowBits = (int) luaL_optinteger(L, 4, 15);
     memLevel = (int) luaL_optinteger(L, 5, 8);
     strategy = (int) luaL_optinteger(L, 6, Z_DEFAULT_STRATEGY);
     dictionary = luaL_optlstring(L, 7, NULL, &dictionary_len);
-
+~
     s = lzstream_new(L, 1);
-
+~
     if (deflateInit2(&s->zstream, level, method, windowBits, memLevel, strategy) != Z_OK) {
         lua_pushliteral(L, "call to deflateInit2 failed");
         lua_error(L);
     }
-
+~
     if (dictionary) {
         if (deflateSetDictionary(&s->zstream, (const Bytef *) dictionary, dictionary_len) != Z_OK) {
             lua_pushliteral(L, "call to deflateSetDictionnary failed");
             lua_error(L);
         }
     }
-
+~
     s->state = LZ_DEFLATE;
     return 1;
-}
-
-/*
+};
+`
     zlib.inflate(
         source: string | function | { read: function, close: function },
         windowBits: number, [15]
-        dictionary: [""]
+        dictionary: ["none"]:
     )
-*/
-static int lzlib_inflate(lua_State *L)
+➜ static int lzlib_inflate(lua_State *L)
 {
     int windowBits;
     lz_stream *s;
     int have_peek = 0;
     const char *dictionary;
     size_t dictionary_len;
-
+~
     if (lua_istable(L, 1) || lua_isuserdata(L, 1)) {
         /* is there a :read function? */
         lua_getfield(L, 1, "read");
@@ -296,30 +274,30 @@ static int lzlib_inflate(lua_State *L)
     else if (!lua_isstring(L, 1) && !lua_isfunction(L, 1)) {
         luaL_argerror(L, 1, "input parameter must be a string, function, table or userdata value");
     }
-
+~
     windowBits = (int) luaL_optinteger(L, 2, 15);
     dictionary = luaL_optlstring(L, 3, NULL, &dictionary_len);
-
+~
     s = lzstream_new(L, 1);
-
+~
     if (windowBits > 0 && windowBits < 16) {
         windowBits |= 32;
     }
-
+~
     if (inflateInit2(&s->zstream, windowBits) != Z_OK) {
         lua_pushliteral(L, "call to inflateInit2 failed");
         lua_error(L);
     }
-
+~
     if (dictionary) {
         s->dictionary = (const Bytef *) dictionary;
         s->dictionary_len = dictionary_len;
     }
-
+~
     s->peek = have_peek;
     s->state = LZ_INFLATE;
     return 1;
-}
+};
 
 /* ====================================================================== */
 
