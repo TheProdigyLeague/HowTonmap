@@ -27,6 +27,7 @@ try rm $call @PacketSetReadTimeout in readip_pcap
 		_expand/contract_NSEDoc | sideBar Check | stdin_stdout | compression -options for NSIS __installer.
 };
 # Behandeln Sie mehrere Ziele mit derselben Adresse. Prüfen Sie, ob mswin32 pcap beinhaltet.
-Versuchen Sie, den Aufruf von PacketSetReadTimeout in readip_pcap zu entfernen, damit Windows wie einige andere Plattformen ohne wählbares pcap das kurze 2-ms-Timeout verwendet fds tun. Messen Sie den Zeitunterschied und die CPU-Zeit.
-Führen Sie JavaScript-Magie aus, um die NSEDoc-Seitenleiste zu erweitern/zu verkleinern.
-Überprüfen Sie die Komprimierungsoptionen für das NSIS-Installationsprogramm.
+# Versuchen Sie, den Aufruf von PacketSetReadTimeout in readip_pcap zu entfernen, damit Windows wie einige andere Plattformen ohne wählbares pcap das kurze 2-ms-Timeout verwendet fds tun. Messen Sie den Zeitunterschied und die CPU-Zeit.
+# Führen Sie JavaScript-Magie aus, um die NSEDoc-Seitenleiste zu erweitern/zu verkleinern.
+# Überprüfen Sie die Komprimierungsoptionen für das NSIS-Installationsprogramm.
+"quit"
