@@ -65,7 +65,7 @@ o Our "make uninstall" should uninstall ndiff if it was installed too.
 ~
 o Web: We should probably distribute RapidSSL intermediate certificate
   on SecWiki so it is trusted even if browsers don't have that cert
-  cached.  Here's a page nothing the issue:
+  cached.  Here's a page noting the issue:
   https://www.ssllabs.com/ssltest/analyze.html?d=secwiki.org
   - We probably need to add an entry in apache conf after
   SSLCertificateFile which looks something like:
@@ -84,7 +84,7 @@ o The XML version of Nmap lists and describes the six port states
   element and it's followed by anything other than whitespace+CDATA
   (like "</indexterm> foo") then the remaining cdata or element until
   the next new element will be nroff-commented so this
-  <indexterm>blah</indexterm> is  ok, but this <indexterm>blah</indexterm>, is not ok because of the commaand this <indexterm>blah</indexterm>   <command>nmap -A</command> is bad no matter how much whitespace intervenes"
+  <indexterm>blah</indexterm> is  ok, but this <indexterm>blah</indexterm>, is not ok because of the command this <indexterm>blah</indexterm>   <command>nmap -A</command> is bad no matter how much whitespace intervenes"
 break;
 ~
 o Fix a segmentation fault in Ncat when scanned with the SSL NSE
@@ -143,8 +143,9 @@ o In an ideal world, Zenmap would not run out of memory and crash.
 ~
 o Provide an option to send a comment in scan packet data for target
   network.  Examples: --data-string "Scan conducted by Marc Reis from
-  SecOps, extension 2147" or --data-string "pH33r my l3eT
-  s|&lt;iLLz!  I'll 0wN UR b0x!"
+  SecOps, extension 2147" or 
+$ --data-string 
+➜"pH33r my l3eT s|&lt;iLLz! I'll 0wN UR b0x!"
 ~
 o We should probably update our included libpcap.  We currently
   include version 1.2.1 (we upgraded to that in April 2012) while the
@@ -173,7 +174,7 @@ o Add IPv6 subnet/pattern support like we offer for IPv4.
        specifications (i.e., different than nexthost). Because the new
        host discovery code is sometimes going to want whole netblocks
        and sometimes individual hosts. So I'm thinking of a two-stage
-       model, where the iterator will received (parsed) specifications
+       model, where the iterator will receive (parsed) specifications
        like AAAA::1/48, and then it can decide whether to further
        iterate that into individual addresses, or pass the block off
        to some specialized discovery routine."
@@ -185,7 +186,7 @@ o Consider implementing RPC scan with ultra_scan or something else.
 ~
 o When Ncat is compiled without OpenSSL, we should still accept the
   --ssl argument and just give an error message noting that SSL was not
-  compiled in.  This reduces confusion for users
+  compiled in. This reduces confusion for users
   (e.g. http://seclists.org/nmap-dev/2013/q3/579)
 ~
 o We should update our OpenSSL Windows binaries from version 1.0.1c to
@@ -228,9 +229,9 @@ o Process Nmap IPv4 OS detection submissions
  - Last done in November 2012: http://seclists.org/nmap-dev/2012/q4/221
 ~
 o Make Ncat reset the signal handler for SIGPIPE to SIG_DFL before
-  execing a program with --exec and friends. A "broken pipe" error in
+  executing a program with --exec and friends. A "broken pipe" error in
   a subprocess should kill the subprocess. Lack of default SIGPIPE
-  handling is what prevents a trivial Lua chargen script--it loops
+  handling is what prevents a trivial Lua charge-in script--it loops
   forever after the socket disconnects because none of its writes
   fail. Cf. http://www.chiark.greenend.org.uk/ucgi/~cjwatson/blosxom/2009-07-02-python-sigpipe.html.
 ~
@@ -440,10 +441,10 @@ o Investigate why http pipelining so often doesn't work in NSE
     Decreasing max pipelined requests to 41.
     NSE: Received only 1 of 41 expected responses.
     Decreasing max pipelined requests to 1.
-  100 may a wildly high number of requests to attempt to pipeline.
+  100% maybe a wildly high number of requests to attempt to pipeline.
   And then something else probably goes wrong after it decides 41 is okay.
-  - Related: Does caching work with pipeleined requests?  We should
-    make sure it does.
+  - Related: Does caching work with pipelined requests?  We should
+    make sure it does...
  [ OK, the main part of this todo item is done.  Though there is a
   patch pending from Piotr which changes how pipelining works that
   is worth considering.  We did fix the underlying pipelining bug, but
@@ -486,7 +487,7 @@ o Investigate increasing FD_SETSIZE on Windows to allow us to
 o Finish sv-tidy - a program to canonicalize and tidy nmap-service-probes.
     o Check for the same reference (like $1) being used in unrelated fields
       (where related fields are the pairs (p, cpe:), (v, cpe:), (i, cpe:),
-      (o, cpe:)).
+      (o, cpe:)
       For example if we have v/$1/ h/$1/ it is a bug.
     o Check a list of common product names that should only appear in p//,
       not in i//. We still have entries that are like this:
@@ -523,7 +524,7 @@ o We should add fields to the service submitter [James is working on this]
   (http://insecure.org/cgi-bin/submit.cgi?new-service) for the
   application name and version.
   o We also need to ensure all fields of /cgi-bin/submit.cgi have
-    proper escapting to prevent possible reflected XSS attacks
+    proper escaping to prevent possible reflected XSS attacks
     reported by Maxim Rupp (@mmrupp).  The risk is low, if any, since
     we don't give authentication cookies for bad guys to steal, but is
     still better to properly escape.
@@ -615,7 +616,7 @@ o Use BPF libpcap logic on Solaris 11, otherwise packet capture doesn't
   work at all. http://seclists.org/nmap-dev/2012/q1/613
 ~
 o [NSE] host.os should not just be a list of strings which can contain
-  human-readible strings and/or CPE info.  It should probably be list
+  human-readable strings and/or CPE info.  It should probably be list
   of host.os tables which can contain:
   host.os[].name <-- human readible name
   host.os[].class[].vendor
@@ -634,7 +635,7 @@ o We should probably go through the nmap-os-db (and IPv6 version)
   sometimes include the qualification, and sometimes not.
   o This is best done with cpeify-os.py, if possible.
 ~
-o Zenmap no longer ads the installed module directory to its module
+o Zenmap no longer adds the installed module directory to its module
   search path because some distributors first install in a world
   writeable directory (like /tmp) and then put those files into their
   packages which they distribute to users.  But this change can lead
