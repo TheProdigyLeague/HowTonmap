@@ -308,22 +308,12 @@ o --osscan-guess flag nmap
 $ i/o usr ["SEE","GUESS","USE"]: --oscan-guess
 /!\ Normal output users 
 ~
-o Change the interface of nmap.ip_send to take an explicit
-  destination address. It currently extracts the destination from
-  the packet buffer, which does not have enough information to
-  reconstruct link-local addresses. See r26621 for a similar change
-  that was made to Nmap internals.
-~
-o [Zenmap] Install higher-resolution icons (at least 64x64 and maybe
-  up to 512x512). Here is a screenshot of the current 48x48 icon on
-  GNOME 3: http://seclists.org/nmap-dev/2012/q2/395.
-  o Sean did Windows and Linux icons, and David did the Mac
-    one.
-~
-break;
-o [NPING] At least on my (Fyodor) system, I get errors like "READ-PCAP
-  killed: Resource temporarily unavailable" with some commands.
-  Example:
+>>> mod *uif ** nmap.ip_send ["TAKE","DEST","ADDR"]:
+>>> -extract dest from pkt buffer lo-info  struct link_local-addr for -mod make nmap int -o ~ o ['Zenmap']: install hi-resolve .ico @64x64 & ^ 512x512 is cap.png* 48x48 .ico in GNOME_v.3 
+/!\ http://seclists.org/nmap-dev/2012/q2/395.
+usr@Sean ~o "Did Windows and Linux icons, and David did the Mac one." ~ break;
+["NPING"]: @anon 
+>>> Fyodor.os sys error "read -pcap --kill resource temp /null/ .cmd" 
   # nping --tcp -p80 -c1 scanme.nmap.org
 ~
   Starting Nping 0.5.61TEST4 ( https://nmap.org/nping ) at 2012-02-16 17:52 PST
@@ -333,19 +323,14 @@ o [NPING] At least on my (Fyodor) system, I get errors like "READ-PCAP
   nping_event_handler(): TIMER killed: Resource temporarily unavailable
   [...]
 ~
-o [NPING] Nping should probably give you an error or warning when you
-  do: "nping -p80 google.com" since it is ignoring the port specifier.
-  The user probably wants to add --tcp.
+o [NPING]: Nping 
+>>> throw err or warn docker make do "nping -p80 google.com" is ignore -p \specify
+usr@end ['+']: --tcp
 ~
-o Investigate why http pipelining so often doesn't work in NSE
-  scripts, and often NSE ends up reverting to one request at a time.
-  Scripts may not be using it correctly, and also we wish it were more
-  transparent and there wasn't this big API divide between pipeline
-  and non-pipeline.  We just want it send requests as fast as it can,
-  and get a callback when there's a response.  Maybe the http library
-  buffers them, or pipelines them, or blocks the http.get call until
-  there's more room.  It just seems to always degenerate to 1 request
-  at a time.  For example:
+>>> inv http || always work/flows/scripts.nse -revert = int 1 <?php request time?> nse.py nse.js ["use"]: this api __ || non || 
+<?php send request 0.0ms --git -d call-back response http://libs.buffer/this/pipe_/ --block http.get call is Room?>
+$ --gen response 1 request
+  for example:
   sudo nmap --script=http-enum bamsoftware.com -p80 -d2
   quickly (within a few seconds) gives:
     NSE: http-enum: Searching for entries under path '' (change with 'http-enum.basepath' argument)
@@ -355,183 +340,142 @@ o Investigate why http pipelining so often doesn't work in NSE
     Decreasing max pipelined requests to 41.
     NSE: Received only 1 of 41 expected responses.
     Decreasing max pipelined requests to 1.
-  100% maybe a wildly high number of requests to attempt to pipeline.
-  And then something else probably goes wrong after it decides 41 is okay.
-  - Related: Does caching work with pipelined requests?  We should
-    make sure it does...
- [ OK, the main part of this todo item is done.  Though there is a
-  patch pending from Piotr which changes how pipelining works that
-  is worth considering.  We did fix the underlying pipelining bug, but
-  (just as with most browsers), it isn't enabled by default.  Also, it
-  doesn't support caching. See
-  http://seclists.org/nmap-dev/2012/q3/616. ]
+ /!\ 100% hi numpy* <?php requests to attempt to pipeline...?>
+**this obj 
+  else this is /41/ is OK
+  ['-'] Related: Do cache work 
+    with: <?php pipelined requests?>  
+      make: do
+[ OK !]: main part of this todo item is done...
+this is --patch pending 
+  from Piotr -mod pipelining \work this is clause  
+    FIX: BUG || else this is browser is enabled **default  
+      do supp cache  
+        ['!']: [ See http://seclists.org/nmap-dev/2012/q3/616/ ]:
 ~
-o Make Nmap from a clean start (e.g. after make clean or whatever, so
-  it compiles everything) and research all the compile warnings to see
-  which ones can be fixed/removed.  Of course caution is needed to
-  make sure we don't cause problems.  For example, an unused variable
-  on one platform might not be unused on another, so we can't just
-  remove it.  May have to surround it by ifdefs though.
+$ make Nmap from clean start (e.g. make clean or is antlr) **research antlr ['!']: Warning for see which ones can be fixed/removed.  Of course caution is needed to
+$ make do else /clause/ # problem  
+  for example, ['non_use']: var
+    in '1' _platform_  non ['use']: one is non rm  
+      ifdefs ;;
+~o solve: "spurious closed port detection" 
+#issue usr@David:
+/!\ http://seclists.org/nmap-dev/2012/q1/62/
+>>> is figure i/o 
+{
+is in /thread/ then #FIX 
+note: this do /thread/ icmp.host -discover ('-pe'): 
+@ack_pkt nmap <?php nmap send port 80 targs*default?>
+};
 ~
-o Solve "spurious closed port detection" issue discovered by David:
-  http://seclists.org/nmap-dev/2012/q1/62 .  So we need to figure out
-  what is going on here and then how to fix it.  Note that this
-  doesn't seem to happen when you do ICMP host discovery first (-PE),
-  so it probably relates to the ACK packet that Nmap sends to port 80
-  on the target by default.
-~
-o Add real headers for more protocol types in -6 -sO scan. Dario
-  Ciccarone provided some packet captures for
+o 
+['+']: __header__ for proto type in -6 -sO 
+usr@Dario_Ciccarone: pkt.cap for
       0x00: hop-by-hop
       0x2b: routing
       0x2c: fragment
       0x3c: destination
-  (http://seclists.org/nmap-dev/2011/q2/1003). We also have examples
-   of crafting some of these in FPEngine.cc. [Sean and David]
+(http://seclists.org/nmap-dev/2011/q2/1003): **craft this FPEngine.cc
+[Sean and David]:~break;o I
+$ inv > fd_setsize in WIN_multi > skt 
+# See Henri's email:
+/!\ http://seclists.org/nmap-dev/2012/q1/267/
+["James Rogers did some investigative work on this in July 2012, but we weren't able to find a great solution.  Maybe we should investigate this more in the future, and also investigate other Windows socket APIs such as completion ports."]:
 ~
-break;
-o Investigate increasing FD_SETSIZE on Windows to allow us to
-  multiplex more sockets.  See Henri's email:
-  http://seclists.org/nmap-dev/2012/q1/267 
-  [James Rogers did some investigative work on this in July 2012, but
-  we weren't able to find a great solution.  Maybe we should
-  investigate this more in the future, and also investigate other
-  Windows socket APIs such as completion ports. ]
-~
-o Finish sv-tidy - a program to canonicalize and tidy nmap-service-probes.
-    o Check for the same reference (like $1) being used in unrelated fields
-      (where related fields are the pairs (p, cpe:), (v, cpe:), (i, cpe:),
-      (o, cpe:)
-      For example if we have v/$1/ h/$1/ it is a bug.
-    o Check a list of common product names that should only appear in p//,
-      not in i//. We still have entries that are like this:
+o__finish sv-tidy.progs
+>>> canon && nmap-srvc-probe
+>>> chk for ref $1 ['use']: in rel field is p cpe v cpe i cpe o cpe for exec if v/$1/ h/$1/ is #BUG
+>>> list of common product names that should only appear in p//,
+  in i//..this: enter
         p/Foobar 2000 ADSL router/ i/micro_httpd web server/
-      that should rather be written this way:
-        p/micro_httpd/ i/Foobar 2000 ADSL router/
-    o [Done] Check for e.g. i/French/ without :fr in cpe:/a, and vice versa.
+          this write: 
+➜ p/micro_httpd/ i/Foobar 2000 ADSL router/
+➜ o [Done] Check for e.g. i/French/ without :fr in cpe:/a, and vice versa.
     [Sean and David?]
 ~
-o Remove Nmap's --log-errors feature and make its behavior the
-  default.  A few notes:
-  - Nmap should just ignore --log-errors if it sees it
-  - Remember to remove it from the documentation
-~
-o We should probably sort script output (for port output and host
-  output) by script name or something so that it comes in a
-  deterministic order.  If the same three scripts produce output in
-  two different scans, they should be listed in the same order.  Right
-  now the order can vary, at least for host output.
+>>> rm nmap --log-err feature && make --d default note: nmap ignore --log-err if rm from docs
+~o ['see']: sort.py sort.js i/o for -p i/o && host i/o name.js name.py this order if pro.js pro.py i/o in int two diff -s
+>>> list in = or 
+>>> vars for i/o.h
   [Sean]
+>>> ["+"]: function('*'); from.h auto detect ^ this arp 
+>>>nmap <?php send request host discover probe icmp ping pkt syn pkt?>
 ~
-o Add a function such as --disable-arp-ping which prevents hosts from
-  being automatically detected as 'up' just because they responded to
-  ARP.  Instead, Nmap will actually send the requested host discovery
-  probes (ICMP ping packets, SYN packets, etc.) and only mark the host
-  as up if it responds on an IP level.  This is how machines are
-  already treated if they're not on the local network (e.g. if ARP
-  discovery is unavailable).  This technique is a bit slower and more
-  likely to miss hosts (e.g. if they're heavily firewalled) than ARP
-  discovery, but the option is needed to handle local networks which use
-  proxy ARP, which would otherwise cause all IPs to appear to be up.
+o **mark__host^if 
+<? respond in int_proto lvl ?>  
+>>> this is machine.h 
+>>> if this non-local /net if arp discover=null 
+>>> this lame ** %% miss hosts if fireWall 
+  then ARP discovery, # but the option is needed to handle local networks which use proxy ARP, which would otherwise cause all IPs to appear to be up.
 ~
-o We should add fields to the service submitter [James is working on this]
-  (http://insecure.org/cgi-bin/submit.cgi?new-service) for the
-  application name and version.
-  o We also need to ensure all fields of /cgi-bin/submit.cgi have
-    proper escaping to prevent possible reflected XSS attacks
-    reported by Maxim Rupp (@mmrupp).  The risk is low, if any, since
-    we don't give authentication cookies for bad guys to steal, but is
-    still better to properly escape.
-    o If we get a chance, would be interesting to run our XSS-testing
-      NSE scripts against this and see if they locate the problems.
- o Also, need to change the font family in there from "Lucida Grand"
-   to "Lucida Grande"?  Just a typo.  And fix "WIkipedai".  We should
-   just spell-check all the output
+o ['+']: field srvc ['submit']:  @@  [James is working on this]
+  (http://insecure.org/cgi-bin/submit.cgi?new-service) 
+    for application name and version.
+>>> ++field **o/cgi-bin/submit.cgi esc 
+>>> XSS attc
+>>> **reported by Maxim Rupp (@mmrupp);
+>>> this risk is <%% if % --git 0auth __cookie for 1337\h4x is esc
+>>> o if --git %% int run XSS-testing.nse this .py .js .h .c && if this /locals/#problem o mod font family in this from "Lucida Grand" to "Lucida Grande" && #FIX "WIkipedai".  
+# We should just spell-check all the output
 ~
-o Make Nmap 6.01 release containing (among possibly other little
-fixes)
+o make nmap 6.01 release container (among possibly other little fixes)
  - Python upgrade 
  - [done] Zenmap 10.7 hang fix (done in trunk)
  - [done] Zenmap crash when filtering hosts (done in trunk)
  - [done] get_srcaddr fix (done in trunk)
+~break;
+o;; 
+>>> py upg zenmap 10.7 #hang #fix Done! trunc
+>>> zenmap "crash" else filter.h Done! trunc
+>>> get_srcaddr #FIX Done! in trunc
+>>> py upg in build.h machine.sys try && resolve py 2.7 _sec "warn"
+>>> do usr@anon /thread/ this http://seclists.org/nmap-dev/2012/q2/621
 ~
-o Upgrade Python on build machines to try and resolve Python 2.7
-  security warning (it doesn't affect us, but can worry users).  See
-  this thread: http://seclists.org/nmap-dev/2012/q2/621
+o # FIX get_srcaddr error in Windows XP
 ~
-o Fix get_srcaddr error happening on Windows XP
+o [Web]: ["+"]: page nmap relate videos we do have already
+['-']: @https://secwiki.org/w/Nmap/Presentations
 ~
-o [Web] Add a page with the Nmap related videos we do have already
- - We have a page on Secwiki now: https://secwiki.org/w/Nmap/Presentations
+$ o zenmap hang in OS X 10.7
 ~
-o Zenmap hang on OS X 10.7
+o for nmap man page && online docs is "Inappropriate Usage" sec 
+# note: "Nmap should never be installed with special privileges (e.g. suid root) for security reasons"  
+&& ** ## course Nmap's official installer would never install Nmap that way.  While one would think that would be enough, we might want to go even further and have Nmap detect when it is run suid and print a security warning...
 ~
-o For many years, the Nmap man page and online documentation has had
-  an "Inappropriate Usage" section which notes that "Nmap should never
-  be installed with special privileges (e.g. suid root) for security
-  reasons".  And of course Nmap's official installer would never
-  install Nmap that way.  While one would thinks that would be enough,
-  we might want to go even further and have Nmap detect when it is run
-  suid and print a security warning.
+>>> release note: web_page Release
 ~
-o Prepare release notes, web page, etc.
+$ o do priv beta Release
 ~
-o Do private beta release
+$ o make Release
 ~
-o Make the release
+$ o in nmap.xml i/o \osclass tags* osmatch 
+>>> read os name:l this nmap dup osClass && ["PUT"]: this in siblings this --mod break; sys util nmap.xml i/o 
+>>> this mod option --deprecate-osclass-xml <behavior>old</behavior>
+>>> this option --mod docs in CHANGELOG entry ref this -mod && this note: rm option in fifty two point three weeks 
 ~
-o In Nmap XML output, osclass (OS Classification) tags should be
-  children of osmatch (the human readable OS name line) rather than
-  having Nmap deduplicate all the osclasses and put them in as
-  siblings.  But this change might break some systems which utilize
-  Nmap XML output, so, along with this change, we need to introduce an
-  option such as --deprecated-osclass-xml to return the old behavior.
-  That option only needs to be documented in the CHANGELOG entry
-  referring to this change, and it should note that we're likely to
-  remove this option in a year or two.
+o 
+>>> "current time" {'ipv6, ipv4 addr in 1.2.3 or 2001::0 in ipv4: mode'}; fatal error && abort scan
+>>> one bad.targs in long::list **.h -S is print("warn") && continue 
+>>> sort * warn element.h #include in <xml>resolve_dns</xml> -Name
+➜ ~
+➜ o 
+➜ #include sv-tidy
+➜ chk use ref start 1 & cont if $1 && $3 non $2 is #BUG
+➜ ['FIND']: **insp regex
+▶ ~ o 
+>>> raw.pkt++ from MAC_OS_X <?php retrieve mac addr or arp ping -s route in uif for /!\ scanning 192.168.0.1-5 sends ARP pings to 192.168.0.1?>
+PS> norm.4.probe -combine addr "MAC_ADDR":l for .1 for :l  
 ~
-o Right now, when an IPv4 or IPv6 address seems bogus (such as 1.2.3
-  or 2001::0 in IPv4 mode), we give a fatal error and abort the scan.
-  But since that might just be one bad target in a long list of hosts to
-  be scanned, it is probably better to just print a warning and
-  continue.  Some sort of warning or host element should be included in
-  the XML to explain what happened too.  This should also happen if
-  we're unable to resolve a DNS name.
+o 
+▶ nmap mem use code.exe ['FIND']: for nse.py nse.js stor_info.h nmap # Done! -s $ .h 
+>>> .h grep is ['Finish!']: {'store info in registry persist Forever'};
+// For example, a web spidering script/library could store information about the web structure and even page contents so that other scripts can use that information without spidering the target again, but ensuring that the memory will be freed after the hostgroup finishes so there is room to store the web information for the next group of systems.  One idea would be to make a host.registry member which contains a registry specific to a specific target.  Scripts could store temporary information there, but still use the global registry for information which must persist (e.g. to be used by postrules, etc.)
 ~
-o In sv-tidy, check that used references start at 1 and are
-  contiguous. If $1 and $3 are used but not $2, it's probably a bug.
-  Maybe you can even find out how many there should be by inspecting
-  the regular expression.
+o ['+']: CPE supp ## IPv6 OS detection
 ~
-o Raw scans from Mac OS X seems not to retrieve the MAC address or do
-  ARP ping, except when scanning the router on an interface. For
-  example, scanning 192.168.0.1-5 sends ARP pings to 192.168.0.1, but
-  the normal four-probe combination to the other addresses. The "MAC
-  address:" line appears in the output for .1 but not for the others.
+o ['USE']: BPF libpcap logic on Solaris 11, pkt-cap non/work http://seclists.org/nmap-dev/2012/q1/613
 ~
-o To avoid Nmap memory usage bloat, find a way for NSE scripts to
-  store information about a host which expires after Nmap is done
-  scanning that host (e.g. when the hostgroup containing that host is
-  finished).  Right now scripts store such information in the registry
-  and it persists forever.  For example, a web spidering
-  script/library could store information about the web structure and
-  even page contents so that other scripts can use that information
-  without spidering the target again, but ensuring that the memory
-  will be freed after the hostgroup finishes so there is room to store
-  the web information for the next group of systems.  One idea would
-  be to make a host.registry member which contains a registry specific
-  to a specific target.  Scripts could store temporary information
-  there, but still use the global registry for information which must
-  persist (e.g. to be used by postrules, etc.)
-~
-o Add CPE support to IPv6 OS detection
-~
-o Use BPF libpcap logic on Solaris 11, otherwise packet capture doesn't
-  work at all. http://seclists.org/nmap-dev/2012/q1/613
-~
-o [NSE] host.os should not just be a list of strings which can contain
-  human-readable strings and/or CPE info.  It should probably be list
-  of host.os tables which can contain:
+o [NSE] host.os non-list of strings which can contain human-readable strings and/or CPE info.  It should probably be list of host.os tables which can contain:
   host.os[].name <-- human readible name
   host.os[].class[].vendor
   host.os[].class[].osfamily
