@@ -481,60 +481,46 @@ o [NSE] host.os non-list of strings which can contain human-readable strings and
   host.os[].class[].osfamily
   host.os[].class[].osgen
   host.os[].class[].devicetype
-  host.os[].class[].cpe[] <-- array of cpe:/ strings
-  So host.os[1].class[1].cpe[1] is the first CPE entry for the first
-  classification of the first OS match for the target system.
-  The host.os entry docs/scripting.xml would have to be updated too.
+  host.os[].class[].cpe[]
+➜ [array*]: cpe:/ "strings"
+host.os[1].class[1].cpe[1] *int=1.CPE ['enter']: *['1']: Class*int=1.OS ['match']: * targs.sys
+host.os docs/scripting.xml *upd
 ~
-o We should probably go through the nmap-os-db (and IPv6 version)
-  entries and, where the fingerprint line specifies a service pack
-  number (or even two of them), ensure that we have sp-qualified CPE
-  entries like "cpe:/o:microsoft:windows_xp::sp2".  Right now we
-  sometimes include the qualification, and sometimes not.
-  o This is best done with cpeify-os.py, if possible.
+>>> nmap-os-db && ipv6_version ['enter']: finger('print'):l srvc pk # 2* sp-qual cpe @entry *cpe:/o:msft:win_xp::sp2
+#include qual 
+  this Done!
+    cpeify-os.py if %
+$ zenmap non+ ['+']: install dir mod @dir mod search \path distro install 
+>>> world write dir /tmp/ then fs usr@anon write dir distro globalUsr 
+>>> mod non-work for usr@anon install non.sys area then home dir 
+>>> --prefix /home/fyodor/ then pythonPATH set Find this sol.imp make zenmap catch miss err.mod && usr set PYTHON_PATH 
 ~
-o Zenmap no longer adds the installed module directory to its module
-  search path because some distributors first install in a world
-  writeable directory (like /tmp) and then put those files into their
-  packages which they distribute to users.  But this change can lead
-  to Zenmap not working for users who install in nonsystem areas like
-  their home directory (e.g. --prefix /home/fyodor) unless they have
-  their PYTHONPATH set to find them.  We should implement a solution,
-  such as making sure Zenmap catches the missing modules error and
-  suggest that the user set their PYTHONPATH or something.
+o scan from Mac OS X then use raw IP packets then ethernet frames 
+>>> in local/net/ dnet do non_retrieve <?php route table proper LAN do non show in --iflist?>
+usr@Patrik > -re ==$0 pro this three *3 MACS_10.7.3
+>>> dnet code.exe route-bsd.c Apple(c) route table code.exe discover usr@Patrik dnet/code.exe non-corr
+>>> ssl-google-cert-catalog non-require usr specs ssl-cert in Order_Run
+>>> :root $call libs cert \cache this ** if run silently avoid script usr this .py .js \work if spec this script "if FIND function ['+','strong','dependent']:"
+  require feature nmap antrl  
+    [Patrik did this by adding an ssl cert library]:
 ~
-o Scans from Mac OS X tend to use raw IP packets rather than ethernet
-  frames even on the local network because Dnet does not seem to be
-  retrieving the routing table properly -- so the LAN doesn't even
-  show up in --iflist.  Patrik can reproduce this on all 3 of his
-  MACs (OS X versions 10.7.3).  Comparing the code in DNet route-bsd.c
-  to Apple's own routing table code discovered by Patrik suggests that
-  the Dnet code may be incorrect.
+$ 目标 [Internet] 协议版本 {6} 多重投射 ;;
+$ --slaac.nse break;
+$ 发送低优先级的路由器通告 ! ! ! ["send","ad"]
+$ <%*--neg _imp _cli if non do **
+$ this **
+/!\ marked Done!
+➜ See http://lists.si6networks.com/pipermail/ipv6hackers/2012-March/000503.html.
+['-']:
+#issue
+  *timeout Global ctrl case
+    nmap *send disc.h probe 2 = .h 
+      if send.h Global ctrl lo timeout 
+        clause.h cong.h ctrl value time_out args 
+          this@@algor_imp 
 ~
-o ssl-google-cert-catalog should not require that the user specify
-  ssl-cert in order to run.  Instead, they should probably both call a
-  library which obtains the certificate (and caches it so that it
-  doesn't happen twice if both scripts are run).  In general, we want
-  to avoid having any scripts tell the user "this script only works if
-  you specify this other script too".  If we really find we need that
-  functionality, we should add a "strong dependencies" feature so that
-  scripts can tell Nmap what other scripts they require.
-  [Patrik did this by adding an ssl cert library]
-~
-o Our targets-ipv6-multicast-slaac.nse should probably send the router
-  advertisements with low priority to reduce the chances of any
-  negative impacts on clients, if we're not doing that already.  See
-  http://lists.si6networks.com/pipermail/ipv6hackers/2012-March/000503.html.
-  - Actually, I think we already do this.  Marking as done.
-~
-o Deal with the issue of timeouts happening too soon due to global
-  congestion control in some cases.  For example, if Nmap sends host
-  discovery probes to two hosts, and one comes back extremely quickly,
-  it can cause the global congestion control to use a very low timeout
-  and cause the 2nd host (which doesn't have any host-based congestion
-  control values yet) to timeout arguably too quickly.  We should look
-  at potential algorithm changes to improve this.
-    David: I think I was wrong about the cause of this. Even when
+o 
+    usr@David: "I think I was wrong about the cause of this. Even when
     replies come back very quickly, the timeout is by default limited
     to 100000 microseconds, much higher than the straightforward
     calculation would give. What I think is really happening is that
@@ -542,69 +528,55 @@ o Deal with the issue of timeouts happening too soon due to global
     In the loop in read_arp_reply_pcap, pcap_select returns 1, then a
     pcap_next is done. Then pcap_select returns 0, but if I insert
     another pcap_next after that, the pcap_next finds another packet
-    without blocking (the first time, anyway; after that it blocks).
+    without blocking (the first time, anyway; after that it blocks)..."
 ~
-o Create CHANGELOG
+➜ o Create CHANGELOG
 ~
-o Make stable release candidate branch
+➜ o Make stable release candidate branch
 ~
-o Make at least one more test release from the candidate branch
+➜ o Make at least one more test release from the candidate branch
 ~
-o Write and send GSoC 2011 results email
+➜ o Write and send GSoC 2011 results email
 ~
-o Document the nsearg format changes made by Paulino (how you can
-  preface an argument with a script to make it more specific, or make it
-  general to apply to multiple scripts)
-  o Rough drafts:
-  o nmap-exp/calderon/refguide.xml
-  o nmap-exp/calderon/scripting.xml
-  o Relates to:
-    o We should probably modify stdnse.get_script_args so that it first
-     checks [scriptname].[argname] and then (if that fails) looks for
-     [argname] by itself.  This way people who are only running one
-     script or who want to use the same value for multiple scripts that
-     take the same argument can just give [argname].  But those who want
-     an argument to only apply to a specific script can give
-     [scriptname].[argname].
+>>> docs nsearg form -mod make usr@Paulino
+/!\ (how you can preface an argument with a script to make it more specific, or make it general to apply to multiple scripts)
+//  o Rough drafts:
+>>> nmap-exp/calderon/refguide.xml
+>>> nmap-exp/calderon/scripting.xml
+▶ mod if stdnse.get_script_args chk ['scriptname']: * ['argname']: && then (if this fails) @ for
+     [argname]: self this Global run
+      script Global use == value for multiple scripts then
+       args --git [argname]:  Global args
+         ['!']: app --git "script"
+     [scriptname].[argname].cc ++ ;;
 ~
-o Make the nmap.header.tmpl wording a little more generic so it more
-  clearly applies to Ncat, Zenmap, Nping, etc. Then use
-  templatereplace.pl to apply those changes to the code. [Fyodor]
+▶ o make nmap.header.tmpl 
+▶ msft Word "generic" is ncat.app zenmap \nping\ then templatereplace.pl 'mod' code.exe usr@['Fyodor']:
 ~
-o Change Nmap copyright dates (in the file headers, etc.) from 2011 to
-  2012.
+o -- mod nmap(c)('in fs header etc.) from 2011 to 2012.
 ~
-o Get RPM staticly linking to libsvn (rather than dynamic linking) so
-  that it isn't a requirement for installing the RPM.
-  - We decided to just make nmap-update its own separate RPM so that
-    it can dynamically link to libsvn without forcing that dependency on
-    the whole nmap RPM package.
-  - since the libsvn-devel package apparently only installs dynamic
-    libs, we'll probably have to install it ourselves on the CentOS
-    build machines.
+▶ o --git RPM static link -libsvn then dynamic link is this install for require rpm
+▶ $ make nmap-upd | rpm dynamic link @ libsvn Force dependent nmap rpm pkg
+▶ libsvn-devel pkg install dynamic libs install in CentOS build ['machine']
+▶ ~ #FIX 
+/!\ can't parse ip pkt in pkg trace * ipv6 pkt
+/!\
 ~
-o Fix "BOGUS!  Can't parse supposed IP packet" in packet trace of IPv6
-  packets.
+➜ o int latest IPv6 OS detection fingerprint submissions
+note: - In addition to the submission CGI submissions, some were emailed to Fyodor and David on Oct 21
 ~
-o Integrate latest IPv6 OS detection fingerprint submissions
- - In addition to the submission CGI submissions, some were emailed to Fyodor and David on Oct 21
+note: o Integrate new service fingerprint submissions (we have more than 2,531 submissions in two files since 11/30/10) ~ o Integrate new OS detection submissions (1,893 since 6/22/11)
 ~
-o Integrate new service fingerprint submissions (we have more than
-  2,531 submissions in two files since 11/30/10)
+o ['+']: option.conf option.ps for Global_usr ['FIND'] sub lib/include dir
+>>> libs \dependent
+See this mail:
+/!\ http://seclists.org/nmap-dev/2012/q1/37
+// -- David added --with-apr and --with-subversion
 ~
-o Integrate new OS detection submissions (1,893 since 6/22/11)
-~
-o Add options in configure script for users to specify where to find
-  subversion lib/include dirs (like we do with our other library
-  dependencies).  See this mail:
-  http://seclists.org/nmap-dev/2012/q1/37
-  -- David added --with-apr and --with-subversion
-~
-o We need to fix the svn server so that Nmap committers can make
-  branches from /nmap to /nmap-exp.  We may need to add some sort of
-  OPTIONS permission to the root directory or something, because
-  they're getting errors like:
-  $ svn cp https://svn.nmap.org/nmap https://svn.nmap.org/nmap-exp/branchname
+o 
+#FIX svn /srv nmap commit make branch from /nmap @/nmap-exp 
+  ++ sort option permission @:root dir error
+$ svn cp https://svn.nmap.org/nmap https://svn.nmap.org/nmap-exp/branchname
   svn: Server sent unexpected return value (403 Forbidden) in response
   to OPTIONS request for 'https://svn.nmap.org'
   - Patrick also reported some other funny business related to svn
@@ -615,34 +587,24 @@ o Give CPE visibility to NSE.
 ~
 o Document the new IPv6 OS detection novelty system in os-detection.xml
 ~
-o Do more thinking/researching/investigating the way our machine
-  learning IPv6 OS detection system decides whether a match is perfect
-  and/or how close the match is.  Maybe our current system works well
-  enough, we'll need to watch how it performs as we increase the DB
-  size and collect/integrate more signatures.  The goal is to:
-  o Producing fewer way-off matches since it would have a way (like our
-    current system) to decide how close the match really is
-  o Doing a better job about printing fingerprints for matches with
-    aren't close enough
+$ do machine artefact/intel/ipv6.os -detect.sys
+>>> match perfs %match
+  curr.sys \work 
+    ['watch']: %%>db+size && collect/integrate --sigs
 ~
-o Improve the "run Zenmap as root" menu item to work on distributions
-  without su-to-root.  We might even want to improve Zenmap so that it
-  itself does not have to run as root, and just executes Nmap that
-  way.  Rather than not showing Zenmap as root on the Menu of
-  non-working systems, it might be better to have it but let it give
-  an error message (and then, perhaps, run as nonroot) so that users
-  of those distributions are more likely to contribute a fix.  We also
-  might want to look at how the distributions themselves package Zenmap.
-~
-o Consider changing Nsock so that it is able to take advantage of more
-  modern interfaces to dealing with large sockets, rather than just
-  select.  Perhaps we should look at poll(), Windows completion ports,
-  and some of the advanced Linux APIs.  Select() limits us to
-  descriptors no higher than FD_SETSIZE, and it may not performa all
-  that well.  We should do some benchmarking and decide on the
-  interface to use for each platform. May want to take a look at
-  libevent (http://www.monkey.org/~provos/libevent/) for inspiration.
-  The libevent home page has some interesting benchmark graphs too.
+>>> pro off-match curr.sys "close match"
+  do Job print('finger_print') for Match Close%Enough%
+    imp run zenmap from :root @menu_item \work distro non_su-root --imp zenmap non_root
+      nmap.exe non_show zenmap :root @Menu in **non_work-sys 
+        --git Err Msg then run non$root @usr **distro %% > cont #FIX
+            ['--''LOOK']: ['DISTRO',"pkg"]: zenmap ~ o 
+~ # --mod nsock is "*>mod uif %%SOCKS then ['SELECT']: poll(WIN_PORT); /!\Complete! **adv Linux_api Select('desc') >% then FD_SETSIZE &&perf"
+>>> %bench%mark && **uif usr ** OS_platform 
+  libevent for link o http://www.monkey.org/~provos/libevent/)
+  <?PHP 
+➜  The libevent home page has some interesting benchmark graphs too.
+usr@Josh: 
+'
   [Josh implemented poll as a SoC student, but it had problems with
   Nsock's architecture.  O(1) lookups were becoming O(n) because of
   the nature of the data structures. It was slower in his benchmarks.
@@ -652,61 +614,57 @@ o Consider changing Nsock so that it is able to take advantage of more
   each. It is the "see if the fd is set" operation that's O(1) with
   select (it's FD_ISSET) and O(n) with poll (it's a traversal of a
   linked list).]
-  o Henri added nsock-engines
+' 
+usr@Henri:
+➜  o Henri added nsock-engines
 ~
-o Consider an update feed system for Nmap which let's people obtain
-  the latest Nmap data files, such as NSE scripts/libs, nmap-os-db,
-  nmap-service-probes, etc.
-  o Note that some scripts require updated compiled libraries.  We
-    will need some sort of compatability system.
-  o One approach is "svn up".  Note that Metasploit uses that approach
-    even for Windows by shipping .svn directories and an svn executable
-    with the Windows installer.  In taht case we might need to have a
-    separate branch for each release that gets updated version/OS
-    databases and scripts.
-  o Another approach is a special feed system as is used by Nessus and
-    OpenVAS.  OpenVAS uses a script wrapper around rsync, or an HTTP
-    download if that fails.
-  o Colin's analysis of different methods:
-    http://seclists.org/nmap-dev/2011/q2/821
+{'void'};
+o 使用脚本引擎用户分析脚本数据库系统更新提要系统。从安装程序可执行文件发布分支操作员。
+usr@Colin:  
+/!\ http://seclists.org/nmap-dev/2011/q2/821
 ~
-o [NSE] Consider using .idl files rather than manually coding all the
-  MSRPC stuff.  The current idea, if we do this, is to have an
-  application in nmap-private-dev which converts .idl files to LUA
-  code for nmap/nselib. Consider adapting the pidl utility from Samba.
- o Drazen did some work on this during SoC.
-   https://svn.nmap.org/nmap-exp/drazen/nmap-msrpc could get someone
-   started.
- o We moved this out of the active section of the TODO because, while
-   it is still a good idea and we'd welcome the change if someone wants
-   to take it on, it isn't something that we are likely to make
-   progress on unless someone steps forward.
+?>
+<>
+[  " N  S  E "  ]  :  _  :
+>>> use fs.idl then man .c msrpc++
+  curr id if do this is app in nmap-priv-dev conversion fs.idl -fs.lua
+  %%lua_code from :root patches ;; nmap/nselib
+    adapt pidl util from Samba
+      usr@Drazen \work this SoC
+        /!\ 
+          https://svn.nmap.org/nmap-exp/drazen/nmap-msrpc/
+              mv this --**active_section **#TODO
+              while is _id --mod if Global_usr 
+                --git is pro for Ward o imp for Global_usr
+                    nist_cpe_os \detect \result
+                      $:S
+                        version_detect for int=2 Phase o
 ~
-o Implement a solution for people who want NIST CPE OS detection
-  results (we'll save version detection for a 2nd phase).  Notes:
-  David report on CPE for OS Detection: 
+Notes: usr@David
+// report on cpe 
+for OS Detection: 
     http://seclists.org/nmap-dev/2010/q3/278
-  David report on CPE for version detection: 
+// version
     http://seclists.org/nmap-dev/2010/q3/303
-  Nessus has described their integration of CPE:
+usr@Nessus: 
+cpe*integrate
     http://blog.tenablesecurity.com/2010/05/common-platform-enumeration-cpe-with-nessus.html.
-  Older messages about it:
     http://seclists.org/nmap-dev/2008/q4/627
     http://seclists.org/nmap-dev/2010/q2/788
 ~
-o [NSE] HTTP spidering library/script
+"script" 超文本协议爬虫库
 ~
-o We should probably modify stdnse.get_script_args so that it first
-  checks [scriptname].[argname] and then (if that fails) looks for
-  [argname] by itself.  This way people who are only running one
-  script or who want to use the same value for multiple scripts that
-  take the same argument can just give [argname].  But those who want
-  an argument to only apply to a specific script can give
-  [scriptname].[argname].
-   o The code is in place now, we just need to document the feature.
-~
-o Script review
- o Martin Swende patch to force script run
+o modify stdnse.get_script_args chk
+[scriptname].[argname] and then (if that fails) looks for
+  [argname] self 
+  this Global_usr run 1
+    script or who want to use the same value for multiple scripts
+      take argument then give [argname]:
+        argument @@apply "script" --git
+          [scriptname] [argname] 
+            o 代码已经到位，我们只需要记录该功能。
+~ स्क्रिप्ट समीक्षा
+usr@Martin_Swende: --patches Force "script run" o /!\ // note:
    http://seclists.org/nmap-dev/2010/q4/567
    o applied
  o irc-info patch. http://seclists.org/nmap-dev/2011/q2/289.
@@ -714,41 +672,39 @@ o Script review
  o http-slowloris. http://seclists.org/nmap-dev/2011/q1/916.
    o Had some issues--never got to a state ready for integration
  o http-phpself-xss
-  - Would need to be rewritten to use newer spider.lua.  Added an item
-   to incoming section of Nmap Script Ideas secwiki page.
+["USE","LATEST","VERSION","INFO__","_SPIDER.LUA"]: ++item _income __section /**nmap | script id | secwiki | page 
 ~
-o Make new SecTools.Org site with the 2010 survey results.
+➜ o make new SecTools.Org 2  0  1  0 के सर्वेक्षण के परिणामों के साथ। ! 
 ~
-o Collect many more IPv6 OS detection training samples from users
- - Can start with nmap-dev, but will probably have to do an Nmap
-   release too.
+➜ o collect IPv6 OS detection training samples from users
+['-']: Start nmap-dev make do nmap release
 ~
-o Integrate more NSE scripts, I think our review queue is getting
-  pretty long.
+➜ o integrate more NSE scripts
 ~
-o Decide what to do with Henri's nsock-engines branch
+➜ o usr@Henri: do nsock-engines branch
   (/nmap-exp/henri/nsock-engines).
 ~
-o finish making nmap-update part of the nmap windows compile-time
-  infrastructure
-  o See if we can build just one project within a solution, rather
-    than having special "with nmap-update" configuration.
+</>
+<>
+{"finish['make(nmap)']"};
+>>> upd **nmap WIN_COMPILE --time infrastructure _o
+PS> **if build project == then special "with nmap-update.conf"  
 ~
-o Add homedir support to Nmap for the updater
+o['+']: homedir support to nmap for updater
 ~
-o Fix expiration date parsing on Nmap Windows for the updater
+o #FIX 
+$ expire date parser in nmap Windows for updater
 ~
-o Updater: Make a missing nmap-update.conf nonfatal (perhaps doesn't
-  even need to mention it).
+o upd: make miss nmap-update.conf non-fatal #non_mention
 ~
-o Updater: Clean up the output messages (e.g. only print what user needs to see
-  unless debugging is specified)
+$ upd clean i/o msg print('usr'): -d spec
 ~
-o [Nping] The --safe-payloads option should be default (though we
-  should keep it for backward compatability).  We could then introduce
-  --include-payloads for cases where they are desired.
+o [Nping] --safe-payloads option default 
+(for backward compatability). 
+  then intro
+$ --include-payloads for cases
 ~
-o A program to canonicalize and tidy nmap-service-probes.
+o canon.prog cat clean nmap-service-probes.
   o Order of fields: m p v i d o h cpe:/a cpe:/h cpe:/o.
   o Check for duplicate templates (except cpe:).
   o Check for unknown templates.
@@ -756,323 +712,294 @@ o A program to canonicalize and tidy nmap-service-probes.
     | % = @ #).
   o Retain line breaks and comments.
 ~
-o Document IPv6 OS detection at https://nmap.org/book/osdetect.html
+o document ipv6 OS detection at https://nmap.org/book/osdetect.html
 ~
 o Script review:
-  - New scripts from Paulino: http-wordpress-brute and http-joomla-brute,
-    http-majordomo2-dir-traversal.nse, http-trace, http-waf-detect
-  - http-methods patch. http://seclists.org/nmap-dev/2011/q1/936.
-  - quake3-info. http://seclists.org/nmap-dev/2011/q2/172.
-  - smb-os-discovery additional
-    information. http://seclists.org/nmap-dev/2011/q2/276.
-  - Outlook web
-  address. http://seclists.org/nmap-dev/2011/q2/296. [probably not
-  going to merge to Nmap trunk at this point, though it is good that
-  the script is available for d/l for those who need it. ]
+['new','script']: from usr@Paulino: 
+http-wordpress-brute && http-joomla-brute
+http-majordomo2-dir-traversal.nse 
+http-trace
+http-waf-detect
+http-methods 
+http://seclists.org/nmap-dev/2011/q1/936/ - quake3-info .. http://seclists.org/nmap-dev/2011/q2/172.
+['-']: smb-os-discovery additional information http://seclists.org/nmap-dev/2011/q2/276.
+['-'] Outlook web address 
+http://seclists.org/nmap-dev/2011/q2/296/ 
+[probably not going to merge to Nmap trunk at this point, though it is good that the script is available for d/l for those who need it. ]
 ~
-o Fix reported (by many people) crash when trying to launch Zenmap on
-  Mac OS X 10.7 (Lion).
+o #FIX #REPORT
+/!\ crash when trying to launch Zenmap on Mac OS X 10.7 (Lion).
 ~
-o Unless we get good arguments for keeping it, we should remove Mac OS
-  X PowerPC support from our binaries.  Apple stopped selling PowerPC
-  machines in 2006 and they stopped making new OS releases available
-  for PowerPC as of Snow Leopard (10.6) in August 2009.  See this
-  thread: http://seclists.org/nmap-dev/2011/q3/430
+o args for rm Mac_OS_X PowerPC supp from bin /apple/sells 
+(c) ['machine']: 2006 new OS_release for PowerPC Snow Leopard(10.6) in August 2009
+See this thread: http://seclists.org/nmap-dev/2011/q3/430
 ~
-o Improvements to the Nmap multicast IPv6 host discovery scripts
- - Note that we hope to move them into core Nmap at some point, but
-   would be good to improve them for now.
- - They should probably print the discovered IPv6 addresses, otherwise
-   they don't actually give the user any information (despite doing
-   their work) unless you give the newtargets script arg.  This would
-   be similar to the current behavior of broadcast-ping.
- - It might be nice if they gave the target MAC address and vendor
-   when printing the discovered IPv6 information too.  Daniel Miller
-   wrote an initial patch for this (though we need to make sure it can
-   handle (e.g. doesn't crash for) non-ethernet
-   devices:http://seclists.org/nmap-dev/2011/q3/862.  Our broadcast-ping script
-   currently prints MAC addresses.
- - It is great that the scripts properly use a specific device when
-   given the Nmap -e option, but they shouldn't require this.  They
-   should do something smart if no specific device name is given.
-   Examples include performing on all compatable devices or trying to
-   pick the best device.  The all-devices appraoch may be the best,
-   IMHO.  That is how our broadcast-ping script works now.
+o nmap imp multicast ipv6 host discovery script 
+note: mv in core_nmap 
+➜ this .imp
+  for print discover ipv6 addr 
+    usr info this Work --git new_targ script arg
+      this curr /behave/ * broadcast-ping
+        this retard if --git target_MAC addr && vendor print discover ipv6 info
+          usr@DMILLER:
+            "$ write init patches for this args make fs do handler non-crash for non-ether dvc"
+http://seclists.org/nmap-dev/2011/q3/862/..
+$ broadcast-ping "script" print(MAC_ADDR);
+['script','dvc','git','nmap','-e_opt']: non-require this
+>>> do s.m.a.r.t dvc Name is --git
+  #include pers in comp+dvc try "dvc" Global dvc alphabet soup
+    is broadcast-ping script \work
 ~
-o Add anti-spam defenses to secwiki.com to stop the current onslaught
-  of spam.  An extention like ConfirmEdit
-  (http://www.mediawiki.org/wiki/Extension:ConfirmEdit) may be a good choice.
+o ['+']: --non --spam --defence
+@@secwiki.com --kill curr Onslaught *spam ext
+# ConfirmEdit
+  indent(http://www.mediawiki.org/wiki/Extension:ConfirmEdit);;
 ~
-o Collect a bunch of IPv6 OS detection signatures from users,
-  integrate them, and then when we have enough, re-enable OS detection
-  results.
+</>
+$ collect ipv6 os detect sigs from usr int then os_detect #result
 ~
-o IPv6 OS detection working (when run on) Solaris and AIX
+o ipv6 os detect work run in Solaris(c) && aix
  - AIX 6.1 - iSeries / System p
  - AIX 7.1 - iSeries / System p
  - Solaris 10 - SPARC
 ~
-o We should consider splitting a 'brute' category out of the 'auth'
-  category now that we have so many brute force scripts.  I suppose
-  users can already do "--script *-brute", but having its own category
-  might still be nice.
+>>> ['split','brute','cat','*','auth','force','script']: usr do --script * -brute
+>>> retarded category
 ~
-o IPv6 OS detection merge
- o [DONE] Initial branch working (nmap-exp/luis/nmap-os6)
- o [DONE] Implement the 2 remaining probes
- o [DONE] Disable the printing of matches (except maybe with debug on).  We
-   want more training examples first so that results are better.
- o [DONE] Merge to /nmap
+/!\ ipv6 os detect merge
+  init branch \work nmap-exp luis nmap os6
+    imp 2 probe
+      disable print * machine exception -d 
+        train i.e. 1st result == bet
+          o[DONE]: merge @@ /nmap
 ~
-o Document Nmap CPE support in appropriate places (candidates:
-  refguide, os detection book chapter, version detection book chapter,
-  output book chapter).
+$ docs nmap cpe supp in 
+$ refguide os detect book chapt version o
 ~
-o Finish CPE support code
- - Escape certain values that can be inserted into cpe string through
-   substitution, like cpe:/a:apache:httpd:$1 where $1 contains a
-   colon.
+o finish CPE supp code esc value 
+o this insert in to cpe string
+   /!\ substitution cpe:/a:apache:httpd:$1 w $1 container: # a colon 
 ~
-o Add advanced IPv6 host discovery features
- o Initially done using NSE by adding these scripts:
-   targets-ipv6-multicast-slaac, targets-ipv6-multicast-invalid-dst, and
+o ['+']: advanced IPv6 host discovery features
+o initial Done! ['use'] NSE by adding these scripts:
+   targets-ipv6-multicast-slaac, targets-ipv6-multicast-invalid-dst, &&
    targets-ipv6-multicast-echo
 ~
-o Initial IPv6 OS detection system (may not make it into stable
-  though, but we want to at least have it working in a branch first.)
-  - OK, it is working in nmap-exp/luis/nmap-os6
+o initial IPv6 OS detection system 
+["stable",'work','branch']: OK !
+  - in nmap-exp/luis/nmap-os6
 ~
-o Investigate a probe/response matching problem reported by QA Cafe
-  Matthew Stickney and Joe McEachern of QA Cafe.  See this thread:
-  http://seclists.org/nmap-dev/2011/q3/227
+>>> probe <?php response srv ['!']: match #problem?>
+➜ जांच प्रतिक्रिया सर्वर। मिलान समस्या।
+usr@QA_Cafe: 
+"Matthew Stickney and Joe McEachern of QA Cafe.  See this thread: http://seclists.org/nmap-dev/2011/q3/227"
 ~
-o When our winpcap installer is run in silent mode
-  (e.g. "winpcap-nmap-4.12.exe /S"), it seems to execute nmap.exe if
-  that binary exists in the same directory.  This leads to a cmd.exe
-  window briefly poping up as Nmap displays its console help output.
-  Moving the Winpcap installer into its own subdir and running it from
-  there seems to fix this (because it then can't find nmap.exe to
-  run), but it would be better to determine why this is happening in
-  the first place and fix it.
+o winpcap installer is run in silent: mode
+    #(e.g. "winpcap-nmap-4.12.exe /S"); 
+    seem.exe nmap.exe if /bin/ current dir
+      this lead cmd.exe payload "pop-up in nmap display console is help i/o"
+        mv winpcap install in subdir && run from #FIX 
+          this { then [find] nmap.exe run determine this 1st place happen #FIX };
 ~
-o Obtain Nmap data directory information from nmaprc at runtime rather than
-  compiled in -- among other advantages this is needed to make
-  relocateable rpm. [actually we ended up doing this without needing
-  nmaprc for now]
+o الحصول على معلومات دليل بيانات 
+>>> Nmap from nmaprc @runtime
+  then compiled in --payload --xploit --vuln xxx.net 
+    this is needed to make relocateable rpm 
+    [usr@end ^ do this nmaprc for now];
 ~
-o Summer of Code feature creeper:
-  o Ncat should probably have an --append-output option like Nmap does
-    so that we can use -o without clobbering existing file.  This would
-    at least be useful for chat.nmap.org.
-  o Change Zenmap bug reporter so that instead of an automatic
-    submission system, we print a stack trace and request that the user
-    send a bug report to nmap-dev.
+o SoC*Feature_creeper
+▶ ncat --append-output option namp do this while use -o without fs.c++ { this when least be useful for chat.nmap.org };
+>> mod zenmap #bug #report is then in stead * auto sub.sys print('stack','trace')
+  <?php request usr@anon send bug report to nmap - dev?>
 ~
-o [Ncat] Solve a crash that only happens on Windows when connecting
-  with --ssl-verify and -vvv, for example
-    ncat --ssl-verify -vvv www.amazon.com 443
-  The crash happens in the function verify_callback, when the function
-  X509_NAME_print_ex_fp is called. Just commenting those two calls
-  avoids the problem. By trying different combinations of debug print
-  statements, I once got the message
-    OPENSSL_Uplink(10109000,08): no OPENSSL_Applink
-  This refers to a Windows dynamic linking issue:
-    http://www.openssl.org/support/faq.html#PROG2
-  However I tried both including <openssl/applink.c> and changing the
-  linker mode to /MD, and neither changed the behavior.
-  Changing the flags from XN_FLAG_ONELINE to 0 seems to make the
-  problem go away.
+<>
+o [Ncat]
+#solve 
+#crash
+WIN_<connection>crash</connection>
+$--ssl-ver && -vvv for ncat --ssl-verify -vvv www.amazon.com 443
+#crash 
+function(verify_callback) when function -call is X509_NAME_print_ex_fp 
+  #comment this :root@call .h .c --silenty ignore
+    try --diff combine *-d print('statement');
+      msg OPENSSL_Uplink(10109000,08): no OPENSSL_Applink
+        this refer @Windows dynamic link issue:
+          http://www.openssl.org/support/faq.html#PROG2
+            try 
+              #include <openssl/applink.c>
+                --mod linker @/md && <xml>behave</xml>
+                    --mod flags from XN_FLAG_ONELINE to 0 make #FIX
 ~
-o Integrate new OS detection submissions (We have about 1,700
-  submissions since 11/30/10)
+o int new_os detect submit 1700 submit 11/30/10
 ~
-o Nmap should defer address parsing in arguments until it has read
-  through all the args.  Otherwise you get an error if you use like -S
-  with an IPv6 address before you put -6 in the command line.  You get
-  a similar problem if you do "-A -6" (but "-6 -A works properly).
-  This is a possible feature creeper task.
+o 
+>>> nmap defer addr parse in args is read in args
+  { "ERROR" if usr -S ipv6 192.0.0.1 -6 in cmd:l --git #problem if do "-A -6" \work this feature _creeper task_Task};
 ~
-o Ncat chat (at least in ssl mode) no longer gives the banner greeting
-  when I connect.  This worked in r23918, but not in r24185, which is
-  the one running on chat.nmap.org as of 6/20/11.  Verify by running
-  "ncat --ssl -v chat.nmap.org"
+$ o ncat chat in ssl: mode banner "greet when connect" this in r23918 in r24185 is run in chat.nmap.org of 6/20/11 ver * run 
+  { "ncat --ssl -v chat.nmap.org" };
 ~
+>>> ipv6 _neighbor _discover -based _discover.h (analog arp -S);
+  inv && docs is drop ncat.exe Self .sys && \work 
+    in dependent *nmap && zenmap **struct @@"Portable Firefox"
 o IPv6 Neighbor Discovery-based host discovery (analog to ARP scan).
+  ;;(http://portableapps.com/apps/internet/firefox_portable)
+    build ["use","open","src"]; tek from portableapps.com 
+      "The Network Toolkit" by Cace(c)(tm)
+        (http://www.cacetech.com/products/network_toolkit.html) //break; 
+        for Nmap && Nping winpcap.imp $load is DLL non-require install | is #TODO #item
 ~
-o Investigate and document how easy it is to drop Ncat.exe by itself
-  on other systems and have it work.  We should also look into the
-  dependencies of Nmap and Zenmap.  It may be instructive to look at
-  "Portable Firefox"
-  (http://portableapps.com/apps/internet/firefox_portable) which is
-  built using open source technology from portableapps.com, or look at
-  "The Network Toolkit" by Cace
-  (http://www.cacetech.com/products/network_toolkit.html).  For Nmap
-  and Nping, we may want to improve our Winpcap to load as a DLL
-  without requiring installation.  There is a separate TODO item for that.
+▶ SCRIPT_NAME o variable non 
+#include ".nse" in name.py Name.js NAME.ps | "script currently omits for script in db" | #include for scripts 
+(You) base_fileName ;;  
+See: http://seclists.org/nmap-dev/2011/q2/481/
 ~
-o The SCRIPT_NAME variable should not include the ".nse" in script
-  names.  Currently, it omits that for scripts in the DB, but includes
-  it for scripts you specify based on their filename.  See:
-  http://seclists.org/nmap-dev/2011/q2/481
+>>> if %%ncat listen: mode
+  sys ipv6 uif @ipv6 
+    192.0.0.1 xxx.com this srvr.apache && srvr.ssh == DEFAULT
+      %listener%in IPV6 ** run 0.1s ncat -6
+        non-work for broker && chat --mod 
+          IPv6 usr enable = Talk: mode @IPV6
+              ['-']: this partition.imp do non-work
+                  --chat mode Test chat.nmap.org
+                      Done!  Test in scanMe 
+usr@David_&_Fyodor in 7/18/11 ~
+o Release NCAT BUILD PORTABLE
+["POST"]: https://nmap.org/ncat/
+  for 5.59BETA1 is for curr
+['-']: CHANGELOG upd
 ~
-o If possible, Ncat, in listen mode, should probably listen on the system's
-  IPv6 interfaces as well as IPv4.  This is what servers like apache
-  and ssh do by default.  It might now be possible to listen on IPv6
-  by running a second ncat with -6, but that doesn't really work for
-  broker and chat modes because you want the IPv6 users to be able to
-  talk to IPv4 and vice versa.
-  - This was partially implemented, but still doesn't seem to work in
-    --chat mode.  Can test against chat.nmap.org
-  - Done.  Tested on scanme with David & Fyodor on 7/18/11.
+o [Fyodor]:;;
 ~
-o Right before the release, we could build Ncat portable and post it
-  on https://nmap.org/ncat/.
-  - Actually we did that for 5.59BETA1, which is good enough for now.
+➜ o [Ncat]: ["+"] NEw! cert BUNDLE(ca-bundle.crt)वर्तमान एक पुराना है See http://seclists.org/nmap-dev/2011/q2/641.
 ~
-o CHANGELOG updates [Fyodor]
+$ mv this pre-Rule post-Rule SecWiki
+スクリプトのアイデアをスクリプト ページに移動する  !
+   if script.app in bit _Detail
+    as #@102.0.0.1 - 192.0.0.0.1 \01 in version http://seclists.org/nmap-dev/2010/q2/101/
+      o dns.srvc.discover (Bonjour): http://en.wikipedia.org/wiki/Bonjour_%28software%29
+        /!\ present in dns-service-discovery.nse.
+          o Netbios Name Service
+              Present broadcast-netbios-master-browser.nse?
+                  ["!"]: DHCP broadcast requests
+                    Present dhcp-discover.nse
+                      postRule ["CREATE"]: --git Final Report/Stat or ["USE"]: i/o
+                        reverse-index 'show all open port numbers' && HOST PORT OPEN
+                          ssh srv zenmap mode: easy
+                          ssh-hostkey & ^ cred-summary
+                            preRule Sniff.py ["use"]: { "pcap @sniff traffice for Short.conf mount Time && then ["+"]: discover Host @ targs list" }      
+                              targets-sniffer.nse
+                                  script.py script.js \trace-route && ["+"]: targ List
+                              o targets-traceroute.nse
+                  return value,
+         ind;;
+   break;
+  ` 
 ~
-o [Ncat] Add new certificate bundle (ca-bundle.crt) since the current
-  one is out of date.  See http://seclists.org/nmap-dev/2011/q2/641.
+</>{'void'};
+["+"]: id secwiki "script" id Page if .app
+o [NSE]: >_detail
+WIN_.sys >log <sysinternal>psloglist<sysinternal>
+srvc ** sysInt pssrvc.script.py or mod @ smb-check-vulns @ detect this MSRPC vuln
+/!\ http://seclists.org/fulldisclosure/2010/Aug/122/o
+['!']: BasicHTML/XML parser libs for usr@Sven/Klemm write script: ["USE"]: libxml2: http://seclists.org/nmap-dev/2008/q3/0462.html/
+    && is usr@DuartSilva 
+      :root@Expat~$: http://seclists.org/nmap-dev/2009/q3/1093.
+          o Add detection of duplicate machines via IP.ID technique.
+            ind["use",'uptime','timestamp']: MAC_ADDR 
+              HOST_KEY.ssh {"is used for this"};
 ~
-o Move these prerule/postrule script ideas to secwiki script idea page
-   if appropriate (with a bit more details):
-   o AS Number to IP ranges: http://seclists.org/nmap-dev/2010/q2/101
-     In progress.
-   o DNS service discovery (Bonjour): http://en.wikipedia.org/wiki/Bonjour_%28software%29
-     Present as dns-service-discovery.nse.
-   o Netbios Name Service
-     Already present as broadcast-netbios-master-browser.nse?
-   o DHCP broadcast requests
-     Present as dhcp-discover.nse.
-   o Postrules could be created which give final reports/statistics or
-     other useful output.  Like a reverse-index, which shows all the open
-     port numbers individually and the hosts which had that port open
-     (e.g. so you can see all the ssh servers at once, etc.)
-     Admittedly you can do that pretty easy with Zenmap instead.
-     Have a few of these: ssh-hostkey and upcoming creds-summary.
-   o We could have a prerule sniffer script which uses pcap to sniff
-     traffic for some short configurable amount of time and then adds the
-     discovered hosts to the target list.
-     Already present as targets-sniffer.nse.
-   o We could have a script which takes traceroute results and adds them to the target list.
-     Already present as targets-traceroute.nse.
+$ iplog http://ojnk.sourceforge.net/ -z Option is FOOL.os -Detect
+S  O  F  T  W  A  R  E  |  |  M  A  I  N  T  A  I  N  E  R
+Go! Page: "I am through working on this project. I will not be making any updates, and I will ignore just about all email about it. If anybody wants to take it over (for whatever reason), let me know..."
 ~
-o [NSE] Add these ideas to secwiki script ideas page if appropriate
-  (with a bit more details):
-  o Windows system logs (like sysinternals' psloglist)
-  o Services (like sysinternals' psservice)
-  o A script (or modification to smb-check-vulns) to
-    detect this MSRPC vulnerability:
-    http://seclists.org/fulldisclosure/2010/Aug/122
-  o BasicHTML/XML parser library?  For example, Sven Klemm wrote a script
-    which uses libxml2: http://seclists.org/nmap-dev/2008/q3/0462.html.
-    And here is one by Duart Silva using Expat:
-    http://seclists.org/nmap-dev/2009/q3/1093.
-  o Add detection of duplicate machines via IP.ID technique.
-    Maybe I should use uptime timestamps too.  Oh, and MAC addresses
-    too.  Our SSH host key script is useful for this as well.
-~
-o Look into iplog ( http://ojnk.sourceforge.net/ ) -z option which is 
-  supposed to fool OS detection.
-  o The software is no longer maintained, so we're not going to worry
-    about it.  The page says: "I am through working on this project. I
-    will not be making any updates, and I will ignore just about all
-    email about it. If anybody wants to take it over (for whatever
-    reason), let me know"
-~
-o [NSE] Consider how we compare to the Nessus Web Application Attack
+o [NSE]
+Nessus Web Application Attack
   scripts
   (http://blog.tenablesecurity.com/2009/06/enhanced-web-application-attacks-added-to-nessus.html).
-  [Joao making a list of web scripts which we might find useful,
-  Fyodor asking HD moore for permission to use http enum dir list]
+  [Joao making a list of web scripts which we might find useful, Fyodor asking HD moore for permission to use http enum dir list]
 ~
-o [NSE] HTTP persistant connections/keepalive? May make
-  spidering/grinding/auth cracking more efficient
+o [NSE] HTTP persistant connections/keepalive? \make  spidering/grinding/auth|cracking 
 ~
-o [NSE] HTTP Pipelining support? May make spidering/grinding/auth
-  cracking more efficient
+o [NSE] HTTP Pipelining support? \make  spidering/grinding/auth|cracking 
 ~
-o [NSE] HTTP Cookie suppport?  Might be useful for spidering sites which use it
-  for authentication/authorization/personalization.
+o [NSE] HTTP Cookie suppport?  \make  _["USE"]: spidering site
+  for authentication/authorization/personalization/..
 ~
-o [NSE] URL grinder checks for existence of applications in common/default
-  paths. Scanning http paths to see if they exist is in some ways
-  similar to scanning to see which ports are open.
-  o Our http-enum does this.
+o [NSE] URL grinder checks for existence of applications in common/default \path 
+Scanning http paths...
+    if EXIST is in -S //See which ports are open.
+o Our http-enum does this.
 ~
-o Investigate why and whether we need mswin32/pcap-include/pcap-int.h.
-  This file is not included in the official WinPcap 4.1.1 developers'
-  pack
-  (http://www.winpcap.org/install/bin/WpdPack_4_1_1.zip). Presumably
-  it covers internal functions and structures which we aren't really
-  supposed to access it.  If we can get rid of it, that would be
-  great.  If we need it, we should probably upgrade to the
-  4.1.1. version (presumably from the Winpcap source code
-  distribution). Right now it is included in tcpip.h,
-  nsock/src/nsock_pcap.h, and nping/common_modified.cc: o David looked
-  into it.  He says it isn't distributed with the WinPcap developer's
-  pack. You have to extract it from the source file. He updated to the
-  4.1.1 version.  He says The entire reason we need it is so we can
-  peek at the definition of struct pcap, so we can access the
-  pcap.adapter member on Windows.  In order to pass it to
-  PacketSetReadTimeout. Usually struct pcap is an opaque type and you
-  are only supposed to access it through a pcap_t *. Unfortunately I
-  don't think there's an easy way to manipulate the timeouts in
-  WInPcap like we do on other platforms. You can specify a timeout
-  when you do pcap_open, but we like to set a timeout on every
-  read. So we sort of sneak in and call PacketSetReadTimeout. In the
-  code there's even a comment: "BUGBUG: This is cheating." libdnet
-  also uses the Packet* functions, but in a more innocuous
-  way. It doesn't access them through a struct pcap, so it
-  doesn't need pcap-int.h.  David tried testing whether this makes
-  any signficiant difference--to see if we could just remove the
-  PcapSetReadTimeout()--but that didn't work out.
-  - We're not going to worry about this for now since it isn't
-  important enough to pester the pcap people about, and they don't
-  seem to be changing their internal structure anyway.  And if they
-  do, we can get the new pcap-int.h.
+>>> inv && mswin32/pcap-include/pcap-int.h 
+  this fs
+    #include in (OFFICIAL) WinPcap 4.1.1 dev pkg
+      (http://www.winpcap.org/install/bin/WpdPack_4_1_1.zip)
+        int('function'); struct  ACCESS  if *del 
+          いい案。 if upg 4.1.1  _version 
+            from the Winpcap src code distro 
+              #included in tcpip.h 
+              br
+              nsock/src/nsock_pcap.h && nping/common_modified.cc: o 
+              usr@David 
+               // looked into it  
+               usr@David "...its not distro'd with winpcap devs pack. extract from src fs. I up'd to 4.1.1-v. Entire reason is to define struct pcap...Access pcap.adapter member in Windows.  Pass it to PacketSetReadTimeout...struct pcap これは不透明なタイプであり、プロトコルを介してのみアクセスすることになっています pcap_t *. 
+               !-utf 86 -- There is no way to manipulate the timeouts in WInPcap like we do on other platforms... 
+               /!\ Specify a timeout when you do pcap_open 
+               note: Like to set a timeout on every read. So, sort of sneak in and call PacketSetReadTimeout... 
+               note: In the code there is a comment: '# バグ。これは不正行為です！' 
+               /!\ libdnet also uses the Packet* functions, but in a more innocuous way. 
+               /!\ It does not access them through a struct pcap. So, it does not need pcap-int.h...
+               Also, try testing whether this makes any signficiant difference--to see if we could just remove the PcapSetReadTimeout()--but that did not work out. - We are not going to worry about this for now since it is not important enough to pester the pcap people about, and they do not seem to be changing their internal structure anyway.  And if they do, we can get the new pcap-int.h..."
 ~
-o Further brainstorm and consider implementing more prerule/postrule
-  scripts:
+o brain_storm.imp prerule/postrule {
    o [Implemented] dns-zone-transfer
    o [Implemented, but a joke] http-california-plates
+~};;
+>>> inv uif interface-matching
+#PROBLEM 
+WIN
+  http://seclists.org/nmap-dev/2011/q1/52/o 
+    is relate to libdnet mods make ['choose']: _corr physical
+      interface when teamed interfaces share__MAC .. 
+          this is Solved with rewritten libdnet code (use_GetAdaptersAddresses) in My_nmap-ipv6 --branch 
+usr@David:
 ~
-o Investigate this interface-matching problem on Windows:
-  http://seclists.org/nmap-dev/2011/q1/52. It is related to the
-  libdnet changes we made to allow choosing the correct physical
-  interface when teamed interfaces share the same MAC.
-  I think this is solved with the rewritten libdnet code (that uses
-  GetAdaptersAddresses) in my nmap-ipv6 branch. --David
-~
-o [Ncat] When in connection brokering or chat mode with ssl support
-  enabled, if one client connects and doesn't complete ssl negotiation,
-  it hangs any other connections while that first is active.  One way to
-  reproduce:
+o [Ncat]: in connect broker or chat mode 
+$ ssl supp:enabled
+  if one client connects && non-ssl negotiation;;
+    HANG : CONNECT while <?php first 1 is active!?>
+      reproduce:
   Run SSL chat server like: /usr/local/bin/ncat --ssl -l --chat
   Window #1: Connect without ssl: ncat -v chatserverip
   Window #2: Try to connect with SSL: ncat -v --ssl chatserverip
   Window #2 will not work while #1 is active.  If you quit #1, #2
-  should work again.
+またうまくいくはずです！
 ~
-o IPv6 todo.
+o IPv6:
   - Protocol scan (-sO).
 ~
-o [Ncat] Find out what RDP port forwarding apparently doesn't work on
-  Windows. http://seclists.org/nmap-dev/2011/q1/86
+o [Ncat] Find:
+>>> rdp_port \forward non-work WIN
+/!\ http://seclists.org/nmap-dev/2011/q1/86
 ~
-o Add raw packet IPv6 support, initially for SYN scan
- o After that can add UDP scan, and sometime OS detection (David did
-   some research on what IPv6 OS detection might require).
+o ["+"]: raw pkt IPv6 supp
+>>> init for syn -S 
+['+']: udp scan&&%OS%%detect
+usr@David: 
+" i did some research on what IPv6 OS detection might require... " 
 ~
-o When I (Fyodor) scan scanme.nmap.org with the command "nmap -sC -p80
--Pn -n scanme.nmap.org", I get a blank http-favicon line like:
-    80/tcp open  http
-    |_http-title: Go ahead and ScanMe!
-    |_http-favicon: 
-  But if I use "--script http-favicon" instead of -sC, it works fine.
+usr@Fyodor: 
+"o -S scanme.nmap.org with cmd 'nmap -sC -p80 -Pn -n scanme.nmap.org'...Blank http-favicon:l 
+80/tcp open http
+|_http-title: 扫描我！
+|_http-favicon: --_blank
+'if '--script http-favicon' * -sC 
+Done!
+"
 ~
-o UDP scanning with IP options causes "Received short ICMP packet" on
-  receipt. http://seclists.org/nmap-dev/2011/q1/82
+>>> udp -S \192.0.0.1 Option clause "receiver short...icmp pkt"
+/!\ http://seclists.org/nmap-dev/2011/q1/82/o
 ~
 break;
 o [Zenmap] Make formerly open ports that are now closed or filtered
