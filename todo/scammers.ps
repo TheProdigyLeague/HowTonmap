@@ -1687,532 +1687,453 @@ $ nsedoc -gen "WARNING, if a script is -e MISS @i/o @usage RETARD @auto-gen for 
 $ o rm --inter_active
 <br> for -T && notice 
 $ call nmap-dev for --interactive_usr do 
-
-Remove --interactive.  It was broken for a long time and nobody
-  seemed to notice, and we put a call out on nmap-dev for
-  --interactive users and didn't get any good reasons to keep it.  We
-  should kill it to remove the code complexity it adds and to avoid
-  the documentation complexity of people having to read and learn
-  about a feature they are unlikely to ever use.
+$ rm --interActive <br> for "me luv yu long Time..." && ["PUTS","CALLS"]: --call i/o in nmap-dev for --interActive ["USR"]: --git NULL non-keep
+$ --kill --interActive rm code.exe ["complex"]: ["+"]: && {"void"}; docs ["complex"]: of Global usr "Read && Learn" Feature ["USE"]:
 ~
-o Zenmanp should perhaps be able to print Nmap output on a Printer (if
-  not too much of a pain to implement.)
+$ zenmap print("nmap"): i/o print("imp") if ** of "output" i/o ["input","output"]
 ~
-o Review afp-serverinfo.nse from Andrew Orr.
-  http://seclists.org/nmap-dev/2010/q1/470 Just waiting on some bug fixes:
-  http://seclists.org/nmap-dev/2010/q1/665
+$ afp-srvrinfo.nse from usr@AndrewOrr
+  http://seclists.org/nmap-dev/2010/q1/470/ #BUG
+  http://seclists.org/nmap-dev/2010/q1/665 #FIX
 ~
-o Test 64-bit pcap installer (e.g. remove old version and install new)
-  before next release, as we've applied a change from Rob which works on
-  his system (http://seclists.org/nmap-dev/2010/q1/796).
+$ test 640bit pcap installer
+$ rm "old version &&" install 1.2.3.4.5.6.7.8.9.0 
+$ --mod from nmap.app #usr@Rob: \WORKS.sys | (http://seclists.org/nmap-dev/2010/q1/796/0);;
 ~
-o [NSE] Improve username/password library (the database files
-  themselves).  We don't have very good lists at the moment.  Maybe
-  work in combination with Ncrack dev.
-  o Now there are some even better lists available (f.e. RockYou)--see
-    this thread: http://seclists.org/nmap-dev/2010/q1/764
-  o We've improved the ncrack files--we should probably either use
-    those for NSE or use a subset of them.
-  o perhaps from Solar Designer. (he sent us permission)
-  o perhaps add phpbb hack data (there is at least a list of 28,635
-    passwords in phpbb_users.sql, and possibly more in other files.
+o 
+[NSE]: imp usr/pwd/libs/fs.db _SELF LIST.lst 
+$ls list \WORKS COMBINE_ncrack-dev LIST ["available","NOW","NEW!"]: version list from solaris_designer
+$ /thread/ | \n http://seclists.org/nmap-dev/2010/q1/764/0 --imp ncrack fs ["use"]: this for scripts.nse --subset**this
+$ permission ls ("RockYou"): from criminal gang banger && the literal fed
+["+"]: phpbb <?php h4x.dat is this list of 28,635 pwd in phpbb_usr.sql in %%fs **o
+~ o
+[Nping]: version_0 ["nmap",'version']: 0.5.22TEST
+~ o rpc.lua nfs-showmount.nse nfs-get-stats.nse && nfs-get-dirlist.nse from usr@Patrik_Karlsson
+/!\ http://seclists.org/nmap-dev/2010/q1/270
+~ o [NSE]: mv pkt mod 
+▶ c++ for perfs \log
+➜usr@[Patrick]: rm this 1 is non-upd _deprecate for "me luv yu long Time"
+  is this if when this is fs.imp _KEY is MEASURE curr perfs && if is #PROBLEM
+$ ~ o nmap ASCII _art .conf for devs make 
+$ ~ o snmpenum.nse from usr@WilliamNjugna: http://seclists.org/nmap-dev/2009/q4/721 | http://seclists.org/nmap-dev/2010/q1/656 
+>>> +o drop_box for EPOCH: 2023-05-14 UNIX: 10:30:00.168410055+0006 || DEBT: 31,900,000,000,000
+>>> usr@author["DAVID"]: else #FIX #BUG \n ;; {"void"};<br>break;
+  ["+"]: smtp -enum --usr from usr@Duarte_Silva if #TEST | http://seclists.org/nmap-dev/2010/q1/699~/0auth/
+    NEW! -sn && -Pn \OPTIONS_options svn++ 7/20
+      5.00 RELEASE_release_Release
+        "me luv yu long Time" in Global_usrs cp of **nmap_NMAP in GLOBAL_VERSION
+          --nmap distro from v_load**NMAP 
+            PAGE.nmap(stable+dev) for @two_months "nmap docs this ref_-version then -sP && -PN" 
+              this MATCH_-n && #PROBLEM -sP is ["USE"]: for "disable: portscan" then -ping Persist for "example use nse traceroute"
+~ o nmap curr ['selects']: route based_32x64x86 in "first", "match" 1 "find"  
+  spec_route in ['SEARCH']:
+    1.) Keep searching routing table for Most specific match
+    2.) Use Stable sort (not qsort) so that routes with identical netmasks && are not rearranged.
+/!\ For more, see http://seclists.org/nmap-dev/2010/q1/685
 ~
-o [Nping] Should take the version number 0.[nmap version], such as
-  0.5.22TEST
+o pgsql-brute.nse from usr@Patrik_Karlsson: http://seclists.org/nmap-dev/2010/q1/455/0
 ~
-o Review rpc.lua, nfs-showmount.nse, nfs-get-stats.nse, and
-  nfs-get-dirlist.nse from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/270
+o psexec missing 
+  v_LOAD_NOW #nmap_srvc.exe
+    i/o #ISSUE function("this","detect"): return value -pass ➜ stdnse.format_output
+      format_output para Display "ERR MSG" 
+        is hard-code Strict display_ERR_MSG -d >= 1 
+          \option -mod format_output && make FLEX or ["decouple"]: of nmap_srvc.exe from 
+            norm_i/o CHAN *script.py 
 ~
-o [NSE] Look into moving packet module to C for better performance
-  [Patrick]
-  o Removing this one because it is stale (has been here for many
-    months with no action seen), but it is something we can consider
-    if/when there is a desire to implement it.  A key is probably to
-    measure current performance and see if it is a material problem.
+o $web -create Share_DIR in svn docker container dir share betwix insecure.org net of SITE
+>>> template_ERR xss.css xss.sass then site sectools nmap.org insecure.org chk 
+  ext declare or symlink css dir then /shared/css/insecdb.css ('etc.'); et, al ;;
 ~
-o Maybe the Nmap ASCII art should come after make rather than
-  configure?
-  - We decided it would probably be annoying for developers to see it
-    every time they 'make'.
-~
-o Review snmpenum.nse from William Njuguna.
-  http://seclists.org/nmap-dev/2009/q4/721
-  http://seclists.org/nmap-dev/2010/q1/656
-  o Dropping for now unless original author or someone else picks it
-  up and fixes the bugs.
-~
-o Add smtp-enum-users from Duarte Silva if testing is favorable.
-  http://seclists.org/nmap-dev/2010/q1/699
-~
-o After the new -sn and -Pn options (added to SVN around 7/20, just
-  after the 5.00 release) have been around long enough to be in most
-  people's copy of Nmap (e.g. in all the versions we distribute from
-  download page (stable+dev)) for at least a few months, we'll document
-  these as the preferred version rather than -sP and -PN.  These match
-  -n, and the main problem with -sP is that we now use it more for
-  "disable portscan" than ping only.  For example, you can also use
-  NSE, traceroute, etc. [David]
-~
-o Nmap currently selects routes based on the first matching one it
-  finds.  But it should really take the most specific route instead.
-  So it should:
-  1) Keep searching the routing table for the most specific match, and
-  2) Use a stable sort (not qsort) so that routes with identical
-     netmasks aren't rearranged.
-  For more, see http://seclists.org/nmap-dev/2010/q1/685
-~
-o Review pgsql-brute.nse from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/455
-~
-o psexec missing (need to download yourself now) nmap_services.exe
-  output issue: "The function where this is detected returns a value
-  that is passed to stdnse.format_output. format_output takes a
-  parameter to decide whether it's displaying an error message, but it
-  is hard-coded to only display error messages with debugging >= 1. So
-  options are to change format_output and make it more flexible, or
-  somehow decouple the sensing of nmap_service.exe from the normal
-  output channel of the script."
-~
-o Website: Create shared directory in svn, which will contain
-  directories shared between the Insecure.org network of sites
-  (e.g. templates, error, css).  Then sites such as sectools,
-  nmap.org, insecure.org can just check that out via externals
-  declaration (or, I suppose, symlink).  CSS directives will then use
-  /shared/css/insecdb.css etc. ).
-~
-o Add CouchDB and JSON scripts once the JSON library is finished.
+o ['+']: CouchDB and JSON scripts JSON library 
   http://seclists.org/nmap-dev/2010/q1/641
-~
-o Review NSE raw IP from Kris Katterjohn.
-  http://seclists.org/nmap-dev/2010/q1/559
-~
-o Review sslv3-enum.nse from Mak Kolybabi.
-  http://seclists.org/nmap-dev/2010/q1/563
-~
-o [NSE] Consider LDAP library and scripts from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/70 [all merged, except David is
-  still reviewing ldap-search]
-~
-o More potential improvements to http-methods:
+~usr@Katterjohn: from raw.nse 192.0.0.1\01 || o http://seclists.org/nmap-dev/2010/q1/559
+~usr@Kolybabi: from sslv3 -enum.nse || o http://seclists.org/nmap-dev/2010/q1/563
+~usr@Patrik_Karlsson: ['NSE']: ldap libs && "script" from ["MERGED"]:
+~usr@David: ldap-search Review exception o [NSE]: ~ o http-methods: ➜imp
    http://seclists.org/nmap-dev/2010/q1/630 and
    http://seclists.org/nmap-dev/2010/q1/640
 ~
-o Remove smtp-open-relay.nse sometime after 9/24/09 if nobody adopts it (see
-  http://seclists.org/nmap-dev/2009/q3/0986.html). [It got fixed up
-  and we kept it.]
+o rm smtp -open relay.nse -9/24/09 if Global_usr non-adopt #FIX (see http://seclists.org/nmap-dev/2009/q3/0986.html)
 ~
-o The -v and -d arguments should take the same syntax.  Right now you
-  use -vvv vs. -d3. We should probably just make either approach work
-  with either of them.
+o -v && -d args Take Syntax | use -vvv -d3 | of this
+  zenmap export normie nmap i/o
+    integrated nping
+      ['nse']: http-method script from usr@Bernd_Stroessenreuther || http://seclists.org/nmap-dev/2010/q1/76 || ["integrate usr@David: is make _ fs.imp"]:
 ~
-o Zenmap should be able to export normal Nmap output
+o 
+>>> nmap web Page is BEGIN_SHOW is "me luv yu long Time" for 5 YEAR
+>>> upg ➜ xhtml + css
+>>> conversion xhtml + css ['+']: inter_action menu bar
+>>> this is MODERN_PROJECT
+>>> NEW! xhtml + css curr html PAGE
+>>> ext Design in ("MOD","CSS","GRAPHIC"); conversion
+  exist PAGE -nmap NEW! xhtml format
+    this #include Open src.progs && mod this Create.py Create.js \help
+      process apply "for this TASK" web-dev.exp && for "example xhtml + css WEB_PAGE ['CREATE']: على الخط."
+        xhtml for current.time integrate in PIECESxpieces "p  i  e  c  e"
+                ind --git struct section headers, left sidebar links. (etc.)
+                  ...
+                    ['USE']: ssi curr page 
+                    is m  a  g  i  c  k  a  .  l  u  a   |  |  على الخط.
+                    ➜ نص القمر
+                      { " xss.css \WORK seclists SSI for sec_reason " };
+                        [  ALPHA_TRANSPARENT ] for ["MENU","GRADIANT","CURVE","MATHS"]:
+                            \n \v \o ^g ^d 
+                                ## But the main goal is not flashiness... ##
 ~
-o Integrate Nping.
+o seclists.org #FIX
+$ --strip Quote.txt for sum from 192.0.0.1.0 102.0.0.0 \01 \10 0x01 LIST consist ENTIRE** 
+  for ward <material> --strip @@ http://seclists.org/interesting-people/0
+$  ~  o  web_site <html>imp</html>"START"@nmap.org
+  {"#FIX"};
+    valid #PROBLEM <br>LINK</br>
+        for this tool
+          then make do seclists.org insecure.org sectools.org
+            this .ico TOP-LEFT of <screen> for link :root URL of curr <site>
+              seclists.org sectools.org nmap.org 
+                then insecure.org <always>never<always>
 ~
-o [NSE] Consider the http-methods script from Bernd Stroessenreuther.
-  http://seclists.org/nmap-dev/2010/q1/76. [integrated, but David is
-  making some improvements].
-~
-o The Nmap web page is beginning to show its age.  Ah, who am I
-  kidding, it was showing its age 5 years ago :).  It could do with an
-  upgrade to XHTML+CSS.  It could also do with a whole redesign, but I
-  think that can be done as a second step after converting to
-  XHTML+CSS with roughly the same look.  Though adding a few more
-  modern touches (like hover interaction on the menu bar) wouldn't
-  hurt.  This is a moderatly big project, which will involve: o
-  Designing the new XHTML+CSS to look similar to the current HTML
-  pages, but be extensible enough that it can be redesigned in the
-  (near) future by mostly just changing the CSS and graphics.  
-    o Converting the existing Nmap pages to the new XHTML format.
-      This will likely include using open source programs and likely
-      modifying them or creating your own scripts to help with the
-      process.  To apply for this task, you need to have some web
-      development experience and an example XHTML+CSS web page you
-      have created online.
-    o We decided not to worry about XHTML for now, and we're
-      integrating CSS in piece by piece -- we already have the section
-      headers, left sidebar links. etc.
-    o Should not use SSI like the current pages -- should do all its
-      magic through CSS. That way it will work on seclists too (which
-      can't do SSI for security reasons).
-    o Maybe alpha transparency for menus, gradiants, curves, etc.  But
-      the main goal isn't flashiness.
-~
-o Seclists.org should maybe be fixed so that it doesn't strip quoted
-  text for its summaries from the IP list because that list consists
-  almost entirely of forwarded material which is being stripped.  Look
-  at the summaries at http://seclists.org/interesting-people/.
-~
-o Web site HTML improvements
-  - Maybe start with nmap.org.
-    - Find and fix HTML validation problems, bad links.  I'm not sure
-      what tool is best for this.
-  - Then do the same with seclists.org, insecure.org, sectools.org
-  - The icon on the top-left of the screen should be for (and link
-    to) the root URL of current site.  e.g. seclists.org,
-    sectools.org, nmap.org rather than always insecure.org.
-~
-o [NSE] Consider SNMP scripts from Patrik Karlsson.
+o [NSE]: snmp <script> from usr@Patrik_Karlsson:
   http://seclists.org/nmap-dev/2010/q1/162
   http://seclists.org/nmap-dev/2010/q1/174
   http://seclists.org/nmap-dev/2010/q1/178
+~#ISSUE
+>>> av $false $true + -re nmap_srvc.exe for <curr> 
+usr@David: --patches from usr@Ron: rm this <script>
+usr@David: print('i/o'); <verbose>in</verbose> then in -d < -Verbose
+  lt is for usr@Ron: <encrypt> OpenSSL 
 ~
-o Deal with AV false positive issue RE nmap_services.exe:
- - For now, David is going to apply Ron's patch which removes this,
-   but David will make it print output in verbose mode rather than
-   debug and maybe make it a little less verbose. LT plan is for Ron
-   to encrypt it with OpenSSL.
+o تحسين الموقع
+['+']: वेबसाइट सुधार
+▶ ^d use css for header ||
+PS> if = Easy --git Header _BAR <round> <corner> if = hard non-imp
+$ nmap.org <navigation> in table <background> line ['USE']: for CALENDER
+  1st item('table') in FEATURE NEWS!
+    margin then 1 in Firefox 3.5.6 && ieb do non-extend FAR
+      <PAGE> + .img in <RIGHT> #PROBLEM ext <BORDER>
+        v_<BELOW>
+          {"make window wide in ieb slight margin of entry "};
+            >RETARDED 
+              && if simp tag x 2 adobe.control.css 
+              <TABLE>FONT_TAG</TABLE> for "entry"
 ~
-o Web site improvements
-    - Update to use CSS, at least for header bars
-      - Also, if it is easy to give the header bars rounded corners,
-        we should probably do so.  But if it is hard, it isn't
-        important enough to matter.
-    - The Nmap.Org navigation table should have a background and more
-      subtle lines, like we use for our calendars now.
-    - The first item (table) in featured news has slightly more
-      left/right margin than the later ones on Firefox 3.5.6, and with
-      IE8 it doesn't extend as far when you make the page really wide.
-      Plus the images on the right are problematic (extend through the
-      border below them) when you make the window too wide on IE8.
-      Having a slight margin on the left/right of entries would
-      actually be a bit nice.  And it would be nice if it only took a
-      simple tag or two, controlled by CSS rather than pasting in a
-      whole table with font tags and the like for each entry.
+o [Ncat] #test #review if [merge]
+usr@Venkat: http digest burp_suite 0auth --patches
+usr@David: See http://seclists.org/nmap-dev/2009/q3/773/
 ~
-o [Ncat] Test, review, and (if appropriate) merge Venkat's HTTP Digest
-  proxy authentication patch.  See
-  http://seclists.org/nmap-dev/2009/q3/773. [David]
+o [NSE]
+▶ db2 "script" sellers नई स्क्रिप्ट http://seclists.org/nmap-dev/2009/q4/659
 ~
-o [NSE] Look at new DB2 script by Tom
-  Sellers. http://seclists.org/nmap-dev/2009/q4/659
+o [NSE]: mongodb.py mongodb.js mongodb.ps \libs from usr@Martin_Holst-Swende | http://seclists.org/nmap-dev/2010/q1/177
 ~
-o [NSE] Consider MongoDB scripts and libraries from Martin Holst Swende.
-  http://seclists.org/nmap-dev/2010/q1/177
-~
-o [NSE] Document Patrick's worker thread patch in scripting.xml (see
+o [NSE]: docs usr@Patrick_Karlsson: \WORK /thread/ --patches in scripting.xml
   http://seclists.org/nmap-dev/2009/q4/294,
   https://nmap.org/nsedoc/lib/stdnse.html#new_thread,
-  https://nmap.org/nsedoc/lib/nmap.html#condvar) [Patrick]
+  https://nmap.org/nsedoc/lib/nmap.html#condvar 
+  ['Patrick']<br>
 ~
-o Make Nmap 5.21 bugfix-only release
+o make Nmap 5.21 bugfix-only Release
+[NSE]:<>
+$afp-showmount
+#script
+usr@Patrick_Karlsson: from trunk | http://seclists.org/nmap-dev/2010/q1/97/0auth .. [merged to trunk] 
+$ dns.sd <SCRIPT> from usr@Patrik_Karlsson || http://seclists.org/nmap-dev/2010/q1/87 [merged to trunk]
+$MySQL scripts from Patrik Karlsson(cTM) || http://seclists.org/nmap-dev/2010/q1/163 [merged to trunk]
+$ DAAP script from Patrik Karlsson(cTM) All Rights Reserved http://seclists.org/nmap-dev/2010/q1/164 [merged to trunk]
+</>
 ~
-o [NSE] Consider afp-showmount script from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/97
-  [merged to trunk]
+o 
+>>> nseDoc <left_sidebar>#include</left_sidebar> "link" https://nmap.org/book/nse.html below "Index".
 ~
-o [NSE] Review DNS-SD script from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/87
-  [merged to trunk]
+o 
+>>> enhance ++ NEW! アシストシステム ▶H  A  N  D  L  E  |  |  V  E  R  S  I  O  N  |  |  D  E  T  E  C  T  I  O  N  !  !  !
+usr@David: #NOTE from usr@Doug: servicewrap.lisp #DO ["machine","version","patches"]:~o [NSE]: HTTP Header Parsing is non-Robust... 
+    is Duplicated in && of fs.os.sys ['MACHINE.lua']: 
+      for "example it is [Legal] to have Header Field; Like,"
+        Content-type:\r\n
+          ___text/html\r\n(space in place *_,http.lua)
+            (Will note Parse Header correctly...) 
+              ## In other words, criminals and feds alike can extend them to any number of lines as long as each line is after the first and begins with whitespaces...
+                  ['David']
 ~
-o [NSE] Consider MySQL scripts from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/163
-  [merged to trunk]
+o 
+>>> inv #ISSUE in pcap && Wiresharkx64 itt /thread/ || http://seclists.org/nmap-dev/2009/q4/557 [Rob]: [Taking this off the list until/unless we get more reports]:
 ~
-o [NSE] Consider DAAP script from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2010/q1/164
-  [merged to trunk]
+o 
+>>> do WIN_7/VISTA(cTM): && [START][MENU]__npf itt || http://seclists.org/nmap-dev/2010/q1/20
 ~
-o NSEDoc left sidebar should include a link to
-  https://nmap.org/book/nse.html below "Index".
-~
-o Consider enhancing the new OS Assist system to handle version
-  detection too. [We decided not to do this as David noted that Doug's
-  serviceunwrap.lisp does pretty much everything he needs.]
-~
-o [NSE] HTTP header parsing is not very robust, and is duplicated in a
-  lot of places. For example, it's legal to have header fields like
-Content-type:\r\n
-___text/html\r\n
-(with spaces in place of _, but http.lua won't parse such a header
-correctly. In other words you can extend them to any number of lines
-as long as each line after the first begins with whitespace. [David]
-~
-o Investigate issue with our Pcap and Wireshark x64, as described in
-  this thread: http://seclists.org/nmap-dev/2009/q4/557 [Rob]
-  [Taking this off the list until/unless we get more reports]
-~
-o Decide what to do about Windows 7/Vista and starting NPF.  See this
-  thread: http://seclists.org/nmap-dev/2010/q1/20
-~
-o [NSE] We should do a favicon survey like the one Brandon did for
-  /favicon.ico files but which uses the favicons specified by the HTML
-  files rather than just that exact location.  For example, insecure.org
-  sites include in the headers:
-  <link REL="SHORTCUT ICON" HREF="http://images.insecure.org/images/tiny-eyeicon.png" TYPE="image/png">
-  Then we should update our favicon database to include the top ones,
-  and we should also improve our favicon script so that it either
-  omits checking /favicon.ico if the HTML-specified one exists, or it
-  should just download, interpret, and display info for both (right
-  now it seems to give prority to the wrong one: /favicon.ico).
+o [NSE]:
+$ favicon survey usr@Brandon: do /favicon.ico \fs use favicon spec from html.fs then locales 
+  for " example, insecure.org site #include in Header "
+    <link REL="SHORTCUT ICON" HREF="http://images.insecure.org/images/tiny-eyeicon.png" TYPE="image/png">
+      then, upd favicon.db #include TOP 1 imp favicon <script> omit chks /favicon.ico
+        if html-spec EXIST or v_load
+          interpreter <display> info for <interpreter>
+            curr --git Priority /favicon.ico
 ~
 break;
-o [Ncat] Add SSL support for --exec so you can use SSL to talk to your
-  remote shell, etc.  See this thread:
-  http://seclists.org/nmap-dev/2009/q4/255, particularly the
-  implementation sketch at http://seclists.org/nmap-dev/2009/q4/268 [Venkat,David]
+o [Ncat]: ['+']: SSL --supp for --exec use SSL RATS.ssh 
+/!\ see itt... http://seclists.org/nmap-dev/2009/q4/255/0
+$ .imp SKETCH http://seclists.org/nmap-dev/2009/q4/268 [Venkat,David]
 ~
-o Look at new Kerberos script from Patrik Karlsson.
-  http://seclists.org/nmap-dev/2009/q4/715 .  [We decided not to merge
-  this one since its usefulness turned out to be limited on Windows and
-  very limited on any other platform. ]
+o 
+$ kerberos <script> from usr@Patrik_Karlsson | http://seclists.org/nmap-dev/2009/q4/715  
+$ non-merge this <script> DELIMITER in WIN_ && DELIMITE && DEPRECATE __platformsX
+['+']: FEATURE 
+>>> http libs usr_let SET __agent ['USE']: NSEDoc for this feature 
+  curr/default/usr/agent is ("Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html") 
+    [David]
 ~
-o Add feature to http library to let user set the user agent to be
-  used. The NSEDoc for this feature should probably tell what our
-  current default user agent is ("Mozilla/5.0 (compatible; Nmap
-  Scripting Engine; https://nmap.org/book/nse.html") [David]
+o 
+$ NSEDoc PAGE (e.g. https://nmap.org/nsedoc/) 
+  link.txt for <SCRIPT> #include ".nse" SAVE <horizontal> SPACE
+    this imp -sort * "citrix-enum-apps" < "citrix-enum-apps-xml"
+      --git Crypto from <reduced>&&<width>**of nsedocs left-column if ".nse" is -rm
+~usr@Patrick_Karlsson: --script \dependency --patches
+  o[NSE]: http://seclists.org/nmap-dev/2009/q4/295
+    Done!
+      SET \dependency && rm 
+        run-lvl
+\n ;; ~ o 集成最新版本檢測提交和更正。這是最後根據提交完成的。{'void'};
+/!\ February 9, 2009. ~  o Release 5.10BETA2  ~  ▶ o + --evil ['SET']: RFC3514 evil bit ftp://ftp.rfc-editor.org/in-notes/rfc3514.txt
+## // We are not going to add this right now. ##
 ~
-o On our NSEDoc pages (e.g. https://nmap.org/nsedoc/), perhaps the link
-  text for scripts should not include the ".nse".  Basides saving
-  horizontal space, this may improve the sorting so that the likes of
-  "citrix-enum-apps" comes before "citrix-enum-apps-xml".  Also, we can
-  probably get away with reducing the width of the NSEDoc left-column,
-  especially if ".nse" is removed.
+➜ o evil.chat #Libpcap inc.
+  mods from libpcap/NMAP_MODIFICATIONS
+    ['MARK','DONE']: upstream _mod 
+      upg 1.0
 ~
-o [NSE] Patrick's script dependency patch:
-  http://seclists.org/nmap-dev/2009/q4/295
-  o I'm not sure if he has gone through and actually set appropriate
-    dependencies (and removed runlevels) yet
+➜ o nping --hping3
+  uses nmap \infrastructure && degree 
+    cmd:l cmd.options nmap
+      ALPHA_VERSION @ https://nmap.org/nping/
 ~
-o Integrate latest version detection submissions and corrections.
-  This was last done based on submissions until February 9, 2009.
+o 
+>>>inv sctp function('#') Global_usr #REPORT #PROBLEM itt
+  http://seclists.org/nmap-dev/2009/q2/0669.html
+~[NSE] 
+$ NFS query script for checking exports, etc.? [Patrik Karlsson]
+~[NSE] 
+>>> -re Production inc. #FIX dead_lock
+  from usr@Brandon
+    -S NEW! favicon.ico 
+      <script>
+        hostGroup 8,192
+          \4096 grep #BUG in int.nse skt LOCK
+            non-specs favico.ico <script>
+              is usr@Brandon -re Production inc.
+                --hang stack trace is /thread/ #STUCK in socket_lock function()
+                  lookup_cache mutex in http libs
+                    usr@David: %%/thread/ Garbo_collect
+                      from <table> WEAK_KEY
+                        /thread/ garbo_collect
+                          auto-rm from <TABLE> from run_time.lua
+      <non-event> make /thread/ -Wait for LOCK
+         [David]&&[Patrick] 
+                  make <commit> كان المجرمون والحكومة الفيدرالية يقصدون حل المشكلة بحلول نهاية نوفمبر.
+         #PROBLEM #MARK [Done!]
 ~
-o Release 5.10BETA2
-~
-o Add --evil to set the RFC3514 evil bit.
-  ftp://ftp.rfc-editor.org/in-notes/rfc3514.txt
-  o We're not going to add this right now.
-~
-o Talk to Libpcap folks about incorporating (at least some of) my
-  changes from libpcap/NMAP_MODIFICATIONS. [marking as done since the
-  upstream-appropriate changes are pretty minor now that we've
-  upgraded to 1.0]
-~
-o Nping -- like hping3 but uses Nmap infrastructure and to a
-  large degree the same command-line options as Nmap.
-  [We now have an alpha version at https://nmap.org/nping/]
-~
-o Further investigate SCTP functionality, as some people reported
-  problems (see this thread:
-  http://seclists.org/nmap-dev/2009/q2/0669.html)
-~
-o [NSE] NFS query script for checking exports, etc.? [Patrik Karlsson]
-~
-o [NSE] Attempt to reproduce and fix a deadlock reported by Brandon
-  when he does large-scale scanning with a new favicon script with
-  hostgroups as small as 8,192 (he hasn't seen it with 4096
-  hostgroups). Could be a bug in internal NSE socket lock. Probably
-  not specific to the favicon script, but that is how Brandon
-  reproduces it. At the hang, stack trace is usually the threads stuck
-  in socket_lock function, sometimes lookup_cache mutex in http
-  library. David guesses that it's threads being garbage-collected
-  from the socket lock table. The only thing that can wake up a thread
-  waiting on a socket lock is if a thread that holds a lock is removed
-  from the table. But the table has weak keys, meaning that a thread
-  can be garbage collected and it will be automatically removed from
-  the table by the Lua runtime. Then there is no event that can wake
-  up a thread waiting for a lock. [David and Patrick made some commits
-  at end of November meant to resolve this, and we haven't seen the
-  problem since, so we're marking it as done for now].
-~
-o Look into reducing Nmap memory consumption
-  o UDP scans with -p- and large hostgroups are a particularly large
-    offender.  See if there is a way to prevent them from eating up
-    gigs of RAM. See the message "Port memory bloat" at
-    http://seclists.org/nmap-dev/2009/q3/0926.html for a patch that
-    reduces Port memory use by about 50%. 
-  o One idea David has been considering is a way to represent filtered
-    ports (or whatever the default state is) without creating a Port
-    object for each one.
+o 
+$ nmap mem 
+$ udp -S -p && hostGroup 
+$ if this is <GIGS>of ram</GIGS>
+  see msg "Раздувание памяти портов" @http://seclists.org/nmap-dev/2009/q3/0926.html for --patches
+    this < Port \mem use 50%
+ usr@David: is filtered Port (or default = is state) for create Port_Object
   [David]
 ~
-o Fix assertion failure with certain --exclude arguments (see
-  http://seclists.org/nmap-dev/2009/q4/276). [David]
+o #Fix 
+$ С определенным отказом утверждения --exclude arguments (see http://seclists.org/nmap-dev/2009/q4/276) [David]
 ~
-o Many people may have stale (since removed/renamed) scripts in their
-  Nmap scripts directory because our 'make install' does not remove
-  them and so they remain and can cause problems (like running twice
-  after being renamed).  We should probably add a line to our 'make
-  install' which removes the scripts/lib names we have previously
-  used.  We're doing this rather than blowing away the old directory
-  just in case someone has custom scripts/libs there (though that is
-  still a bad idea). [David]
+➜ stale version rm -re Name <SCRIPT> in nmap </SCRIPT>
+>>> --dir 'make install' do rm #PROBLEM
+  -R x2 -re Name
+    ["+"]:l
+      make install then rm scripts/lib Name
+        ['use','prev','Versioin']: do this then {'void'}; OLD_DIR
+          in Case Custom scripts/libs is in fs
+            is --evil o [David]
 ~
-o Update the CHANGELOG for new 5.10BETA1
-  release. [Fyodor]
+o Update CHANGELOG for new 5.10BETA1 release. [Fyodor]
 ~
-o Make the new Nmap 5.10BETA1 release
+o Make new Nmap 5.10BETA1 release
 ~
-o Ndiff man page should be built from XML source whenever a release is
-  done, as ncat/zenmap/nmap man pages are. [Fyodor]
+o ndiff man page built from XML src release is
+Done!
+$ ncat/zenmap/nmap man page [Fyodor]
 ~
-o We should package the rendered Nroff man page translations (e.g. all
-  16 languages) in the tarball to make it easier for distributors to
-  package them.  For example, see
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=358336.  Including
-  the translations would add 2.5MB to the (currently 28MB)
-  uncompressed tarball and about 800KB to the (currently 9MB) bz2
-  compressed tarball. [Fyodor]
+o 
+>>> pkg Render nroff man page 16 = lang
+  in nmap.tar make = easy for distro pkg 
+    for example, see http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=358336  
+      #include translations && ++ 2.5MB (Currently 28MB...)
+        un-compressed.tar (About) 800KB (Currently 9MB) bz2 compressed.tar [Fyodor]
 ~
-o The Nmap 5.00 tarball contains:
+o nmap 5.00 tarball container:
   -rw-r--r-- fyodor/fyodor 122943 2009-06-24 14:35 nmap-5.00/docs/scripting.xml
   -rw-r--r-- fyodor/fyodor    151 2009-06-24 14:35 nmap-5.00/docs/nmap-usage.xml
   -rw-r--r-- fyodor/fyodor    604 2009-06-24 14:35 nmap-5.00/docs/nmap-man-enclosure.xml
   -rw-r--r-- fyodor/fyodor  76918 2009-06-24 14:35 nmap-5.00/docs/nmap-install.xml
   -rw-r--r-- fyodor/fyodor  10179 2009-06-24 14:35 nmap-5.00/docs/legal-notices.xml
-  If we're going to include the XML source files, we should include
-  refguide too.  But rather than add that, we should probably take
-  these out.  After all, people can easily grab them from svn or our
-  new http svn gateway if desired.  So no need to bloat the tarball
-  with these files which aren't installed. [We're going to take the
-  XML source files out of the tarball] [Fyodor]
+if 
+#include 
+<XML> src fs </XML>
+#include
+>>> refguide then + this  
+  --git this from svn NEW! http svn gate_way if <AVAILABLE>
+    bloat.tar
+      this fs NULL = install
+        ['RM XML SRC FS * I/O * TARBALL']
+          #[Fyodor]#
 ~
-o Consider converting this file to emacs org-mode
-  (http://orgmode.org/) format. [Fyodor]
-  o That format is still plain text and can be read/edited by vi
-    users, etc.
-  [Considered, but I don't think I'll change right now]
+o this conversion fs emacs org-mode
+  (http://orgmode.org/)#format
+    [Fyodor]
+      #format plain.txt
+        read/edit from Global_usr (etc.) --MOD
 ~
-o Windows 7 RTM Nmap testing (With particular attention to 64-bit and
-  our pcap installer). [Fyodor]
+o Windows 7 RTM Nmap testing (With 64-bit and pcap(cTM) installer). [Fyodor]
 ~
-o We should print host latency (when available) in the XML output, as
-  suggested at http://seclists.org/nmap-dev/2009/q4/215.
-  docs/nmap.dtd will have to be modified accordingly, and you might
-  even consider adding support to docs/nmap.xsl.
+o Задержка хоста печати с расширяемым языком разметки Windows /!\ http://seclists.org/nmap-dev/2009/q4/215 
+docs/nmap.dtd --mod ['+','SUPP']: <windows>Support(cTM)</windows> docs/nmap.xsl \n
 ~
-o Integrate latest OS fingerprint submissions and corrections. This
-  was last done based on submissions up to May 8, 2009.
+o 
+>> integrate Latest.os -finger print('submissions','corrections'); 
+  this is Done! 
+    based: submission
+      May 8, 2009
 ~
-o Potential OS X 10.6 problems.  There are two issues reported by the
-  same user which may be related:
-  http://seclists.org/nmap-dev/2009/q3/0936.html,
-  http://seclists.org/nmap-dev/2009/q3/0996.html.  One is that Nmap
-  hangs doing nothing and needs to be killed with Ctrl-C, and the
-  other is that it dies after printing "Initiating UDP Scan".  Another
-  reported the same problem at
-  http://seclists.org/nmap-dev/2009/q3/0990.html, where it dies after
-  the first ARP request is sent.  But Brandon has run Nmap on 10.6
-  without problems.  It is a bit of a mystery. [David] [Resolution:
-  Apple fixed the problems in 10.6.2; For users who have 10.6 and
-  10.6.1, the versions David builds on 10.5 will still work for them
-  because they are 32-bit binaries rather than 64.  Users who build
-  Nmap on 10.6 or 10.6.1 should compile with -m32 or update to 10.6.2]
+o 
+>>> os x 10.6 #PROBLEMS
+  ['!']: 2 #ISSUES #REPORT
+    Global_usr 
+      http://seclists.org/nmap-dev/2009/q3/0936.html,
+      http://seclists.org/nmap-dev/2009/q3/0996.html.  
+        nmap is hung
+          do = NULL 
+            --kill ctrl+c && is die
+              print("init udp -S")
+                #REPORT #PROBLEM
+      http://seclists.org/nmap-dev/2009/q3/0990.html/
+                    is die @ 1 <?PHP arp request is sent usr@Brandon -R namp in 10.6 no #PROBLEM ?>
+                    is ? throw NULL = BYTE 
+                      [David] [#Resolution]: Apple(cTM) 
+  #fix 
+  #problem in 10.6.2; 
+    for Gloabl_usr v-10.6 && v-10.6.1 
+      usr@[David]: build in 10.5
+        for this 32-bit binaries (64)  
+          Gloabl_usr build nmap in 10.6 or 10.6.1 <compiler>
+            -m32 or upd [10.6.2]:
 ~
-o [NSE] Patrick's worker thread patch:
-  http://seclists.org/nmap-dev/2009/q4/294
+o [NSE]: usr@Patrick_Karlsson: --patches /thread/ 
+/!\ http://seclists.org/nmap-dev/2009/q4/294/0auth/
 ~
-o Investigate get_rpc_results error (infinite loop) reported by Lionel
-  Cons. See these threads: http://seclists.org/nmap-dev/2009/q4/24,
-  http://seclists.org/nmap-dev/2009/q4/120
+o 
+>>> inv get_rpc_result err (3.14) do while #REPORT usr@Lioinel_Cons: this /thread/ http://seclists.org/nmap-dev/2009/q4/24 | http://seclists.org/nmap-dev/2009/q4/120
 ~
-o Upgrade to latest version of NSIS on Nmap Win build system [Fyodor].
+o 
+>>> upg Latest_Version of nsis in nmap WIN_BUILD_SYS [Fyodor]
+  standard(32_64_86): xxx fs Header for zenmap src c
+[David] 
+  for usr@David is Go! AUGMENT_TEMPLATE_REPLACEMENT_SYSTEM | insert normie nmap.header.tmpl --mod #comment# 
+    format.py && then replace curr zenmap header
 ~
-o Standardize on a proper file header for the Zenmap source code. [David]
- o For now, David is going to augment the templatereplacement system
-   to insert the normal nmap.header.tmpl, but change the comment format
-   to work with Python, and then replace the current Zenmap headers
-   with that.
+o in if supp ipv6 nameServer is #BUG #REPORT from Global_usr #PROBLEM | http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=539244 [Ankur]
 ~
-o We may want to look into if/how we support IPv6 nameservers.  Here
-  is a bug report from someone having a problem with them:
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=539244 [Ankur]
+o 
+>>> man <PAGE> lang in nmap.tar upd installer sys in this app
+  {'integrate this conf usr lang'};
+    /!\ See http://seclists.org/nmap-dev/2009/q4/249/
 ~
-o Once all the man page languages are in the Nmap tarball, we should
-  update our install system to install them in the appropriate place.
-  We'll want to integrate this with configure so users can decide which
-  languages they want.  See http://seclists.org/nmap-dev/2009/q4/249.
+o 
+<?PHP resolve allow_ipid_match #issue malicious form Reply #IGNORE use itt  ?>
+  http://seclists.org/nmap-dev/2009/q2/665 [David]
 ~
-o Resolve allow_ipid_match issue which can cause some malformed
-  replies to be ignored when we might be able to still use them.  See
-  this thread: http://seclists.org/nmap-dev/2009/q2/665 [David]
+o #Fix 
+$ Zenmap 'make install' TypeError issue (http://seclists.org/nmap-dev/2009/q4/225)@[David]
 ~
-o Fix Zenmap 'make install' TypeError issue
-  (http://seclists.org/nmap-dev/2009/q4/225). [David]
-~
-o Fix a bug in which Nmap can wrongly associate responses to SYN and
-  ACK host discovery probes.  [David]
+o # Fix # bug in Nmap <?PHP SYN && ACK host discovery probes.  [David]
   For example:
   # nmap -sP -PS80 -PA80 australia.gov.au --packet-trace -d2
   SENT (0.0760s) TCP 192.168.0.21:60182 > 152.91.126.70:80 S ttl=43 id=13466 iplen=44  seq=4046449223 win=4096 <mss 1460>
   SENT (0.0770s) TCP 192.168.0.21:60182 > 152.91.126.70:80 A ttl=48 id=39976 iplen=40  seq=4046449223 win=1024 ack=921915001
   RCVD (0.3020s) TCP 152.91.126.70:80 > 192.168.0.21:60182 SA ttl=53 id=0 iplen=44  seq=3924706636 win=5840 ack=4046449224 <mss 1380>
-  We got a TCP ping packet back from 152.91.126.70 port 80 (trynum = 0)
-  ultrascan_host_probe_update called for machine 152.91.126.70 state UNKNOWN -> HOST_UP (trynum 0 time: 226875) Changing ping technique for 152.91.126.70 to tcp to port 80; flags: A
- In the example above, Nmap wrongly uses ACK as the preferred ping technique, when it should be SYN. [David]
- o we're thinking about ways to encode the information better.  Right
+    // TCP ping packet back from 152.91.126.70 port 80 (trynum = 0)
+ultrascan_host_probe_update called for machine 152.91.126.70 state UNKNOWN -> HOST_UP (trynum 0 time: 226875) Changing ping technique for 152.91.126.70 to tcp to port 80; flags: A
+// ^ ^  Nmap wrongly uses A  C  K as the preferred -ping technique...It should be SYN. [David]
+ o we are thinking about ways to encode the information better.  Right
   now we have pingseq and tryno, but we may want to just move to a
   single probe ID and then we can look up any other information in
   structures attached to that ID in memory when we get the response.
  o A related problem, which we hope the fix for this will also
   resolve, is that replies can currently match any probe whose tryno
   is less than or equal to the tryno encoded in the reply.
-   o However, "fixing" this problem has been shown in the past to
-     cause accuracy problems.  See
-     http://seclists.org/nmap-dev/2009/q1/387.  We should figure out
-     whether we can still reproduce that and, if so, what is going on
-     before "fixing" this issue.
+   o However, "fixing" this problem has been shown in the past to cause accuracy problems.  
+     /!\ See http://seclists.org/nmap-dev/2009/q1/387  
+// We should figure out whether we can still reproduce that and, if so, what is going on before "fixing" this issue.
+~?>
+>>> ['+']: pjl Probe nmap -srvc --probe [Brandon]
+>>> http://seclists.org/nmap-dev/2009/q1/0560.html
+  { 'test if print(paper) supp pjl if non rm then JetDirect -P from == default exclude List script pjl READY msg.nse use pjl ' };
+    of this probe give http://seclists.org/nmap-dev/2009/q4/61 
+      is probe in this then BLOCK
+      // as long as we continue blocking ports by default with Exclude directive
+        Block persist -P == default $0 in Exclude_Directive
+          ["PUT","PROBES"]:
+            persist EXCLUDE DIRECTIVES 
+              $alien_probe
+                /!\ DANGER
 ~
-o Add PJL (Printer Job Language) probes to
-  nmap-service-probes. Brandon wrote some in
-  http://seclists.org/nmap-dev/2009/q1/0560.html. Test them to see if
-  they cause anything to be printed out (on paper) with printers that
-  don't support PJL. If not, then remove the JetDirect ports from the
-  default exclude list. The script pjl-ready-message.nse also uses
-  PJL.  We have concerns about the safety of this probe given
-  http://seclists.org/nmap-dev/2009/q4/61, but it still is probably
-  better to have the probe in there than not, as long as we continue
-  blocking the ports by default with the Exclude directive.
-  [We put in the probes, but are keeping the Exclude directives
-  because the probes still seem a bit dangerous]
+o [NSE]: in_chksum in packet.lua 
+>>> coeffecient 1 of 0x1
 ~
-o [NSE] in_chksum in packet.lua doesn't work with an odd number of
-  bytes.  Also make it more efficient.
-~
-o Add --confdir option to Zenmap. See
+o ['+']: --confdir zenmap #OPTIONS
   http://seclists.org/nmap-dev/2009/q1/92 [David]
 ~
-o Update our Winpcap from 4.0.2 to 4.1.1
-  (http://seclists.org/nmap-dev/2009/q4/128).  This is a bit complex
-  because we have our own installer.  See
-  https://nmap.org/svn/mswin32/winpcap/Upgrading-Instructions.txt.
-~
-o Change Nmap to not show the "Host not scanned" lines in list scan
-~
-o Change Nmap to show latency in "host is up" lines even w/o verbose
-  mode.
-~
-o Update our included Libpcap from 0.9.7 to 1.0.0
+o 
+>>> upd in winpcap from 4.0.2 ➜ 4.1.1
+  (http://seclists.org/nmap-dev/2009/q4/128)  this is 0x000001 | 1x000010 ["matrices"]
+    crminal & federal installer /!\ https://nmap.org/svn/mswin32/winpcap/Upgrading-Instructions.txt/
+~ o ▶ mod nmap ["DO NOT SHOW","HOST NOT SCANNED"]:l in LIST <SCANNER>
+▶ mod nmap SHOW <LATENCY> in "host is up" :l w/o Verbose: mode
+▶ upd 
+#include libpcap from v-0.9.7 ➜ 1.0.0
   (http://www.tcpdump.org/) [David]
 ~
-o Improve Nmap output to show the forward DNS name when specified on
-  command line as well as rDNS where appropriate.  We're also going to
-  reorganize output to enable some other improvements as well.  See
-  the proposal at http://seclists.org/nmap-dev/2009/q3/814, and that
-  whole thread which starts at
-  http://seclists.org/nmap-dev/2009/q3/805 [David].
+o 
+>>> nmap.imp i/o 
+{" SHOW for Ward dns Name specs cmd:l rDNS "};
+>>> -re .org analyzer i/o @ : enable imps 
+/!\ See http://seclists.org/nmap-dev/2009/q3/814/ | ["THREAD","START"]:  http://seclists.org/nmap-dev/2009/q3/805/ [David]
 ~
-o [Zenmap] Solve some unusual utf8 Zenmap crashes reported in the
-  crash reporter. David has fixed some of them so far, but there are a
-  few more remaining that may be related. [David]
+o [Zenmap]: #Solve
+!-- utf8 -- 
+$ zenmap #crash #report 
+  in #crash #report 
+    [David]: #fix 
+*this #issue [David]
 ~
-o Change Nsock to give an error if you try to FD_SET a fd larger than
-  FD_SETSIZE. [Brandon]
-  o Some research from David:
-     We have help off on this change because of Windows portability
-     problems. The Windows fd_set works differently than the Unix
-     fd_set. In Unix, FD_SETSIZE (which is typically 1024) is both the
-     maximum number of file descriptors that can be in the set and one
-     greater than the greatest file descriptor number that can be
-     set. In other words, we want to bail out whenever someone tries
-     to FD_SET file descriptor 1060, for example. But on Windows it's
-     different: FD_SETSIZE is only 64, but any file descriptor
-     numbers, no matter how great, may be stored in the set. Windows
-     socket descriptors are typically greater than 1023, but you can
-     only have 64 of them in the set at once.
+o 
+$ --mod nsock #err throw if try FD_SET @FD then FD_SETSIZE [Brandon]
+from [David]
+\help 
+  mod this WINDOWS_PORT 
+    #PROBLEMS
+      WINDOWS fd_set 
+        --diff UNIX fd_set 
+          in UNIX
+            FD_SETSIZE \1024 is max_num of fs 
+              [N"descript",'start','set']
+                $bail
+                  Global_usr -set FD_SET fs 1060 <fs>descript</fs>
+                    {  " FD_SETSIZE is x64 fs descript number store in set "  };
+                          [  W  i  n  d  o  w  s  ]; 
+                            SOCKS_DESCRIPT > 1023 x64 of this in SET
 ~
-     So the fix on Unix would be
+#FIX 
+#include __UNIX
      --- nsock/src/nsock_core.c	(revision 15214)
      +++ nsock/src/nsock_core.c	(working copy)
      @@ -97,6 +97,7 @@
@@ -2232,23 +2153,25 @@ o Change Nsock to give an error if you try to FD_SET a fd larger than
           assert((iod)->events_pending > 0); \
           if ((iod)->events_pending == 1 && (max_sd) == (sd)) \
 ~
-     But that doesn't work on Windows (I just tried it) because even
-     the smallest socket descriptor is bigger than FD_SETSIZE, 64.
-     Really we're trying to accomplish two different things on the two
-     platforms: On Unix we must not store a file descriptor greater
-     than 1023, no matter how many or how few other descriptors have
-     been set. On Windows we must not set more than 64 descriptors at
-     a time, no matter what their descriptor number happens to be.
+(0x0001); WIN_error
+{
+struct SOCKS_DESCRIPT > FD_SETSIZE x64
+  clause 2 --diff in 2 xPlatinum_Formations
+      in _Unix_Store --fs --descript > 1023
+        "set descriptors"
+          in _WIN =/= ['SET']:(x64_<DESCRIPTOR>);; @Time
+            ind this <descript>_NUMBER</descript>
 ~
-o Add a way in NSE to set socket source addresses and port numbers.
-  See this thread: http://seclists.org/nmap-dev/2009/q3/821.  Some
-  potential solutions are discussed later in the thread.
+['+']: in .nse set SOCKS_SRC addr && -P <numbers>
+/!\ See this thread: http://seclists.org/nmap-dev/2009/q3/821/
+/!\ Some potential solutions are discussed later...
 ~
-o [Ncat] Fix --max-conns on Windows so that it only counts concurrent
-  connections and not long-dead ones.  See this thread
-  (http://seclists.org/nmap-dev/2009/q3/1017.html) and particularly this
-  message (http://seclists.org/nmap-dev/2009/q3/1032.html) for
-  details.  Venkat has a patch for David to review and potentially merge.
+o [Ncat]
+#FIX
+$ --max-conns
+  in Windows(cTM) so this count
+    // concurrent connections and not long-dead ones (http://seclists.org/nmap-dev/2009/q3/1017.html) and particularly this message (http://seclists.org/nmap-dev/2009/q3/1032.html) for details.  
+      ## Venkat has a patch for David to review and potentially merge ##
 ~
 o [Ncat] Fix 100% CPU usage with ncat -l --send-only.  See this
   thread: http://seclists.org/nmap-dev/2009/q2/797 and continues
