@@ -3017,56 +3017,67 @@ $ ,,args --script --args --git [LOST] nmap cmd print in nmap i/o fs -R
                   Note: the missing ",intrusive" in the script argument. [David]
 ~
       [m  e  r  g  e]
-          patrick/nse-lua-merge for easier-to-maintain and simpler codebase 
+          patrick/nse-lua-merge for easier-to-maintain and simpler codebase
             usr@David and usr@[Patrick]
->>> svn chk i/o /nmap external in dir Name svn or src or nmapsvn or 0x01.lua v nmap.org web tree 
-  then redirect usr nmap.org/data/ fs 
-    while nmapsvn /data/ dir 
-      then upd nsedoc sys.os 
-        generate link 
+>>> svn chk i/o /nmap external in dir Name svn or src or nmapsvn or 0x01.lua v nmap.org web tree
+  then redirect usr nmap.org/data/ fs
+    while nmapsvn /data/ dir
+      then upd nsedoc sys.os
+        generate link
           PROPER SCRIPT/NSELIB LOCALES
 [Fyodor]
 usr@Brandon:~o | present.imp | *Version_Detect_info__"longer string 128 chars for FullVersion info is for this useful information-packed string"
   "Apache httpd 2.0.52 ((Red Hat)
     mod_perl/1.99_16 Perl/v5.8.5 DAV/2 mod_jk/1.2.19 PHP/4.3.9
-    mod_python/3.1.3 Python/2.3.4 mod_ssl/2.0.52 OpenSSL/0.9.7a)".
+    mod_python/3.1.3 Python/2.3.4 mod_ssl/2.0.52 OpenSSL/0.9.7a)"
       #GO! Allow 160 chars total...
-        omit info version info string truncate 157 chars + ...
+        // omit info version info string truncate 157 chars + ...
 (...)
-// "my final gripe is that the full version string is constructed as <product><space><version><space>(<extrainfo>). but, even if product or version are blank, the spaces are still there"
-~
-o i/o autoflush -option of sort
+// Full version string
+         <VERSION>STRING</VERSION>
+            is struct <product><space><version><space>(<extrainfo>);;
+              if <PRODUCT>_blank</PRODUCT>
+                <VERSION>_blank</VERSION>
+                  <space>_blank</space>
+    // But, even if product or version are blank, the spaces are still there
+~ o i/o autoflush -option of sort
   this is useful
-    ensure --git --packet_trace and -d .dat nmap 
+    ensure --git --packet_trace and -d .dat nmap
       "crash"
-        this is not critical
+        this is NON CRITICAL
           --kill for current.time 
-            is not needed
+            // is not needed
 ~
 o 
 #FIX dir function(s) in nse_fs.cc to be used by script and flexible.imp
   this entry usr@Patrick:  ~  o [Ncat]: sys_wrap.c/.h code container of Versions of system calls (Fork(), Socket(), Sscanf(), etc.)
     Standard_version
       ncat "quit" if trigger
-%%used partially for portability  The main issues are:
-   1) Because the function quits in the case of errors, it doesn't
-      always have the context to print a useful error message (and
-      even when it does, it often doesn't -- for example Fopen could
-      print the filename, but doesn't.)  Also, sometimes these
-      functions are called when quitting really isn't the desired
-      outcome of an error.
-   2) Some could be replaced by code in nbase, for example, Malloc
-      basically does the same thing as our safe_malloc already used
-      throughout Nmap.
-  So we should probably consider simplifying/removing this code to the
-  extent possible.  But we need to remember to add error detection to
-  the callers where necessary rather than blindly switching from
-  (e.g.) Connect() to connect(). [Kris or David]
+%%used partition for portability  
+#main 
+#issues
+> function("quit");
+> in Case of ERROR
+  ['USE']: ERROR MSG <CONTEXT>
+    do %often%does%not
+      for function('OPEN'):%print%fs%Name // but does not
+        %Time%Function%_:root$Call while "QUIT"
+          is == sum of ERROR
+            for "usr@Malloc: replace code in nbase do == this (thing) in safe_malloc use >nmap.exe"
+1.) Function Quits in Case of Errors...
+2.) Some could be replaced by code in nbase...
+%simp$rm this "code" to ext %needs%
+<ERROR>detection_<ERROR> 
+$call -blind Switch from
+    Connect("USR") to connect("GLOBAL") 
+      [Kris or David]:
 ~
-o With --version-trace (may be a problem with other uses of nsock
-  tracing too), I often get dozens of "wait_for_events" reports in a
-  row in a very short period, flooding the logs.  For example, with
-  the command "nmap -sV --version-trace www.google.com", I get:
+o $ --version -trace 
+$ #PROBLEM use of nsock Trace
+  12 * wait_for_events ++ #REPORT in ROW with in 5 - 10 seconds
+    > flood log
+      cmd "nmap -sV --version _ -trace www.google.com"
+        --git 
   NSOCK (22.3570s) Callback: WRITE SUCCESS for EID 283 [74.125.19.147:443]
   NSOCK (22.3570s) msevent_delete (IOD #4) (EID #283)
   NSOCK (22.3570s) wait_for_events
@@ -3078,39 +3089,51 @@ o With --version-trace (may be a problem with other uses of nsock
   NSOCK (22.3570s) wait_for_events
   NSOCK (22.3570s) wait_for_events
   NSOCK (22.3570s) wait_for_events
-  [Goes on for pages]
+  ["Go!","ON_WARD","FOR","PAGER"];;
 ~
-o NSE memory issues (and gh_list assert failure) [David]
-  o See this thread: http://seclists.org/nmap-dev/2009/q1/0532.html
-  o We're taking this out for now since the new nse-lua-merge
-  tenatively looks like it fixes this.
+mem.nse 
+#ISSUE
+> and gh_list assert "FAIL"
+> this /thread/ 
+> http://seclists.org/nmap-dev/2009/q1/0532.html
+[David];;
+> take this out for current.time #NEW! 
+  .nse .lua [MERGE]
+      o - o tenatively looks like it fixes this.
 ~
-o [Ncat] Why does Ncat require enclosure in a while loop to answer
-  repeated UDP queries, but not TCP?  For example, see the "Emulating
-  Diagnostic Services" section of the Ncat user's guide.
-  o Note: http://seclists.org/nmap-dev/2009/q1/0133.html
+o [Ncat] 
+$ ncat Require ['CLOSE']: in while 
+  loops Answer -repeat udp [QUERY]
+    tcp for "example, see emulate diagnostic srvc section of ncat usr [GUI]" 
+// note: http://seclists.org/nmap-dev/2009/q1/0133.html
 ~
-o Determine what we should do about the IE.DLI OS detection test [David]
-  o All of the 1656 results for this test in nmap-os-db are DLI=S.
-    o Is the test not working right (producing the proper results
-      against targets), or is it just a generally useless test for
-      which virtually all targets respond the same way?
-  o Are there other "useless" tests in nmap-os-db?  It is worth
-    checking, IMHO.
-  o We're going to get rid of IE.DLI, IE.SI, U1.RUL, and maybe TOS and
-    TOSI tests.
+▶ deter do ie.dli os detect $test
+▶ 1656 <RESULT> for this $test in nmap-os-db 
+  dli=s
+    $test <WORK>\right</WORK>
+        is $test \WORK
+          $produce proper result
+            TARGET_ is General $test for V_Virtual
+              ALL TARGET RESPONSE == تستجيب جميع الأهداف الافتراضية بنفس الطريقة.
+> useless test in nmap-os-db is chk == Value
+> rm of ie.dli ie.si u1.rul && in TOS and TOSI 
+#TEST
 ~
-o When you do ncat -h, Ncat should probably show the Nmap version
-  number rather than (currently) 0.2.  Also ncat in -v mode should
-  show that same header. [David]
+o 
+$ ncat -h 
+$ ncat [SHOW] nmap Version number then Version_0.2 in ncat -v 
+$ mode: Header
+[David]
 ~
-o Ncat verbose mode (-v) should probably only give important messages,
-  such as perhaps a message once you connect successfully to a port,
-  or a message if the connection attempt times out.  An Ncat version
-  banner (with URL) like Nmap has might be warranted (in verbose
-  mode).  Currently, Ncat floods you with (mostly) useless debugging
-  information like this with a single -v (this output, on the other
-  hand, might be useful for a debugging option): [David]
+o 
+$ncat verbose mode -v %imp%msg
+$ msg connect ['SUCCESS']: -P msg if Connect %TIME_OUT
+$ ncat version banner_URL 
+>>> nmap WARRANTY -v MODE in ncat flood % -d in info 
+  this -v this i/o "otoh imho" && %USE%%FULL
+    for -d 
+      \options \help \n
+[David]
   # ncat -C -v scanme.nmap.org 80
   NSOCK (0.0000s) TCP connection requested to 64.13.134.52:80 (IOD #1) EID 8
   NSOCK (0.0200s) Callback: CONNECT SUCCESS for EID 8 [64.13.134.52:80]
@@ -3127,79 +3150,83 @@ o Ncat verbose mode (-v) should probably only give important messages,
   # nc -v scanme.nmap.org 80
   Connection to scanme.nmap.org 80 port [tcp/http] succeeded!
   GET / HTTP/1.0 [David]
+~ o [FINAL]: of GSoC Page [Fyodor]: ~ o
+>ad for nmap GSoC.app
+[Fyodor]
 ~
-o Final polishing of our GSoC pages. [Fyodor]
+o [Ncat]
+> %for Global_usr% usrName/pwd/chat.net
+> in --chat
+> rm this for current.time
+  ['+']: #TODO this
 ~
-o Advertise widely for Nmap GSoC applicants [Fyodor]
+o
+> python 2.6 zenmap #BUILD [WARNING]
+/!\ C:\Python26\lib\site-packages\py2exe\build_exe.py:16: DeprecationWarning: // the sets module is deprecated
+>>> import sets
+/!\ http://sourceforge.net/tracker/index.php?func=detail&aid=2314799&group_id=15583&atid=115583
+#BUG
+> in py2exe #FIX #NEW! #VERSION
+  of py2exe is #RELEASE #UPGRADE
+    is cause for #PROBLEM
 ~
-o [Ncat] We should (maybe) consider a way for people to choose
-  usernames in --chat.
-  o Removing this for now.  We can add it back if we decide we really
-    want this.
-~
-o Deal with new Python 2.6 Zenmap build warnings:
-  C:\Python26\lib\site-packages\py2exe\build_exe.py:16: DeprecationWarning: the sets module is deprecated
-  import sets
-  http://sourceforge.net/tracker/index.php?func=detail&aid=2314799&group_id=15583&atid=115583
-  [Bug in py2exe, will probably be fixed with a new version of py2exe
-  once it is released and we upgrade.  This isn't causing us any major
-  problem anyway.]
-~
-o When I scan large groups of hosts with OS detection enabled, I get
-  groups of warnings like:
+o
+> grep -S *
+  Host.h Host.os -Detection ['ENABLE']: --git * ['WARNING']: #
   Insufficient responses for TCP sequencing (0), OS detection may be less accurate
   Insufficient responses for TCP sequencing (0), OS detection may be less accurate
   Insufficient responses for TCP sequencing (0), OS detection may be less accurate
   Insufficient responses for TCP sequencing (0), OS detection may be less accurate
   Insufficient responses for TCP sequencing (0), OS detection may be less accurate
-  Note how it doesn't even tell the relevant IP address, and it isn't
-  included in an individual host section.  We should probably either
-  include it in the section for an individual host, like we do with
-  "OSScan results may be unreliable because we could not find at least
-  1 open and 1 closed port", or (not quite as
-  good) include the relevant IP address in the error message.  And we
-  may or may not want to require verbose mode.
+  Note: how it does not even tell relevant IP address
+  and it is not included in an individual host section...
+  EITHER or
+  include it in section for an individual host, like we do with "OSScan results may be unreliable because we could not find at least 1 open and 1 closed port", or (not quite as good) include the relevant IP address in the error message.  And we
+    # may or may not want to require verbose mode... #
 ~
-o Ncat chat should bomine the "already connected" user list into one
-  line, like:
+o ncat chat bomine "already connected" user list into one line, like:
   <announce> already connected: 69.232.238.42 is connected as <user5>, 206.81.65.43 as <user4>, 69.232.238.42 as <user6>
 ~
-o [Ndiff] Maybe Ndiff should display changes to version detection and
-  OS detection information? [David]
- o Version detection done, now just needs OS detection.
-~
-o When I start ncat chat with this tcsh command:
+o [Ndiff]: ndiff 
+<DISPLAY>mods_version_detection</DISPLAY>
+  <DISPLAY>detection+os+info</DISPLAY>
+[David]: Done!
+#include os_detection
+[start]: ncat 
+/!\ chat with this tcsh command:
   ncat -l --chat scanme.nmap.org < /dev/null >& /dev/null &
-  The first client to connect to the chat becomes user0 and doesn't
-  work quite right.  Messages user0 type get transmitted to other
-  clients, but user0 does not see their messages.  Nore does user0 get
-  the normal connection announcement upon connecting.  If I quit
-  user0, the next client to connect becomes user0 again and has the
-  same problem.  If I start ncat on the server with "ncat -l --chat
-  scanme.nmap.org" (no redirection), other clients can connect with no problems.
+    1st cli 
+      <?php connct to chat and user0 ?>
+        <?php msg usr0 transmit cli msg ?>
+          usr@Nore: do usr0 --git Standard_Connect Announcement --connect
+            if "QUIT" usr0 next cli connect usr0 x2 and #PROBLEM
+              if ncat.exe in srvr cli "ncat -l --chat scanme.nmap.org (no redir)"
+                cli connect #Done!
 ~
-o Ncat --chat should probably announce to everyone (including the new
-  person) when someone connects.  This tells the new person their
-  username, and lets everyone else know about the new connection. [David]
-  o We should also tell the new person (and possibly everyone on the
-   channel) the list of existing participants.
+o ncat --chat 
+  announce Global_usr #include NEW! usr
+    connect!
+      this chat @NEW!(usr)
+        userName/pwd/let_GlobalUser/New_Connection
+          NEW! Global_usr from channel && list * exist part
 ~
 o SoC ideas page [Fyodor]
 ~
 o Nmap 4.85BETA4 release [Fyodor]
 ~
-o [Ncat] Wouldn't it be nice if we could support --exec (and maybe
-  some sort of partial-emulated --sh-exec) on Windows? [David]
-  o Almost working!  We found some problems with "ncat.exe -v -l
-  --sh-exec "ncat -v scanme.nmap.org"
+o [Ncat]
+> support if retarded and --exec 
+> %sort of partition emulate --sh -exec in WIN(x32_x64_x86)
+%WORK!%
+[FIND]: #PROBLEM 
+>>> "ncat.exe -v -l --sh-exec ncat -v scanme.nmap.org"
 ~
-o [Ncat] Can we use it as an IPv4 <-> IPv6 gateway?  If so (or if we
-  can add it), it should be added to the ncat guide feature list.
-  o Yes, David tried it with --sh-exec and it worked.
+o [Ncat]: ["USE"]: ipv4 <-> ipv5 <GATE></GATE>
+  if ['+']: ncat Guide.Feature List
+    [y/n]: usr@[David]: try --sh-exec 
+      WORK!
 ~
-o [Ncat] We should probably make it work without OpenSSL.  When I try
-  ./configure --without-openssl on latest svn Nmap, Ncat build fails
-  with:
+o [Ncat]: %make $work w/o OpenSSL try ./configure --without-openssl #LATEST svn #Nmap #Ncat build "FAIL"
        gcc -MM -I../libpcap -DHAVE_CONFIG_H -D_FORTIFY_SOURCE=2 -I. -I.. -I../nsock/include/ -I../nbase ncat_main.c ncat_connect.c ncat_core.c ncat_listen.c ncat_proxy.c ncat_broker.c ncat_hostmatch.c ncat_ssl.c util.c sys_wrap.c > makefile.dep
        make[2]: Leaving directory `/mondo/fyodor/nmap/ncat'
        make[2]: Entering directory `/mondo/fyodor/nmap/ncat'
@@ -3216,181 +3243,211 @@ o [Ncat] We should probably make it work without OpenSSL.  When I try
        make[1]: Leaving directory `/mondo/fyodor/nmap'
        make: *** [static] Error 2
 ~
-o [Ncat] Defensive coding review of Ncat --chat (talk)
+o [Ncat]: 
+> defense(Blue) code Review of ncat --chat
+$ echo("talk")
 ~
-o [Ncat] As SSL server it should not crash when someone connects in
-  w/o SSL and does ^C.  When David tried it during our chat, the ncat
-  servr "ncat --broker --ssl-key test-key.pem --ssl-cert test-cert.pem
-  --ssl --chat -l"  crashed with: SSL_accept():
-  error:00000000:lib(0):func(0):reason(0).  Also, when a Windows SSL
-  clients joined and then left, the server died with "Broken pipe
+> ["o"]: [Ncat]: ssl.srvr
+> "CRASH USR CONNECT" w/o ssl ^c 
+  usr@[DAVID]: try chat 
+    ncat srvr "ncat --broker --ssl-key test-key.pem --ssl-cert test-cert.pem --ssl --chat -l"
+      [CRASH]: ssl_accept():
+        error:00000000:lib(0):func(0):reason(0)
+          WIN_SSL_CLI [JOIN]: and $srvr --kill 
+            /|_/_|\ #  "Broken pipe" #
+$ ~ o [  n  c  a  t  ] --chat  %restrict%char 
+  {'avoid of cntrl-chars'};
 ~
-o [Ncat] --chat should probably only allow reasonable chars, to avoid
-  cntrl-chars, etc.
+o 
+$ nmap -P Name "unknown" in nmap-srvcs
+  handler == from Name -P NON-LIST
+    See http://seclists.org/nmap-dev/2009/q1/0589.html/
+~ o ncat user guide "Emulating Diagnostic Services" page 
+> udp charge srvr:l #CAUSE wrapper #PROBLEM in web.browser
+  wide page substitute
+    %split%multi%line
+      [David]
+~ o ncat usr guide proxy section 
+  " exception is List Proxy Host IPv6 address; then port is required... "
+      require -P Number for ipv6 then use default for ipv4
+        [David] 
+> this is make do ['ambiguity']: ipv6 [USE]: for ||__ handler [FF::10:80]
+~ o [Ncat] 
+$ make --ssl in --chat
+    elif ['USE']: if -- NUMBER of Global_usr connect! telnet then ncat
 ~
-o Nmap should treat ports named "unknown" in nmap-services the same
-  way (from a naming perspective) as it treats ports which are not
-  listed at all.  See http://seclists.org/nmap-dev/2009/q1/0589.html.
+o [Ncat]: --talk %%mod (in the code and documentation); --chat | ncat chat | --talk | $alias --chat Docs [David]
 ~
-o Ncat user guide "Emulating Diagnostic Services" page has a very long
-  UDP chargen server line which causes wrapping problems in web browsers
-  (e.g. it widens the page substantially).  It should probably be
-  split into multiple lines. [David]
+o [Ncat]: Windows #issue 
+> connect and then type in Line srvr
+  ncat wrong times
+    try write &&line in remote server... 
+      [David]
 ~
-o Ncat user guide proxying section says "The only exception is when
-  listing a proxy host by IPv6 address; then the port is required."
-  Why would we require a port number for IPv6 rather than just use the
-  same defaults as we do for IPv4?
-  [David explained that this is because to do otherwise would be
-  ambiguous because IPv6 uses : for separaters, so we wouldn't know
-  how to handle things like FF::10:80]
+o ncat write timeout 
+#PROBLEM
+$ cause cli "QUIT" -write
+  time_out [David]
+    Examples:
+      o yes/no | ncat localhost
+      o ctrl+c _ ctrl+v in terminal window in ncat chat ~ o code_blue 
+[review]: of ncat_proxy * [David] ;; ~
+o 
+> Latest Version Detection 
+  [SUBMIT]:
+> 1700 of [QUEUE]: && ^
+[Doug]
 ~
-o [Ncat] Perhaps we should make --ssl work in --chat.  If nothing
-  else, it might be useful if you want to reduce the number of people
-  connecting with telnet, etc. rather than ncat.
+o 
+>>> write ncat usr GUIDE
+  demo ['this will %% in DocBook.xml and nns CHAPTER QUERY NMAP-DEV for LIST of ncat for nc TEST for example EXPOSE AREA for imp']
+    [David]
 ~
-o [Ncat] --talk should probably be changed (in the code and
-  documentation) to --chat, as Ncat chat has a
-  much nicer ring to it, IMHO.  --talk should remain as an alias to
-  --chat, but we don't need to document it. [David]
+o 
+usr@Dario_Ciccarone: @email from 5/1/07 @About ipid sequence #ISSUE
+> ['+']: %+%for close-port-tcp --diff 
+[David]
+#FIX #BUG #SEQ
+print('if tcp OPEN PORT ['FAIL','TEST']: produce result elif II(upcoming...); ci test _use_result');
+[David]
 ~
-o Ncat Windows issue where you make a connection and then take several
-  seconds to type in a line to the server, Ncat wrongly times out when
-  trying to write your line to the remote server. [David]
+o .NSE 
+$ Sleep for x*Time
+  this persist script while -R "string NULL DO"
+    [SLEEP]
+> srvc * rate ^ limit use for KIND 
+  for "example web site spider application DELIMIT http request number per second..."
+تجنب تبول مشرف الموقع المستهدف أكثر مما هو ضروري...  
+  WHOIS SRVR?
+    BLOCK 192.0.0.1\01
+      {0x00010}
+        QUERY IN MS
+          # do not exceed threshold limits of an IDS #
+            "current script"*'sql-injection && whois %%'
+              $pop3-brute
+                  if for cpu-bound.NSE script ['!']: 
+                    \help .imp mek
+                      coroutine.yield 
+                          $trix
+                            <mechanic>docsX</mechanic>
+                                  id.imp in one <script> 
+                                    ▶ nmap ship script
 ~
-o Ncat write timeout problems cause client to quit due to write
-  timeout sometimes. [David]
-  Examples:
-   o yes | ncat localhost
-   o when we paste a few lines into the terminal window in an Ncat chat
+o 
+['+']: <?php for request time status upd interval ?> 
+5.s xml and or normal i/o this is ['USE']: Global_usr for -R nmap from SCRIPTS
+  hi-lvl app
+[David]
 ~
-o Defensive coding review of ncat_proxy.* [David]
+o 
+$ncat --allow / --deny 
+#BUG
+$ --allow and --deny @Support @Host
+  "specs 192.0.0.1 addr"
+    and --git "WARNING" form hostName[use]:syntax as --exclude
+> verify begin make all entry WELL-FORMED.xml    
+    dns resolve ['!']: [BEGIN]: $FAIL
+      connect and reject connect 
+        <WRONG>or_risk$FALSE-n-</WRONG>
+[David]
 ~
-o Process the latest version detection submissions.  We now have more
-  than 1,700 of them queued up. [Doug]
-~
-o Write Ncat users' guide, demonstrating all the neat stuff you can do
-  with it.  This should probably be in DocBook XML so it can be an NNS
-  chapter.  You might want to query nmap-dev for list of neat things
-  people do with ncat (or look around for what people do with nc).
-  Testing it out for examples might expose areas for improvement as
-  well. [David]
-~
-o Look at Dario Ciccarone's email from 5/1/07 about IPID sequence
-  issues, and consider adding IPID sequence test for closed-port-tcp as
-  they apparently can be different. [David]
-  o Also fix bug which causes SEQ to not be printed if the TCP open
-    port tests fail to produce results, even though the II and
-    (upcoming) CI tests may have useful results. [David]
-~
-o NSE should offer some way to sleep/yield for a given amount of
-  time.  This would allow other scripts to run while a script has
-  nothing to do.  Possible uses:
-  o Many services have rate limits (or you might just want to use them
-    for politeness).  For example, a web site spidering application
-    might want to limit HTTP requests to some number per second to avoid
-    pissing off the target webmaster more than is necessary (or prevent
-    getting auto-blocked).  Similarly, whois servers often will block
-    IPs which query them too often in a short period.  Or maybe you
-    don't want to exceed the threshold limits of an IDS.
-  o Example current scripts which might benefit: sql-injection, whois
-    (possibly), pop3-brute, etc.
-  o If we don't currently have a way for a cpu-bound NSE script to
-    yield, then perhaps this could help us implement such a mechanism.
-    But maybe coroutine.yield already does the trick.
-  o The mechanism needs to be documented, and ideally should be
-    implemented in at least one of the scripts shipped with Nmap.
-~
-o Consider adding a way for requesting timing status updates at a
-  given interval (such as every 5 seconds) to XML and/or normal
-  output.  This would be useful for people who run Nmap from scripts
-  or other higher level applications. [David]
-~
-o Ncat --allow/--deny bug: "--allow and --deny only support host
-  specification by IP address, and give no warning when you use
-  another form such as a host name." Should probably use same syntax
-  as --exclude. We also want to at least do verification at the
-  beginning to make sure all the entries are legitimately formed.  We
-  probably want to do things like DNS resolution at the beginning
-  too. Otherwise we might have a DNS failure when we actually get a
-  connection and perhaps have to reject the connection wrongly, or
-  risk a false negative.  [David]
-~
-o Fix this overflow:
-  Stats: 93:57:40 elapsed; 254868 hosts completed (2048 up), 2048 undergoing UDP Scan
-  UDP Scan Timing: About 11.34% done; ETC: 03:21 (-688:-41:-48 remaining)
+o 
+#Fix 
+  this overflow:
+    Stats: 93:57:40 elapsed; 254868 hosts completed (2048 up), 2048 undergoing UDP Scan
+    UDP Scan Timing: About 11.34% done; ETC: 03:21 (-688:-41:-48 remaining)
   [Done by David and Henri Doreau]
 ~
-o Ncat -- perhaps connection brokering should support UDP as well as
-  (its existing support for) TCP?  Actually this does raise issues
-  such as deciding what list of UDP systems to forward a packet too.
-  Its obviously not like TCP where you have a list of open
-  connections.  Ncat could build such a list, but, for example, would
-  never know when to remove the host.  For now, David is just going to
-  adjust the error message to encourage people to email nmap-dev
-  describing their usage scenario if they want this feature.
+o ncat -- connection broker support UDP is exist
+  this #ISSUE
+    exist == support for tcp
+      do this "raise #ISSUE"
+        list of udp <system>udp</system>
+          frwrd pkt
+            tcp is list of OPEN CONNECTION
+> ncat build list ;; for example rm Host
+> for 
+  usr@David is Go! adjust ERR MSG 
+    @email nmap-dev for descript usage if this Feature
 ~
-o Ncat documentation should note that no SSL certificate verification
-  is done (maybe we should offer an option to do so, if OpenSSL makes
-  that easy).
-  o Done in the new Ncat user's guide
+o 
+>>> ncat docs 
+  note: ssl cert verify is Done! 
+    [OFFER]: OPTION 
+      do if OpenSSL make == easy
+        Done!
+          in NEW! [ncat usr guide]
+#Fix 
+> dns-zone-transfer infinite recursion 
+#bug 
+> described at
+  http://seclists.org/nmap-dev/2009/q1/0317.html
+    is use dns.lua \libs 
+      make dns-zone-transfer do $self dns pkt PARSE
+{0x0010};
+:root@DRIVER~o 
+#FIX <xml>escp</xml> escp #ISSUE chars from scripts.nse or A l  i  e  n else cause CORRUPTION XML FILE
+  http://seclists.org/nmap-dev/2009/q1/0316.html
+    [David]
 ~
-o Fix dns-zone-transfer infinite recursion bug described at
-  http://seclists.org/nmap-dev/2009/q1/0317.html.  It sounds like the
-  best approach is to use our dns.lua library rather than having
-  dns-zone-transfer do its own DNS packet parsing.
+o 
+$ in increase frequency of -P -S -Ping
+http://seclists.org/nmap-dev/2008/q1/0096.html
+Note: usr@Fyodor
+> increase this bit from 2008
+  %no%needs
+[David]:
+> do extend test of this 1
 ~
-o Fix XML escaping issue so that improper chars from NSE scripts or
-  elsewhere can't cause corrupt XML files.  See
-  http://seclists.org/nmap-dev/2009/q1/0316.html for an example. [David]
+o 
+[FIND]: docs.nse libs script args this script
+  for example; snmp libs src code deter script args specs snmp comm Name for snmp-sysdescr
+    (https://nmap.org/nsedoc/scripts/snmp-sysdescr.html)  
+      %standard%do%smb/libs/scripts/$call
+    (https://nmap.org/nsedoc/modules/smb.html, https://nmap.org/nsedoc/scripts/smb-check-vulns.html) 
+      [David]
 ~
-o Look into whether we should increase the frequency of port scan
-  pings.  See http://seclists.org/nmap-dev/2008/q1/0096.html . Note
-  that Fyodor already increased them a bit in 2008.  Might not need
-  more.  [David did extensive testing of this one already]
+o if bloat 
+#include
+> ndiff in nmap win32 zip distro fs
 ~
-o Find way to document NSE library script arguments and perhaps have
-  them bubble up to scripts themselves.  For example, I had to read
-  the SNMP library source code to determine the script argument to
-  specify the SNMP community name for snmp-sysdescr
-  (https://nmap.org/nsedoc/scripts/snmp-sysdescr.html).  Maybe we could
-  just standardize on something like we do with SMB library and the
-  scripts which call it (https://nmap.org/nsedoc/modules/smb.html,
-  https://nmap.org/nsedoc/scripts/smb-check-vulns.html). [David]
+o 
+#REPORT
+{crash.nse};
+> "assert FAIL..."
+  fs ..\nse_main.cc
+        ..\nse_main.cc:l 
+          314
+              " lua_gettop(L_script_scan) == $0"
+                $usr@David:
+  "I looked closer. And it appears assertion occurs if #include 192.0.0.1\01 -S is -R from <docs> -R this in \57 is VMWare_WIN Srvr.img"
+    "if --kill \57 from -range"
+      -S for dvcs
+/!\ SUCCESS COMPLETE
+#%FIX 
+#PROBLEM from 4.85BETA3
+/gtk.dll
+$nmap_4.85BETA1
+[Fyodor]
+usr@David: installer --diff gtk++ distro 
+  try Done!
+    for det in #PROBLEM
 ~
-o If it wouldn't bloat things too much, it would be nice to include
-  ndiff in the Nmap win32 zip distribution files.
-~
-o Reported NSE crash:
-  "Assertion failed - file ..\nse_main.cc line 314
-   lua_gettop(L_script_scan) == 0"
-  o He says: "After looking at this closer, it appears the assertion
-    occurs if I include the IP where the scan is run from. For us, I'm
-    running this on IP 57, which is a VMware Windows Server image.  If
-    I eliminate that IP from the range it successfully completed the
-    scan for all other devices."
-  o Seems to be fixed.  He can no longer reproduce the problem with
-    4.85BETA3.
-~
-o Deal with GTK DLL problem with Nmap 4.85BETA1: [Fyodor]
-  o David's installer seems to work--he's using a different GTK
-    distribution.  I'll try that.  Works!  Done!
-  o Details on problem: http://seclists.org/nmap-dev/2009/q1/0207.html
-  o Quick workaround done for 4.85BETA2, but better solution needed.
-~
-o "SCRIPT ENGINE (250.600s): ./scripts/rpcinfo.nse against
+  http://seclists.org/nmap-dev/2009/q1/0207.html
+$ Done! for 4.85BETA2 == solution  ~ o "SCRIPT ENGINE (250.600s): ./scripts/rpcinfo.nse
   a.b.c.d:<port> ended with error: ./nselib/datafiles.lua:114: attempt
-  to index global 'arg' (a nil value)"
-  -- http://seclists.org/nmap-dev/2009/q1/0227.html [Patrick]
+    to index global 'arg' (a nil value)"
+        -- http://seclists.org/nmap-dev/2009/q1/0227.html [Patrick]
 ~
-o Consider making the TODO list public
-  o Done: http://seclists.org/nmap-dev/2009/q1/0175.html
-  o Probably remove all of the "done" items since that is easier than
-    reviewing them.
-  o Might as well add to insecure.org/nmap/data/
-  o Maybe a bug tracker is a better approach.
+o 
+<>
+#TODO from Public
+  http://seclists.org/nmap-dev/2009/q1/0175.html
+    rm * "Done!" == Easy (REVIEW)
+      ['+']: inescure.org/nmap/.dat
+        is #BUG TRACK
 ~
-o [NPING] Fix compilation on Solaris.  See
-  http://seclists.org/nmap-dev/2010/q1/870.
+o [NPING]: #Fix #compilation in Solaris
+/!\ http://seclists.org/nmap-dev/2010/q1/870/
 ~
 "quit"
