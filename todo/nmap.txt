@@ -3,178 +3,116 @@ $Id: TODO
 11866 2009-01-24 23:10:05Z fyodor $ -*-text-*-
 #WORK
 $ nmap.m Android
-	{NYSE:ABC};
+	{"NYSE:ABC"};
 		playStore.js
 >>> workable gui $test Global_usr
 	if $Success! imp iOS
 /!\ https://secwiki.org/w/Nmap/Android/
 $nmap perf --min-rate "re-arch nmap make of -S | then #FIX [SET]: Host* ["START","FINISH"]: phase1 then mv in ["NEXT"]: in para" ;;
 	%allow this ["+"]: HOST 1:1 in host Finish! Phase! -R in para**
-$nmap xxx -S (2nd Edition)
-[placeholder]
+$nmap xxx -S (2nd Edition);
+[placeholder]:
 $org nselib in Hierarchy /libs/ dir na
-o Organize nselib into a hierarchy. A library "dirname/filename.lua" can be
-  required as "dirname.filename". We would need to ensure the installers
-  (Makefile, OS X, Windows, RPM) can handle this. See
-  http://seclists.org/nmap-dev/2014/q3/364
-o We should work to reduce Zenmap's memory consumption. We used to
-  commonly get error reports from people who load so many systems that
-  Zenmap gives an out of memory error and crashes.  For example, see
-  this thread: http://seclists.org/nmap-dev/2014/q2/46
-  After committing patch at http://seclists.org/nmap-dev/2014/q2/429,
-  we no longer get the error report but the problem still exists.
-  The problem seems to lie in a very large Nmap Output being stored
-  in memory and a possible fix seems to be to use a file based paging
-  system.
-o Consider making a version of Nmap for Apple's official Mac App
-  Store.  A particular concern with the downloadable Mac version of
-  Nmap is that Apple's new "Mountain Lion" release may require users
-  to jump through hoops to install unsigned non-app-store content per
-  their "Gatekeeper" "feature".  Though maybe signing the app will be
-  enough.  There may also be an issue with the "Sandboxing"
-  requirement for App Store apps starting June 2012.  Will Nmap be
-  able to request all the permissions it needs?  Ignoring the
-  technical challenges for the moment, what will users prefer?
-o Do a roll up on (state, TTL) pair instead of just state so that TTL
-  info is not lost when doing roll up on port states.
-  See thread at http://seclists.org/nmap-dev/2014/q3/93
-o Consider looking into differring TTL values during OS detection
-  phase and choose a port that is (hopefully) not firewalled to get
-  a better chance at correct result. See thread at
-  http://seclists.org/nmap-dev/2014/q3/33
-o [Zenmap] Look into and refactor code which uses the (very slow) += operation
-  on strings. http://seclists.org/nmap-dev/2014/q2/432 helped improve speeds
-  for opening files (from hours to seconds) and it seems like more speedups
-  can be done in other places.
-o Look into moving our Mac building/testing system into a virtual
-  machine or leased server sort of environment so that multiple Nmap
-  developers can access it and nobody has to keep a stack of Mac Minis
-  in their closet.
-o INFRASTRUCTURE: Upgrade seclists to use Mailman 3, which apparently
-  has many improvements.
-o We should fix nsedoc generation so it doesn't fail when blocks like
-  @usage, @output, etc. are followed by a local declaration.  See
-  http://seclists.org/nmap-dev/2014/q2/331.  If for some reason this
-  just can't be fixed, we will have to document the heck out of it, I
-  suppose.
-o When scanning your own IP from Windows, Nmap currently recognizes
-  the problem (can't do a raw scan like that on Windows) and skips the
-  SYN scan, leading to Nmap printing a bunch of ports in "unknown"
-  state at the end.  Nmap should probably act like unprivileged mode
-  in this case (e.g. do a connect scan, etc.).  See
-  http://seclists.org/nmap-dev/2013/q3/519
-o Investigate Checkmarx static analysis report of Nmap source tree
-  that someone sent us on Feb 12.  It looks like mostly false positives,
-  but we should go through to check for any real bugs or even possible
-  security issues.  Fyodor has the report.
-o INFRASTRUCTURE: Consider updating our svn-mailer.py (and conf file)
-  to the latest official version.  First check whether there is a
-  later official version and whether it has material changes.  We're
-  currently using one from
-  subversion-1.4.2/tools/hook-scripts/mailer/mailer.py.
-o Consider a two-stage model for IPv6 subnet/pattern support
-  o Right now you can try to scan a /64, for example, and Nmap will try
-    to iterate through them all (and of course never complete).  So
-    perhaps Nmap should first look at a specification and decide if it
-    should use other techniques like multicast discovery instead.
-o Move advanced IPv6 host discovery features from NSE into core Nmap.
-  We'll probably add the functionality of
-  targets-ipv6-multicast-invalid-dst, targets-ipv6-multicast-echo, and
-  maybe targets-ipv6-multicast-slaac.
-  - The idea is that Nmap does them automatically if it gets a large
-    target specification and sees that it is local so can be multicast
-    pinged.
-o We should figure out why (at least with Nping) raw ethernet frame
-  sends seem to be taking significantly longer than raw socket sends
-  (e.g. using --send-ip or the OS-provided ping utility).  This has
-  been reproduced on Linux and Windows.  Here's a thread:
-  http://seclists.org/nmap-dev/2012/q4/424
-  o Note that David and I tried to reproduce this on his machine and
-  on 'web' and 'research' machines and could not reproduce.  Still
-  happens with Fyodor's machine connected with WiFi.  Fyodor should
-  test on the same machine using wired and see if that changes anything.
-o Implement some improvements to dns-ip6-arpa.nse, as describe at
-  http://seclists.org/nmap-dev/2012/q2/45.
-  - Also consider a move to "fire and forget" logic.  Just blast out
-  the queries that we know we have to make, and then read any replies
-  that may happen to come back. (but still try not to introduce
-  inaccuracy (missed hosts) by flooding the network.
-o Treat the input to the escape function in xml.cc as UTF-8, not just
-  ASCII. Good UTF-8 should survive into the output; i.e., "\xe2\x98\xbb"
-  should become "\xe2\x98\xbb" in the output, not "&#xe2;&#x98;&#xbb;".
-  If the input happens not to be UTF-8, (like the file name in
-  http://seclists.org/nmap-dev/2013/q1/180), I suppose we can
-  individually encode each byte of each invalid sequence: "\xba\xda\xbf"
-  becomes "&#xba;&#xda;&#xbf;". Can probably do this with simple
-  byte->rune and rune->byte functions as in
-  http://plan9.bell-labs.com/sys/doc/utf.html.
-o We should probably redo the Nmap header (e.g. on https://nmap.org) to
-  make it more attractive.  Or, at a minimum we should update the
-  screenshots and think about which links we really need (some of those
-  pages aren't really updated any more).
-o Test a hierarchical classifier for IPv6 OS detection. Our classifier
-  currently treats, for example, some localhost Linux fingerprints as
-  separate classes from remote Linux fingerprints, simply because we
-  lose precision if we lump them together (for example TCP window size
-  differs across certain Linux versions when measured remotely, but
-  not on localhost). This leads to the linear classifier having to use
-  narrow margins between fingerprints that are really very similar. I
-  want to try a tree of classification where each non-leaf node is a
-  separately trained classifier and each leaf node is a final
-  classification. The first layer of the hierarchy would be something
-  like
-      (linux windows solaris aix ... other)
-  where "linux" would contain *all* the Linux fingerprints in a single
-  class. Lower levels would be like
-      (linux-2.4 linux-2.6)
-      (windows-xp windows-vista windows-7)
-  Lower levels will include only those fingerprints in their parent
-  class, so we don't even think about Windows when classifying
-  Linux. Probably three or four levels will be sufficient. There may
-  be a principled or automatic way to build this hierarchy, but I
-  suspect playing it by ear will be sufficient. Talk to David for more
-  of his thinking on this topic.
-o Maybe we should rename dns-brute to dns-brute-enum since it is so different
-  from our traditional brute force authentication cracking -brute scripts?
-o NSE WORK (note that this is mostly infrastructure because script
-  ideas are generally put on the script ideas page instead:
-  https://secwiki.org/w/Nmap_Script_Ideas)
-  o Review NSE-based port scanning and RST idle scan.
-    http://seclists.org/nmap-dev/2011/q2/307. [Henri and Hani?]
-o Maybe we should add an analysis or reporting or intelligence (or
-  different name) for our NSE scripts which don't send any packets, but
-  simply analyze Nmap's existing data and report when useful.
-o Install some sort of svnview webapp for svn.nmap.org which is
-  wrapped in Insecure chrome, allows people to click link for direct
-  file download, probably shows revision history and allows users to
-  see older versions, etc.
-o Process Nmap survey and send out results [Fyodor]
-o Nping (we think) will stop after 2^32 rounds even when "-c 0" is
-  given.  We should probably make this a 64-bit integrer so that "-c
-  0" will go essentially forever and so that users can give values
-  higher than 4 billion.
-o Nscan work [placeholder]
- - Hosted Nmap system
-o Add CPE entries to OS fingerpting DB entries which still lack them.
-  This is a gradual process since almost all of the missing ones
-  aren't in the official CPE dictionary either and it can take a lot
-  of research to decide on an appropriate entry.  Milestones so far:
-  - 3/21/12: We have entries for 2,601 of 3,572 fingerprints (971
-    missing; 73% coverage)
-  - 11/5/12: We have entries for 3,285 of 3,907 fingerpritns (622
-    missing; 84% coverage)
-  - 11/12/12: We have entries for 3,558 of 3,946 fingerprints (388
-    missing; 90% coverage).
-o [Zenmap] should actually parse and use script results. See
-   http://seclists.org/nmap-dev/2010/q1/1108
-  - We have an initial prototype, but probably need to redo because it
-    doesn't present the results in the way we'd like yet due to
-    problems implementing such a presentation with GTK, etc.
-o Make Zenmap settings get upgraded when the Zenmap executable is
-  upgraded. The per-user configuration files such as scan_profile.usp
-  and zenmap.conf are never overwritten once installed by Zenmap, so
-  changes and fixes to those files don't reach anyone who has
-  installed Zenmap already. This is most noticeable with changes to
+$"dirname/filename.lua" require
+$ installer makefiler os_x win rpm handler
+/!\ http://seclists.org/nmap-dev/2014/q3/364/
+$ zenmap mem ['use']: --git err #REPORT $load sys zenmap --git "out of memory err crash"
+	this thread /!\ http://seclists.org/nmap-dev/2014/q2/46
+		commit $patches @http://seclists.org/nmap-dev/2014/q2/429
+			error report "exists"
+				#PROBLEM nmap i/o store in mem % #FIX fs [based page sys]
+$ make version of nmap for Apple(cTM); official mac app store
+$ MAC version of nmap is Apple "mountain lion" release require [user]
+▶ install unsign non-app-store content pr "Gatekeeper", "feature"
+▶ sign-in .app #ISSUE "sandbox" require Store June 2012 nmap
+▶ nmap <?php request premission ignore technical challenge for this Global_usr Perefer ?>
+▶ $roll state ttl pair*state
+➜ --diff ttl Value detect.os phase -P is firewall --git % http://seclists.org/nmap-dev/2014/q3/33
+➜ refactor.c++ use += operate in strings
+/!\ http://seclists.org/nmap-dev/2014/q3/93
+[Zenmap]: /!\ http://seclists.org/nmap-dev/2014/q2/432
+➜ speed.imp for [OPEN]: fs from (hours to second)
+	s  p  e  e  d  -  u  p
+		Done! in ['fs']
+	mv mac build/test.sys in V_M ['srvr','sort']: of env nmap-dev STACK of mac mini in closet
+$ infrastructure upg seclist [use] mailman3.imp
+#FIX nsedoc generation #FAIL block @usage @output *local declare
+/!\ http://seclists.org/nmap-dev/2014/q2/331
+	if for #REASON this #FIX
+		docs --supp%
+$ -S 192.0.0.1 from WIN nmap #PROBLEM raw -S WIN
+	['SKIP',"SYN",'-S']:
+		nmap print("ports") of and in "unknown" state
+$ nmap in this case unprivilege mode
+	docker do connect scan
+/!\ http://seclists.org/nmap-dev/2013/q3/519/
+>>> inv checkmarx statis ANALYZE #REPORT of nmap src tree
+	['send'] feb 12 $false +
+		chk for #BUG %sec%#issue [FYODOR]: #REPORT
+$ infrastructure upd svn-mailer.py and conf fs Latest Official Version
+$ chk this Official Version
+	first chck if this is ['use']: from subversion-1.4.2/tools/hook-scripts/mailer/mailer.py/
+$ 2-stage mod for ipv6 subnet/pattern supp
+$ try -S /64 for " and Complete! " nmap spec and if [use] tech multi-discover
+$ advanced ipv6 Host from nse core nmap
+$ function("target-ipv6-multicast-invalid-dst","targets-ipv6-multicast-echo" and "targets-ipv6-multicast-slaac")
+$ is nmap auto if Target spec and see is local multicast -ping
+	nping raw ethernet frame send raw skt send [use]: --send -ip or os-provide -ping util
+		this Linux and Window /thread/
+/!\ http://seclists.org/nmap-dev/2012/q4/424
+usr@David: and try
+	this ['machine']: and 'web' and 'research' [Fyodor]: connect WiFi
+		['use']: wire if
+			imp dns-ip6-arpa.nse
+/!\ http://seclists.org/nmap-dev/2012/q2/45
+$ fire and forget logic
+$$_[QUERY]: then Read Reply %%
+>>> int % miss Host Flood Net
+>>> i/o esp function('xml.cc') !--UTF-8-- ascii
+>>> "\xe2\x98\xbb", "\xe2\x98\xbb" in i/o "&#xe2;&#x98;&#xbb;"
+>>> if i/o utf-8 fs Name in http://seclists.org/nmap-dev/2013/q1/180
+>>> encode byte of encode invalid sequence "\xba\xda\xbf", "&#xba;&#xda;&#xbf;"
+>>> do this byte ➜ rune and rune ➜ byte function in http://plan9.bell-labs.com/sys/doc/utf.html/
+>>> nmap Header https://nmap.org/ min upd Screenshot <LINK> page udp
+$test hierarchy class for ipv6 os --detect Class <THREAT> for localHost Linux finger print('lose','precision');
+	if --lump for tcp \window size --diff Linux Version <measure> remote localHost
+		this Class ['USE']: margin ➜ finger Print("try tree of class non-Leaf node is train class...");
+			 is $train Class and node.leaf final Class
+			 	layer of hierarch
+						Linux: Windows Solaris aix
+						Linux: "container fingerprint in class lower lvl"
+						Linux-2.4, *Linux-2.6
+								Windows-xp Windows-vista Windows-7
+									v_Three, v_Four
+										principle or auto build this
+											usr@David: "talk to David for more of his thinking on this topic..."
+>>> rename dns-brute ➜ dns-brute-enum is --diff from trad -brute force 0auth --crack -brute script
+>>> work.nse note: this is infrastructure <scrpt> idea [PUT]: id page
+/!\ https://secwiki.org/w/Nmap_Script_Ideas);
+["based","port"]: -S and rst idle -sS
+/!\ http://seclists.org/nmap-dev/2011/q2/307/ [Henri and Hani?]
+['+']: analysis -R or int or --diff Name for script.nse [SEND] pkt
+$ analyze.simp EXIST.dat [REPORT]: [USE];;
+$ install -S of svnView | webapp for svn.nmap.org is wrapped in Insecure chrome | click <link> for direct fs download
+	[usr]: Version
+>>> nmap survey ["SEND"]: Result [Fyodor]
+>>> nping 2^32 Round "-c 0" is --git 64-bit int "-c 0" 3.14 ["USR"]:
+	value then 4 BILLION ;;
+		nscan
+			[placeholder]
+			[HOST]: nmap system
+			["+"]: entry.os finger('print entry.db this is ➜ process "of the miss 1 are not in official/CPE/DIR"'); of research.app entry /mile/stone
+["-"]: 3/21/12: We have entries for 2,601 of 3,572 fingerprints (971 missing; 73% coverage)
+["-"]: 11/5/12: We have entries for 3,285 of 3,907 fingerprints (622 missing; 84% coverage)
+["-"]: 11/12/12: We have entries for 3,558 of 3,946 fingerprints (388 missing; 90% coverage)
+["Zenmap"]: parse and ["use"]: <script> RESULT!
+/!\ http://seclists.org/nmap-dev/2010/q1/1108
+["-"]: init proto %redo%present in imp gtk++
+$ make zenmap ['setting']: --git upg zenmap.exe is upg 
+$ per-usr config fs scan_profile.usp and zenmpa.conf "overwrite --install zenmap --mods and #FIX" pre-install zenmap
+	this is 
+
+most noticeable with changes to
   profiles and highlight definitions are notably affected. This fix
   may involve hard-coding settings that are not normally configured by
   users (like highlighting) or updating the per-user files at startup
