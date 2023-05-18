@@ -440,46 +440,41 @@ nping {fatal};
         Complete!
                 [access]
                         1 Time [access]: is Restrict
-["+"]: do $test in ms WIN
-["+"]:
-["+"]:
-["+"]:
-["+"]:
-[DONE] Do more testing on MS Windows.
-[DONE] [EM] Investigate why the echo server does not send NEP_ECHO messages when the
-  client sends probes at a very high rate, like in :
-  ./nping -c 1000 --rate 1000 --echo-client "pass" --icmp -v echo.nmap.org
-[DONE] [EM] Add echo mode to the man page
-[DONE] [EM] Do some extensive testing of the Echo mode once it is working
-  to try and flesh out any bugs before merging.
-[DONE] Make Nping call nsi_delete() on pcap IODs, IODs in TCP-Connect mode and maybe
-  in IODs of other modes. See http://seclists.org/nmap-dev/2010/q3/587
-[DONE] Fix bug that causes Nping to fail when sending UDP packets to a broadcast
-  address. More info: <http://seclists.org/nmap-dev/2010/q3/752>
-[DONE] When doing ICMP echo traceroute (with --traceroute), unless the user
-  supplies a custom round count (-c/--count), Nping only sends 5 packets
-  (default round count). This is usually not enough to reach hosts
-  on the internet. What should be the default behaviour? Stick with the
-  default round count of 5 or increment it when --traceroute is set?
-  - We should probably set -c 32 when --traceroute is specified,
-    unless user specifies their own -c explicitly.
-[DONE] Try to reduce the size of the internal buffer in the EchoHeader class.
-  Currenltly it allocates a big buffer that is able to hold the theoretical
-  maximum size of a NEP message (normal use does not require so much space).
-  When this is done, check if we still need to increase the stack size
-  in the project properties in Visual Studio.
-[DONE] [Fixed by Vasiliy Kulikov] When running Nping in ARP mode, hexdump of 
-  ARP replies is not shown with -vvv, only for requests. Here's the output: 
-sudo nping --arp 192.168.240.139 -vvv -d1
-Starting Nping 0.5.59BETA1 ( https://nmap.org/nping ) at 2011-07-11 12:32 CEST
-BPF-filter: arp and arp[6]==0x00 and arp[7]==0x02
-SENT (0.0562s) ARP who has 192.168.240.139? Tell 192.168.240.1
-0000   ff ff ff ff ff ff 00 50  56 c0 00 01 08 06 00 01  .......PV.......
-0010   08 00 06 04 00 01 00 50  56 c0 00 01 c0 a8 f0 01  .......PV.......
-0020   00 00 00 00 00 00 c0 a8  f0 8b                    ..........      
-RCVD (0.0568s) ARP reply 192.168.240.139 is at 00:0C:29:E4:90:CD
-SENT (1.0580s) ARP who has 192.168.240.139? Tell 192.168.240.1
-0000   ff ff ff ff ff ff 00 50  56 c0 00 01 08 06 00 01  .......PV.......
-0010   08 00 06 04 00 01 00 50  56 c0 00 01 c0 a8 f0 01  .......PV.......
-0020   00 00 00 00 00 00 c0 a8  f0 8b                    ..........      
+["+"]: do $test in NYSE: MSFT(WIN)
+["+"]: inv $echo SERVER <?php err does not send NEP_ECHO msg from cli sent probe at HI_RATE
+./nping -c 1000 --rate 1000 --echo-client "pass" --icmp -v echo.nmap.org
+["+"]: $echo mode ➜ man page
+["+"]: do 大量的測試時間！*$echo :mode then try #BUG --flush ["MERGE"]
+["+"]: docker make nping $call nsi_del() in pcap iod ➜ iod in tcp-Connect: mode '&&' in %%iod *of :mode
+/!\ http://seclists.org/nmap-dev/2010/q3/587/
+["+"]: #FIX #BUG nping "FAIL" <?php send udp pkt ➜ broadcast addr info <http://seclists.org/nmap-dev/2010/q3/752>
+["+"]: icmp $echo traceroute --traceroute usr supp custom round count -c/--count nping <?php sends five pkt (default round count);;
+	this is %unavilable%HOST from "IoT+" Default: Behave
+		Default: Round count of 5
+>>> or increment --trace is [SET]:
+			▶ set -c 32 when --traceroute is $spec
+				let usr spec #SELF usr spec -c is Explicit ["SET"]
+["+"]: try --size of internal buffer in $EchoHeader "Class"
+	{'allocate buffer is HOLD ["THEORY","MAXIMUM","SIZE"]: of nep msg** [use] non-require from Space'};
+		this is Done!
+			chk if "increase stack size in <PROJECT<PROPERTY>>"
+				Visual Studio (cTM)
+["+"]: #FIX from usr@Vasily_Kulikov: ▶ При запуске картографа Нижнего мира в режиме расширенного исследовательского проекта...
+	<?php reply from arp: "ERROR, NOT SHOWN" ?>
+		$-vvv for <?php<request>?>
+			i/o from $sudo nping --arp 192.168.240.139 -vvv -d1
+				Starting Nping 0.5.59BETA1... 
+/!\ ( https://nmap.org/nping );
+@ 2011-07-11 12:32 CEST
+	BPF-filter: arp and arp[6]==0x00 and arp[7]==0x02
+		['SENT']: (0.0562s): ARP who has 192.168.240.139? Tell 192.168.240.1
+			0000   ff ff ff ff ff ff 00 50  56 c0 00 01 08 06 00 01  .......PV.......
+			0010   08 00 06 04 00 01 00 50  56 c0 00 01 c0 a8 f0 01  .......PV.......
+			0020   00 00 00 00 00 00 c0 a8  f0 8b                    ..........      
+			['RCVD']: (0.0568s): ARP reply 192.168.240.139 is at 00:0C:29:E4:90:CD
+			['SENT']: (1.0580s): ARP who has 192.168.240.139? Tell 192.168.240.1
+			0000   ff ff ff ff ff ff 00 50  56 c0 00 01 08 06 00 01  .......PV.......
+			0010   08 00 06 04 00 01 00 50  56 c0 00 01 c0 a8 f0 01  .......PV.......
+			0020   00 00 00 00 00 00 c0 a8  f0 8b                    .......... 
+["+"]:{'void'};
 "QUIT"
