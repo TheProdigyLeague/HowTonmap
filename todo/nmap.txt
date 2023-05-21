@@ -111,193 +111,180 @@ $ install -S of svnView | webapp for svn.nmap.org is wrapped in Insecure chrome 
 $ make zenmap ['setting']: --git upg zenmap.exe is upg 
 $ per-usr config fs scan_profile.usp and zenmpa.conf "overwrite --install zenmap --mods and #FIX" pre-install zenmap
 	this is 
-
-most noticeable with changes to
-  profiles and highlight definitions are notably affected. This fix
-  may involve hard-coding settings that are not normally configured by
-  users (like highlighting) or updating the per-user files at startup
-  (only those parts that haven't been changed by the user).
-o We should offer partial results when a host timeouts. I (Fyodor)
-  have been against this in the past, but maybe the value is
-  sufficient to be worth the maintenance headaches.  Many users have
-  asked for this.  If we do implement this, we may want to only print
-  results for the COMPLETED phases (e.g. host discovery, port
-  scanning, version detection, traceroute, NSE, etc.)  Trying to print
-  partial results of a port scan or NSE or the like might be a pain.
-  And if we print some results for a host which timeouts, we should
-  give a very clear warning that the results for that host are
-  incomplete. As an example, here is someone who hacked Nmap source
-  code to achieve this: http://seclists.org/pen-test/2010/Mar/108.
-  o Another benefit would be that it would allow us to clean
-    up/regularize the host output code. Right now there are I think
-    three places where a host's final output can be printed. If,
-    instead, that code just looked at what information was available and
-    printed that out only, we could potentially isolate it in just one
-    place.
-  o This also might let us provide a feature for skipping the rest of
-    an Nmap phase which is going too slowly (I think that has its own
-    Nmap TODO item).
-o [Nsock] Some SSL connections that used to work now fail; find out
-  why. http://seclists.org/nmap-dev/2010/q4/788. Narrowed down to
-  r19801 in http://seclists.org/nmap-dev/2011/q1/12.
-o [NSE] Consider a system where scripts can tell if any other scripts
-  depend on them.  They could then use that to determine whether they
-  should bother storing information in the registry.  For example,
-  snmp-interfaces could store the discovered table if another script
-  (such as a mac address geolocator script) depends on it.
-o [NSE] Consider whether we need script.db for performance reasons at
-  all or should just read through all the scripts and parse on the fly.
-  See: [http://seclists.org/nmap-dev/2009/q2/0221.html]
-o A couple minor nsedoc issues (see
-  http://seclists.org/nmap-dev/2011/q1/1095):
- o After the ssh-hostkey portrule was added, nsedoc seems to be
-   generating a blank "Script types" filed for the script:
-   http://localhost:8082/nsedoc/scripts/ssh-hostkey.html
-   o This is happening because "portrule" and "hostrule" appear later in
-     the script, and NSEDoc thinks it is their definition, and there is
-     no NSEDoc there.
+		["notice","mods","profile","hightlight","define"]:
+			note affect
+	this: #FIX in Settings normal.conf usr "highlight" or upd usr fs @BOOT
+		mod part usr
+			partition result HOST TIMOUT
+usr@Fyodor: "Der Wert ist für die Wartung ausreichend. Benutzer haben danach gefragt. Druckimplementierung für eine komplette Phase.
+Hosterkennung, Portscan, Versionserkennung, Traceroute, Nether Script Engine. Versuchen Sie, die Ergebnisse eines Port-Scans oder der Nether Script Engine zu drucken und zu partitionieren. Wenn wir Ergebnisse für Host-Timeouts drucken. Geben Sie eine klare Warnung aus: „Ergebnisse für Host sind unvollständig!“ Beispiel: Globaler Benutzer: 'http://seclists.org/pen-test/2010/Mar/108.'"
+$ clean regex for host i/o.c 
+$ 3 "sys for final Host output print('if code look at avail info and print only')iso in 1 sys"
+	{"this is so %provide%feature for Skip *nmap phase Slow"};
+		is nmap #TODO <ITEM>
+>>> [Nsock]: ssl connect use FAIL 
+/!\ http://seclists.org/nmap-dev/2010/q4/788/ 
+➜#r19801 in http://seclists.org/nmap-dev/2011/q1/12
+>>> [NSE]: sys.py sys.js sys.ps if <script> \dependency
+	then [use]: deter store info in \registry
+		for example "snmp-interfaces could store the discovered table if another script (such as a mac address geolocator script) depends on it..."
+➜ ["NSE"]: script.db for perfs Read <script> && then parse
+	[http://seclists.org/nmap-dev/2009/q2/0221.html]
+➜ nsedoc #issue
+/!\ http://seclists.org/nmap-dev/2011/q1/1095 ):
+>>> ssh.hostkey portrule ['+']: nsedoc gen _blank "script type file for <script>"
+/!\ http://localhost:8082/nsedoc/scripts/ssh-hostkey.html
+➜ this is "portrule" and "hostrule" <script> NSEDoc is defined and is NSEDoc  
        local ActionsTable = {
          -- portrule: retrieve ssh hostkey
          portrule = portaction,
          -- postrule: look for duplicate hosts (same hostkey)
          postrule = postaction
-       }
- o ssh-hostkey and rmi-dumpregistry each have two @output sections,
-   and NSEDoc is only showing the second one.  We should probably just
-   combine them into one @output section, and maybe make nsedoc give a
-   warning in this case.  Or we could make nsedoc handle multiple
-   @outputs.
-o Add general regression unit testing system to Nmap
- o David has created a system for Ncat which could serve as a
-   model.
-o Make version detection and NSE timing system more dynamic so that
-  the concurrency can change based on network conditions/ability.
-  After all, beefy systems on fast connections should be able to handle
-  far more parallel connections than slower systems.
-  o At a minimum, this at least warrants more benchmark testing.
-o We should run at least one SCTP service on scanme.  Daniel
-  Roethlisberger has made available dummy services which support IPv4
-  and IPv6 (see http://seclists.org/nmap-dev/2011/q2/450).
-  Alternatively, we could run some sort of "real" SCTP application(s)
-  (preferably one which is relatively simple, easy to install, secure,
-  and supports IPv6).
-o Create new default username list:
-  http://seclists.org/nmap-dev/2010/q1/798
-  o Could be a SoC Ncrack task, though should prove useful for Nmap
-    too
-  o We probably want to support several lists.  Like an admin/default
-    list like "root", "admin", "administrator", "web", "user", "test",
-    and also a general list which we obtain from spidering from
-    emails, etc.
-o Improve Nsock proxies system
- - Add SSL support
- - Add proxy authentication
- - Switch Ncat to using Nsock proxy system rather than it's own
-   built-in support.
- - Move the code which is shared with ncat to nbase (URL parsing code,
-   for instance).
- - Add socks4a/socks5 support. This requires to figure out how to
-   enter the nsock proxy code w/o having the target IP address. No huge
-   technical blocker there though, only design choices to make.
- - Nping could potentially use it as well (could be useful for
-   measuring latency and reliability of a given proxy chain, for
-   example).
- - Add proxy support to connect() scan.  This would mean moving
-   connect scan to nsock.
-o [NCAT] Send one line at a time when --delay is in effect. This is
-  cumbersome to do until Nsock supports buffered reading.
-o [NCAT] Make the HTTP proxy support the chunked transfer encoding,
-  then change it to be HTTP/1.1 and support pipelining.
-o [NCAT] Drop privileges once it has started up, bound the ports it
-  needs to, etc.
-o [NCAT] Work as a SOCKS4a/SOCKSv5 proxy.
-o [NCAT] Resolve names through the proxy when possible.
-  http://seclists.org/nmap-dev/2012/q2/768
-o [NSE] Script writing contest (something to think about)
-o We should document an official way to compile/test refguide.xml so
-  people can more easily test their changes to it.  This will probably
-  involve moving legal-notices.xml into /nmap/docs, among other
-  things.
-  o Note that nping has its own /nmap/nping/docs/genmanpage.sh - we
-  could look at how that could apply to Nmap.
-o Move Zenmap man page from nmap/docs/ to nmap/zenmap/docs to match
-  the man page location for ncat and ndiff.
- o Don't break packaging/build system
- o Don't break the system for posting html to web site. 
- o Consider standardizing names for nping and ncrack man pages as well.
- [Fyodor]
-o [NSE] MSRPC - Improve domain support all around -- in particular,
-  let the user give the domain in the format DOMAIN\username or
-  username@DOMAIN anywhere that usernames are accepted. Suggested
-  at http://seclists.org/nmap-dev/2010/q2/389
-o [NSE] Combine similar MSRPC scripts, especially the "get info"
-  stuff.  See this thread on combining
-  (http://seclists.org/nmap-dev/2010/q1/1023).  This was suggested by
-  Ron at http://seclists.org/nmap-dev/2010/q2/389.
-o [Zenmap] Investigate getting new OS icon art. See
-  http://seclists.org/nmap-dev/2010/q1/1090
-o We should probably enhance scan stats--maybe we can add a full-scan
-  completion time estimate? Some ideas here:
-  http://seclists.org/nmap-dev/2010/q1/1007
-o [NSE] Do some benchmarking of our brute.nse.  We should check the
-  performance with different levels of thread parallelism.  Our
-  initial results show that it isn't helping much for vnc-brute or for
-  drda-brute (which is currently using the multi-thread feature
-  directly rather than through brute.nse library).  We should figure
-  out why the threads aren't helping more, and whether there is
-  something we can do to fix it.  It would also be interesting to
-  compare speed with Ncrack for services we have in common.
-o Start project to make Nmap a Featured Article on Wikipedia.
- - See http://seclists.org/nmap-dev/2010/q1/614
-o Add Nmap web board/forum
- - First step is looking at the available software for this.
- - Nmap subreddit exists: https://www.reddit.com/r/nmap
-o [Zenmap] Consider a couple ideas from Norris Carden
-  (http://seclists.org/nmap-dev/2010/q2/228):
- - remember last save and/or open location for new saves and/or opens
- - default save location option
-o [Nsock] Consider adding server support to Nsock so it can accept
-  multiple connections and multiplex the SD's, like it does for
-  clients.  This could potentially be used by Ncat and Nping echo
-  mode.  Currently Ncat server doesn't use Nsock at all, while Nping
-  echo mode basically polls, repeating a loop of 1s in nsock_loop
-  followed by a nonblocking accept().  Then Nping gives the SD's to
-  Nsock to manage.
-o Consider implementing both global and per-host congestion control in
-  the IPv6 OS detection engine. Currently it handles congestion globally
-  (one CWND and SSTHRESH shared by all hosts). This works fine but it
-  may not be the most efficient approach: if the congestion is not
-  in our network segment but in a target's and we are os-scanning
-  hosts in different networks, then all hosts get "penalized" because
-  there is congestion in another network, not in theirs.
-o [Nsock] Consider implementing a nsock_pcap_close() function or making
-  nsp_delete() call pcap_close() when pcap IODs are used. Currently valgrind
-  warns about a socket descriptor left opened (at least in Nping).
+       };
+➜ ssh-hostkey
+➜ rmi-dumpregistry
+	--diff @output Section:S
+		NSEDoc is ['ONLY SHOW SECOND']:
+			%combine in 1 = @output_Section
+			%make-file nsedoc --git "WARNING IN THIS CASE"
+			%nsedoc: handler "multiple @output"	
+▶['+']: general regression unit test system ➜ nmap [David]
+>>> o ['CREATE']: sys for ncat "SERVE MODEL"
+	{"make version detection and timing.nse /sys > dynamic concurrent mod [based] net condition and ability"};
+>>> "large.sys" in "fast.connect" handler: parallel (connect) then Slow System
+$min
+	this Warranty(benchmark_test);;
+$run
+	1 sctp srvc in ['!']: scanme
+[Daniel_Roethlisberger]:
+➜ avail @dummy_srvc SUPP ipv4 and ipv6 (see http://seclists.org/nmap-dev/2011/q2/450).
+>>> -R -Sort * "REAL SCTP APP" --install SEC and SUPP ipv6
+[CREATE, NEW, DEFAULT, USERNAME, LIST]
+/!\ http://seclists.org/nmap-dev/2010/q1/798
+>>> ncrack task ➜ use for nmap,
+	% supp list ➜ admin/default/list,
+		"root", "admin", "administrator", "web", "user", "test", and gen List <obtain> from Spider from email
+			imp nsock ➜ <proxy_system>
+> o ['+']: supp _SSL
+	['+']: burp_suite 0auth
+	['-']: switch ncat ➜ ['ncat','proxy','system','from Built-in Supp']
+$mv lib/share.c ➜ nbase ('url parse .c for $_instance')
+$['+']: socks4a/socks5 supp
+	require this ('%enter nsock proxy code w/o having target ip addr')
+['-']: design
+['-']: nping %use%design ("measure latency and realiability of proxy chain for crypt")
+['+']: proxy supp ➜ connect('')scan
+	mv this -S ➜ nsock
+▶ o [NCAT]: <?php sned line -T for Time
+	--delay is in effect
+		this is "BUFFER_OVER_LOAD"
+			➜ do nsock __SUPPORT_BUFFER_READ
+▶docker make HTTP proxy support chunked transfer encoding,
+  	then --mod HTTP/1.1 || supp
+		--kill Privileges from BOOT
+		--bound -P for \<PORTS>*
+▶"SOCKS4a/SOCKSv5 proxy"
+	resolve Names ➜ %proxy%
+/!\ http://seclists.org/nmap-dev/2012/q2/768
+		script write (Competition);;
+▶doc(official) compiler/test from refguide.xml
+	Global_usr $test --mods
+		this mv legal-notices.xml in /nmap/docs/.h
+		➜note: nping is /nmap/nping/docs/genmanpage.sh
+			nmap ["APPLY!"]:
+▶ $mv zenmap/man_page from nmap/docs/ ➜ nmap/zenmap/docts > ['MATCH',"man_page","location"]: for ncat and ndiff
+	br pkg/build sys
+	br sys for ['POST']: <html> ➜ web_site
+		Standard-Name for nping and ncrack man page
+ 		[Fyodor]
+▶ msrpc.nse msrpc.imp <domain> --supp 
+	in Part let usr --git <domain> in format DOMAIN\usrName or usrName@DOMAIN
+		usrName ['!']: ["ACCEPT"]: http://seclists.org/nmap-dev/2010/q2/389
+			combine.sim msrpc <script> /!\--git info /thread/ combine
+				(http://seclists.org/nmap-dev/2010/q1/1023)
+					this usr: [Ron]: http://seclists.org/nmap-dev/2010/q2/389.
+						[zenmap] inv --git NEW! os.ico ART
+/!\ http://seclists.org/nmap-dev/2010/q1/1090
+%enhance%++
+	-S stats %['+']: 100% -S
+		完成时间预估
+			or %+ -S
+/!\ http://seclists.org/nmap-dev/2010/q1/1007
+$ ['benchmark']: *brute.nse
+$ chk perfs --diff lvls * /thread/ | parallel
+$ init result SHOW is "non" \help for vnc-brute or for drda-brute
+	is [use] multi/thread [feature]
+		then ➜ brute.nse /libs
+			/thread/ ['!']: \help is "non"
+				is <?php #FIX ?>
+>>> int compare SPEED ncrack for srvc in #COMMON
+["START"]: #PROJECT
+$ make nmap [feature]: [article]: in @WIKI
+/!\ http://seclists.org/nmap-dev/2010/q1/614
+["+"]: nmap web board/forum
+["1st Step"]
+	is @available_software for this ["-"]: nmap /sub-reddit(cTM)/
+		exists: https://www.reddit.com/r/nmap
+			[zenmap]: ["!"]: from usr@Norris_Carden:
+				(http://seclists.org/nmap-dev/2010/q2/228)
+["-"]: "LOAD LAST SAVE" ➜ or ["OPEN"]: location for NEW! ["SAVE"]: open
+["-"]: default save location option
+["NSOCK"]: ['+']: srv supp ➜ nsock ACCEPT /mult-connection/ and multiplex ➜ sd
+	for cli
+		this %use from ncat and nping $echo mode
+			ncat srvr non-use of nsock while nping $echo mode
+				[basic|poll]
+					repeat loop * is in nsock_loop
+						[follow]: [nonblock]: accept()
+							then nping --git SD:s ➜ nsock manager
+▶ imp Global and per.h <<congestion control in ipv6 os detection engine>>
+	handler: congestion
+		global: cwnd 
+			ssthresh: share
+				host: all
+	o this WORKS
+		%efficient?
+			if congestion is "not in net.segment"
+				is in --targ and os -S ["HOST"]: in --diff net
+					then, "all hosts penalize"
+					["CONGESTION!","IN","OTHER","NETWORK"]: #not  in  theirs
+>>> imp nsock_pcap_close('') or nsp_delete('')
+$call pcap_close()
+	pcap_iod is use
+		current valgrind
+			["WARN","SKT","DESCRIPT"]:
+				l  e  f  t  |  o  p  e  n
+					(at least in nping...)
   ==10526==    at 0x62F77A7: socket (syscall-template.S:82)
   ==10526==    by 0x4E348A5: ??? (in /usr/lib/libpcap.so.1.0.0)
   ==10526==    by 0x4E36819: pcap_activate (in /usr/lib/libpcap.so.1.0.0)
   ==10526==    by 0x4E375FC: pcap_open_live (in /usr/lib/libpcap.so.1.0.0)
   ==10526==    by 0x4311A9: nsock_pcap_open (nsock_pcap.c:64)
   ==10526==    by 0x428078: ProbeMode::start() (ProbeMode.cc:329)
-o Consider rethinking Nmap's -s* syntax for specifing scan types
-  o Current problems with this -s syntax:
-    o We already use like 20 of the 26 letters, so we end up with
-      things like SCTP scan using -sY
-    o Can make Nmap command lines hard to read, particularly given
-      that we often need to improvise to find a letter which isn't
-      taken.
-    o Problematic for scan types -sI and -b which require arguments
-    o Inconsistencies.  For example, -sC and -sV do script scan and
-    version detection, respectively, and yet for OS detection we use
-    -O.  Also, control flow (-sP, -sL) is used with -s, which further
-    overloads the options.
-  o Possible solution:
-    o We are enabling -Pn and -sn as preferred notations for -PN and
-      -sP which mean "no ping" and "no port scan".  Those match the
-      already existing -n for "no DNS".  The problem with -sP is that it
-      implies "ping only", when what it really should mean is "disable
-      port scan" because you may want to do NSE, OS detection,
-      traceroute, etc. still.
+		o nmap -s* syntax for specs and scan Types
+#problem 
+	this -s <syntax>
+		['use']: 20 * 26 l  e  t  t  e  r | sctp -S ['use']: -sY
+$nmap cmd:l "Reading is difficult"
+#imp [find]: letter is "not taken"
+#problem
+	for scan Type -sI and -b
+		require args
+			"inconsistent"
+$ -sC and -sV do script scan and version detection, 
+	and for OS detection 
+		use -O
+			control flow (-sP, -sL) is used with -s 
+				"overflow option"
+	o %%enable -Pn and -sn as preferred notations for -PN and -sP 
+$ "no ping" and "no port scan" 
+	this ["MATCH"]:
+		"already exists for -n and for no DNS..."
+			#PROBLEM
+				-sP is imp "ping only"
+					is mean "disable port scan"
+						do nse, os detection, traceroute
+
     o We might want to just give them normal option strings, so you
       could do --maimon instead of -sM, for example.  For extremely
       common options such as SYN scan, UDP scan, version detection, we
