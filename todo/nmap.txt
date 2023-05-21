@@ -284,149 +284,102 @@ $ "no ping" and "no port scan"
 				-sP is imp "ping only"
 					is mean "disable port scan"
 						do nse, os detection, traceroute
-
-    o We might want to just give them normal option strings, so you
-      could do --maimon instead of -sM, for example.  For extremely
-      common options such as SYN scan, UDP scan, version detection, we
-      could perhaps find good single letter options as an alias to the
-      longer one.
-    o Another idea is to use something like --scantype syn,udp,sctp,
-      which is a lot longer for single-type scans, but shorter when
-      you're combining mulitiple ones.  Doesn't allow for individual
-      scan arguments easily.  I (Fyodor) think I prefer the idea above
-      of just givem them top level arguments.
-    o If we keep -s*, we could just give it one defined function, such
-      as selecting port scan type, or control flow.
-  o Obviously this will take some discussion/brainstorming on nmap-dev.
-o Do -p- Internet UDP scans.
-o Scanning through proxies
- o Nmap should be able to scan through proxy servers, particularly now
-   that we have an NSE script for detectiong open proxies and now that
-   Ncat can act as proxy client or server.
- o Requirements:
-   o Would be nice to be able to chain through multiple proxy servers of
-     different types.
-   o Would be nice to be able to spread the load amongst multiple
-     proxies.
-   o Should support port scanning, version detection, and NSE.  In
-     other words, nsock should support proxies.
-   o Support IPv4 and v6
-   o Need to figure out how to get good performance.  Pool of
-     connections to proxy or proxies for concurrency?  HTTP pipelining?
-   o Support the different varieties of proxies: socks4, socks4a,
-     socks5, HTTP GET (if possible), HTTP CONNECT.  Note that GET
-     proxies present some challenges since the error messages may not
-     be standard, etc.
-   o Maybe auto-detect the proxy type so that Nmap can try the most
-     efficient scanning method first?
-   o I've been asked to support basic, ntlm, and digest authentication
-     if possible.
- o Implementation ideas: 
-   o There is a patch by Zoltan Panczel (http://nmap-dev.fw.hu) and it
-     has been improved by Jacob Appelbaum in nmap-exp/ioerror/ .  This
-     patch doesn't handle things like parallelization, but it may be a
-     good proof of concept.
-   o This might not be appropriate for ultra_scan ... perhaps would be
-     better to write a general scanning engine for abusing
-     applications for port scanning purposes.  This could handle
-     scanning through proxies and the existing FTP bounce scan would
-     also be ported to this engine (or, frankly, we could probably get
-     away with removing FTP bounce).  rembrandt at jpberlin.de tells me
-     that you can also do this with the "forwarding" commands on IMAP
-     servers.  Whoever does this should probably start by reading the
-     code for the main port scanning engine (ultra_scan()) and also
-     the version detection code (service_scan()).  And the version
-     detection paper at https://nmap.org/book/vscan.html.  If you
-     understand all that, you may be ready for this project :).  This
-     is important, because it is easy to do poorly.  The tough part is
-     high performance and clean code which is general enough that all
-     these different applications can be scanned through using the
-     same basic engine.  You should run your ideas by nmap-dev in as
-     much detail as possible before starting.
-   o David: I'm starting to think about building proxy support into
-     Nsock and then implementing -sT with Nsock instead of ultra_scan.
-o [Web] Consider adding training/introduction videos to the Nmap site
- o Would be great to have a (5 minute or less) promotional video
-   introduction to each tool (Nmap, Zenmap, Ncat, Ndiff) on its web
-   page.
- o They need to be good to be useful--the sort of the quality you see
-   in Laura Chappell's Wireshark videos or James Messer's Nmap videos
-   or Irongeek's videos (http://www.irongeek.com).
- o Besides the promotional videos, users would probably enjoy more
-   in-depth video instructions (e.g. covering the Nmap Network
-   Scanning topics).
- o Here's an example product page with lots of videos (we may not go
-   that far): http://www.splunk.com/product
-o The Zenmap translation system
-  (https://nmap.org/book/zenmap-lang.html) has been pretty successful
-  so far.  We should consider doing the same for Nmap.  After all, we
-  already have the reference guide in 16 languages at
-  https://nmap.org/docs.html.  We should definitely try to use the same
-  translation methods for Zenmap as we do for Nmap.  In fact, maybe we
-  can create a combined PO file Nmap, Zenmap, Ncat, and Ndiff so that
-  they can all be translated and maintained together. Something to
-  consider: calling setlocale can change the behavior of functions like
-  isalpha. Locale-dependent functions need to be checked for security
-  risks.
-o [NSE] Consider whether we should include some sort of NSE debugger.  Or we
-  could include something simpler.  For example, Nmap now provides a
-  traceback (with sufficient debugging/verbosity) when a script ends
-  in error.  For some inspiration/ideas, look at Diman's NSE
-  debugger (http://seclists.org/nmap-dev/2008/q1/0228.html).
-o [NSE] Support routing http requests through proxies.
-o [NSE] Would be great if NSE scripts could be made to NOT
-  run as root if they don't have to.
-o [NSE] Security Review
- o Consider what, if any, vulnerabilities or security risks NSE has
-   with respect to buffer overflows, format string bugs, any other
-   maliciously formatted responses from target systems, etc.  Maybe
-   address the known risk of malicious scripts too.
- o Consider that NSE runs scripts as root
-o More security auditing of Nmap code (it never hurts to do more proactive
-  security auditing).
-o Figure out and document (in at least the Ncat user's guide) the best
-  way to use Ncat for chaining through proxies.  One option is this
-  sort of thing:
+							--git "OPTION STRING"
+							--maimon in [place]:*-sM
+							["for","{cmd,option}","syn_-S","udp_-S","Version","detection","alias"]: single letter option ➜ long_1
+➜ id ["USE"]: --scantype syn udp sctp for single-type -S Combine_Multi							
+$ \restrict for ind -S args = Easy
+usr@[Fyodor]: * ^ Top+Lvl+Args
+	if
+		{"-s*, --git, define ('select','-P','-S','type ctrl flow')"};
+			["@nmap+#discussion,nmap-dev"]: -p int _udp_-S
+➜ -S _Proxy Nmap -S _Burp Suite SRVR 
+	{'script.nse','for detect OPEN_suite'}; @proxy_cli | or srvr
+\require retarded chain ➜ multi_proxy * burp_suite | srvr --diff Type
+▶ Retarded ["SPREAD","ENABLE"]
+	$load
+		{'multiple proxy servers'};
+▶ 支持端口掃描！
+$ --supp --P --S ["!"]:
+	version: detect
+	#'&&'.nse
+	//other words, nsock should support proxies.
+$supp ipv4 && ipv6
+$--git perfs
+$pool*connections+proxies for concurrent('Version',"DETECTIONS"); || http
+>>> supp --diff vars * proxy, socks4, socks4a, socks5, ['HTTP','GET']: if %% ["HTTP","CONNECT"]: // challenge
+>>> GET PROXY elif throw "err msg %%non-standard"
+>>> %auto-detect "proxy, type"
+	{'nmap try -S (METHOD)'}:
+		;;
+#SUPPORT for if %% ,,['basic','ntlm','digest0auth'];
+#IMP for id
+#PATCHES
+usr@['zoltan_Panczel']: (http://nmap-dev.fw.hu) and imp usr@Jacob_Appelbaum in nmap-exp/ioerror/
+	this patch handler {'parallelization'}; % proofs * concept
+	this % app for ultra_scan % write gen_-S.nse for #ABUSE
+		"applications for port scanning..."
+	this handler -S > burp_suite and '&&' ftp "exists for ftp bounce -S"
+	this port.nse
+	▶ rm "ftp bounce"
+>>> rembrandt @@ jpberlin.de:
+“您可以通過“使用內部 [  N  e  t  h  e  r  ] ;; 應用程序協議服務器轉發命令”來做到這一點。 “然而，無論誰做這件事，都應該從閱讀主端口掃描引擎的代碼開始……
+// (ultra_scan()) and version detection code (service_scan())...
+// And the version detection paper at /!\ https://nmap.org/book/vscan.html/
+/!\ This is all important!!!
+note: because it is easy to do poorly...// hi-perfs with clean code all diff apps scan ▶ use basic engine
+▶ -R #IDEA nmap-dev in #DETAIL % ['START'];
+usr@David:
+"I am starting to think about building proxy support into Nsock and then implementing -sT with Nsock instead of ultra_scan..."
+▶ o [Web];
+> ["+"]: Train/intro.mp4 ▶ nmap SITE
+➜ p  r  o  m  o | v  i  d  e  o  |  i  n  t  r  o  |  t  o  o  l !  | [online];
+usr@Laura_Chappell: "They need to be good to be useful--the sort of quality you see in Wireshark videos or James Messer's Nmap videos or Irongeek's videos (http://www.irongeek.com)"
+➜ promo | vid | usr in vid in struct
+> nmap.net -S
+> product | page
+/!\ http://www.splunk.com/product
+$ zenmap sys | (https://nmap.org/book/zenmap-lang.html);
+["SUCCESS"]:
+$nmap refguide in 16 lang | https://nmap.org/docs.html/
+%try ['use']: = translate('method');
+	for Zenmap == do for nmap
+		in $true % ['create']; combine+PO+file++Nmap, Zenmap, Ncat, and Ndiff#all be translated and maintained together#
+			$call setLocale --mod [behave] of function('*') isalpha
+				locale-dependent function('chk for sec'); #RISK
+▶ o [NSE]: #include sort of .NSE -d  Or #include
+	for nmap traceback
+		-d Verbose | <script> --kill in err
+			for inspiration/ideas usr@Diman:
+				NSE -d (http://seclists.org/nmap-dev/2008/q1/0228.html)
+					--supp route http request ▶ proxy
+						if script.nse make -R if non #include :root
+▶ o [NSE] 安全審查
+	if vuln or xploit
+		{'sec_risk from .nse ➜ buffer_overflow | format String #BUG'};
+			malform <?php response from targ sys % addr risk of malscript ?>
+				script.nse :root$
+▶ sec_audit * nmap ➜ code | sec_audit
+> docs * in ncat usr _ gui
+>>> ncat for ['cahin','proxy']: \OPTION is this Sort *
   ncat -l localhost 1234 --sh-exec "ncat --proxy A.A.A.A B.B.B.B"
   ncat --proxy localhost:1234 C.C.C.C
-  If you had two proxies A.A.A.A and B.B.B.B, connecting to C.C.C.C.
-  With another listener/--sh-exec pair for each additional proxy.
-  But perhaps we can make it easier by adding it to the syntax.
-o Look into whether we should loosen/change the global congestion
-  control system to address possible cases of one target host with many
-  dropped packets slowing down the whole group.  See
-  http://seclists.org/nmap-dev/2008/q1/0096.html .
-  * Related possibility: Fix --nogcc to gracefully handle ping scans.
-    Right now it seems to go WAY TOO FAST (e.g. several thousand
-    packets per second on my DSL line).
-  * [12/22/09] David says: It still is in one case that I've
-    documented on my wiki. I had an idea to fix it, but on testing it
-    it didn't work. The idea was to treat the global congestion limit
-    differently. Instead of dropping it down to the minimum level on a
-    drop as is done currently, I thought about only dropping it by the
-    amount that the individual host limit drops. For example, if a
-    host had a drop and its limit fell from 25 to 1, then the global
-    limit would change (if it was at 100 to begin with) to 76, not all
-    the way down to 2 or whatever it is.  The idea being that the
-    global limit is most important at the beginning of a scan, when
-    there's no information to set host limits, and every host wants to
-    send all its first probes at once. See
-    http://www.bamsoftware.com/wiki/Nmap/PerformanceNotesArchive2#global-cc. I
-    am convinced, though, that some sort of global control is
-    necessary. There's a reason that a web browser limits the number
-    of connections it will make, and doesn't try to download every
-    image file at once and count on the fairness of TCP to sort it
-    out.
-o libnmap organization for UNIX and Windows
-  o Then change Nmap and Zenmap to simply call this library
-  o It is interesting to look at: http://www.gnupg.org/gpgme.html
-o Deal with UDP retransmission for version detection (I think I
-  should just do a second run of all probes for UDP if it fails to
-  match anything).  The advantage there is that no retransmissions are
-  neccessary if the service is found.  Then again, per-probe
-  retransmission would let us redo the most likely probes (the one(s)
-  that match the port number) quickly.  Lost packets should probably
-  affect ideal_parallelism.
+>>> if ['2']: A.A.A.A '&&' B.B.B.B ➜ connect C.C.C.C
+['listener'] / --sh -exec for add-on proxy
+	++<syntax>
+> % --mod Global_<congestion> ctrl sys addr % Case of Targ_.h --kill pkt -Slow ['grep']: /!\ http://seclists.org/nmap-dev/2008/q1/0096.html/
+	% #FIX --nogcc Handler -ping -S
+		(e.g. several thousand packets per second on my DSL line);;
+usr@David: * [12/22/09];
+" It still is in one case that I have documented on my wiki. I had an idea to fix it, but on testing it it did not work. The idea was to treat the global congestion limit differently. Instead of dropping it down to the minimum level on a drop as is done currently, I thought about only dropping it by the amount that the individual host limit drops. For example, if a host had a drop and its limit fell from 25 to 1, then the global limit would change (if it was at 100 to begin with) to 76, not all the way down to 2 or whatever it is.  The idea being that the global limit is most important at the beginning of a scan, when there is no information to set host limits, and every host wants to send all its first probes at once. See http://www.bamsoftware.com/wiki/Nmap/PerformanceNotesArchive2#global-cc. I am convinced, though, that some sort of global control is necessary. There is a reason that a web browser limits the number of connections it will make, and doesn't try to download every image file at once and count on the fairness of TCP to sort it out. "
+> libnmap org for unix and win | o
+	{'then --mod nmap and zenmap $call this libs'};
+		is /!\ http://www.gnupg.org/gpgme.html
+>>> udp_retransmit for version detection (Second of Probe for UDP if $Fail Match);
+	is retransmit if srvc Found 
+		then probe transmit < redo probe MATCH PORT NUMBER
+			pkt ideal_parallelism,,
+			
 o Make RPM relocatable (requires somehow avoiding storing paths in the
   binary)
   - That may be easier now that David has made some big improvements
