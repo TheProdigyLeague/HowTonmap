@@ -376,57 +376,49 @@ usr@David: * [12/22/09];
 	{'then --mod nmap and zenmap $call this libs'};
 		is /!\ http://www.gnupg.org/gpgme.html
 >>> udp_retransmit for version detection (Second of Probe for UDP if $Fail Match);
-	is retransmit if srvc Found 
+	is retransmit if srvc Found
 		then probe transmit < redo probe MATCH PORT NUMBER
 			pkt ideal_parallelism,,
-			
-o Make RPM relocatable (requires somehow avoiding storing paths in the
-  binary)
-  - That may be easier now that David has made some big improvements
-    in detecting where the binary is cross-platform and then looking for
-    data files based on that location.
-o Nmaprc-related - Create a system to store Nmap defaults/preferences
-  in an nmaprc file.
-  o nmaprc should be in ~/.nmap on UNIX
-  o On Windows, we may need a registry key to find the .nmaprc
-  o Perhaps Lua could be used as the format?
-  o .nmaprc for keeping defaults, etc.
-    o Nmaprc infrastructure, hook to new timing variables
-    o Nmaprc man page
-    o Default timing mode
-    o Default NSE arguments, such as user agent
-    o Maybe Default source IP (-S) argument
-    o should be a way to specify your own .nmaprc
-    o Maybe lets you add a directory and template for saving all
-     scans. 
-    o Maybe let you define "scan profiles" like is done with Zenmap.
-      There would then be a command-line option to select the profile used.
-o Get new Zenmap logo
- o consider putting back on top-right of command constructor wizard
- (there used to be umit logo there).
- o Maybe that can be done after the release by soliciting ideas.
-o Create or collect some great ./configure ascii art.
-o Look at all the pcap functions, there are some like
-  pcap_findalldevs() which could be quite useful.  There are mails to
-  the Nmap list relating to suggested improvements --
-  http://seclists.org/lists/nmap-dev/2004/Apr-Jun/0024.html .
-  Actually I do indirectly use that for Windows. I wonder if they work
-  for UNIX?
-o perhaps each 'match' line in nmap-service-probes should have a
-  maximum lines, bytes, and/or time by which a response should be
-  available.  Once that much time (or many bytes or lines) have passed,
-  that match can be considered 'failed' and ignored in subsequent runs.
-  Once all matches are considered failed, that probe is done.  This
-  could be a useful optimization and is arguably better than the less
-  granular 'totalwaitms'.  Or I could just have a simple function that
-  looks at whether a given regex could possibly match something
-  starting with the received data (not too hard since almost all of
-  the current regexes are anchored).  But before doing this, I should
-  look long and hard at how many of the probes have every match
-  capable of doing this.  In particular, many of the softmatch lines
-  don't offer many chars anchored at the front.
-o Separate nbase into its own Windows library in the same way as Andy did
-   with iphlpapi .
-o Nmap / Nmap-hackers FAQ
-o random tip database
+				make _rpm('relocate');;
+					require #AVOID store/path in /bin/
+>>> %easy [David]: imp in detect /bin/ is cross-platform and then ['look']: fs.dat ['based']: locate
+['-']: nmaprc-relate ['-']: create \sys\ store nmap default/prefer in nmaprc fs
+>>> nmaprc in ~/.nmap in unix
+["WIN"]: \registry\_key ["FIND"]: \.nmaprc\
+$ \.lua\ ['USE']: format
+$ \.nmaprc\ for ["KEEP"]: default
+$ ~\nmaprc\`.h | infra\struct`.h
+▶NEW!
+	;;time vars
+▶ nmaprc man page
+▶ default Time ['MODE']: default.args | usr agent
+➜ src 192.0.0.1\-S args
+➜ pwn.nmaprc
+➜ ["+"]: dir and template for $save -S
+➜ ['LET']: -S profile is Done! $zenmap
+▶ cmd:l \OPTION ['SELECT']: then PROFILE ['USED'];;
+$ --git NEW! zenmap.ico
+$ ["PUT"]: esc top-right of cmd struct ["WIZARD"];;
+$ ["UMIT","LOGO"];;
+$ ["%","Done!","Release"]: Solicit #IDEA
+$ ["CREATE","COLLECT"]: ./conf # ASCII # ART
+>>> pcap function("pcap_findalldevs()")break;;USE | o
+>>> \mail\ ➜ nmap /list/ -Relate ➜ #IMP
+/!\ http://seclists.org/lists/nmap-dev/2004/Apr-Jun/0024.html/
+>>> indirect -use for WIN_WORK if for #UNIX
+>>> 'match':l in nmap-srvc-probe max:l ['byte','*','time','response']: /!\__available,,
+$ byte:l -pass ['MATCH']: 'FAIL',#IGNORE in subsequent -R
+$ ['MATCH']: FAIL probe is Done!
+$ this
+	use optimal and is args
+		< granular 'totalwaitms'
+			or simple('function');;
+				--git regex
+					['START']: receive.dat
+>>> regex #HARD
+	anchor < do this < probe < match < *of do this,,
+		in part of soft['match']:l, ["OFFER"]: chars anchor @front,,
+			seperate nbase in WIN_LIBS in usr@Andy: do iphlapi,,
+				nmap/nmap-hackers #FAQ
+					random tip database,,
 "QUIT"
