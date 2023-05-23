@@ -1,96 +1,71 @@
-LIBLINEAR is a simple package for solving large-scale regularized
-linear classification. It currently supports L2-regularized logistic
-regression/L2-loss support vector classification/L1-loss support vector
-classification, and L1-regularized L2-loss support vector classification/
-logistic regression. This document explains the usage of LIBLINEAR.
-
-To get started, please read the ``Quick Start'' section first.
-For developers, please check the ``Library Usage'' section to learn
-how to integrate LIBLINEAR in your software.
-
-Table of Contents
+>>>  import liblinear.pkg for ['SOLVER',"REGEX","LINEAR","CLASS"];
+        {"current support for l2-regular logistic regression and l2-loss support vector class and l1-loss support vector class"};
+                and L1-REGULAR, L2-LOSS --supp
+                        ["VECTOR","CLASS"]: ('logistic reression'); 
+                                        this docs /usage/*LIBLINEAR
+>>> ["QUICK START"]: Sections && 對於開發人員
+        $chk libs/usage.c from section ➜ learn integrate \LIBLINEAR in 軟件
+>>> ['Table','of','Contents']
 =================
-
-- When to use LIBLINEAR but not LIBSVM
-- Quick Start
-- Installation
-- `train' Usage
-- `predict' Usage
-- Examples
-- Library Usage
-- Building Windows Binaries
-- Additional Information
-- MATLAB/OCTAVE interface
-- PYTHON interface
-
-When to use LIBLINEAR but not LIBSVM
+``
+['-']: USE LIBLINEAR
+        Quick Start
+        Installation
+        'train' Usage
+        'predict' Usage
+        '&&' Example
+        Lib Usage
+        WIN_BIN build
+        ADD_ON
+        MATLAB/OCTAVE.ui
+        ui.py
+``
 ====================================
-
-There are some large data for which with/without nonlinear mappings
-gives similar performances.  Without using kernels, one can
-efficiently train a much larger set via a linear classifier.  These
-data usually have a large number of features. Document classification
-is an example.
-
-Warning: While generally liblinear is very fast, its default solver
-may be slow under certain situations (e.g., data not scaled or C is
-large). See Appendix B of our SVM guide about how to handle such
-cases.
-http://www.csie.ntu.edu.tw/~cjlin/papers/guide/guide.pdf
-
-Warning: If you are a beginner and your data sets are not large, you
-should consider LIBSVM first.
-
-LIBSVM page:
-http://www.csie.ntu.edu.tw/~cjlin/libsvm
-
-
-Quick Start
+有一些帶有“/w/o”非線性映射的大數據
+給出類似的性能。不使用內核，可以
+通過線性分類器有效地訓練更大的集合。這些
+數據通常具有大量的特徵。文件分類
+是一個例子。
+/!\ W  A  R  N  I  N  G  :
+        "While generally liblinear is very fast...its default solver may be slow under certain situations"
+                (e.g., data not scaled or C is large);
+        "See Appendix B of our SVM guide about how to handle such cases."
+/!\ http://www.csie.ntu.edu.tw/~cjlin/papers/guide/guide.pdf/
+/!\ W  A  R  N  I  N  G  : 
+"If you are a beginner and your data sets are not large, you should consider LIBSVM first."
+note: LIBSVM page:
+/!\ http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+Q  u  i  c  k  |  |  S  t  a  r  t
 ===========
-
-See the section ``Installation'' for installing LIBLINEAR.
-
-After installation, there are programs `train' and `predict' for
-training and testing, respectively.
-
-About the data format, please check the README file of LIBSVM. Note
-that feature index must start from 1 (but not 0).
-
-A sample classification data included in this package is `heart_scale'.
-
-Type `train heart_scale', and the program will read the training
-data and output the model file `heart_scale.model'. If you have a test
-set called heart_scale.t, then type `predict heart_scale.t
-heart_scale.model output' to see the prediction accuracy. The `output'
-file contains the predicted class labels.
-
-For more information about `train' and `predict', see the sections
-`train' Usage and `predict' Usage.
-
-To obtain good performances, sometimes one needs to scale the
-data. Please check the program `svm-scale' of LIBSVM. For large and
-sparse data, use `-l 0' to keep the sparsity.
-
-Installation
+/!\ See the section ''Installation'' for installing LIBLINEAR...
+['-']: After installation, there are programs `train' and `predict' for training and testing, respectively.
+['-']: About data format, please check the README file of LIBSVM. 
+        Note: that feature index must start from 1 (but not 0).
+['-']: A sample classification data included in this package is `heart_scale'.
+        Type 'train heart_scale', and program will read training data 
+                and output model file 'heart_scale.model'. 
+                        if you have a test 
+                                set called heart_scale.t, 
+                                        then type `predict heart_scale.t
+['-']: 'heart_scale.model output' predict%%ACC
+        'output' fs contains predicted class labels
+> For more information about `train' and `predict', see the sections `train' Usage and `predict' Usage
+> To obtain good performances, sometimes one needs to scale data. Please check program `svm-scale' of LIBSVM. 
+> For large and sparse data, use `-l 0' to keep the sparsity.
+['+']: Installation
 ============
-
-On Unix systems, type `make' to build the `train' and `predict'
-programs. Run them without arguments to show the usages.
-
-On other systems, consult `Makefile' to build them (e.g., see
-'Building Windows binaries' in this file) or use the pre-built
-binaries (Windows binaries are in the directory `windows').
-
-This software uses some level-1 BLAS subroutines. The needed functions are
-included in this package.  If a BLAS library is available on your
-machine, you may use it by modifying the Makefile: Unmark the following line
-
+>>> type 'make-build_work' in 'train' and %predict%.prog,, -R w/o args,, ['show','usage'];;
+        {$$_docker makefile "build this pkg /bin/ in fs or use /bin/ from .yml in dir WIN"};;
+/!\ This software uses some level-1 BLAS subroutines. 
+        The needed functions are included in this package.  
+                If a BLAS library is available on your machine, you may use it by modifying the Makefile: Unmark the following line
+~
         #LIBS ?= -lblas
-
+``
 and mark
-
+~
         LIBS ?= blas/blas.a
-
+``
 `train' Usage
 =============
 
