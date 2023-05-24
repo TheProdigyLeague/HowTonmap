@@ -279,149 +279,103 @@ $ if not mod_penalty for any * class [set] <nr_weight> ==$0
 ~
      param describes the parameters used to obtain the model.
 ~
-     nr_class and nr_feature are the number of classes and features, respectively.
+     <nr_class> and <nr_feature> is number of classes and features;;
 ~
-     The nr_feature*nr_class array w gives feature weights. We use one
-     against the rest for multi-class classification, so each feature
-     index corresponds to nr_class weight values. Weights are
-     organized in the following way
-
+<nr_feature>*nr_class</nr_feature>
+	['ARRAY']: w/o --git @feature <weight>
+		for multi-class = $class feature
+			index.db <nr_class>value</nr_class>
+				organize in ['FOLLOW'];
      +------------------+------------------+------------+
      | nr_class weights | nr_class weights |  ...
      | for 1st feature  | for 2nd feature  |
      +------------------+------------------+------------+
-
-     If bias >= 0, x becomes [x; bias]. The number of features is
-     increased by one, so w is a (nr_feature+1)*nr_class array. The
-     value of bias is stored in the variable bias.
-
-     The array label stores class labels.
-
-- Function: void cross_validation(const problem *prob, const parameter *param, int nr_fold, int *target);
-
-    This function conducts cross validation. Data are separated to
-    nr_fold folds. Under given parameters, sequentially each fold is
-    validated using the model from training the remaining. Predicted
-    labels in the validation process are stored in the array called
-    target.
-
-    The format of prob is same as that for train().
-
-- Function: int predict(const model *model_, const feature_node *x);
-
-    This functions classifies a test vector using the given
-    model. The predicted label is returned.
-
-- Function: int predict_values(const struct model *model_,
-            const struct feature_node *x, double* dec_values);
-
-    This function gives nr_w decision values in the array
-    dec_values. nr_w is 1 if there are two classes except multi-class
-    svm by Crammer and Singer (-s 4), and is the number of classes otherwise.
-
-    We implement one-vs-the rest multi-class strategy (-s 0,1,2,3) and
-    multi-class svm by Crammer and Singer (-s 4) for multi-class SVM.
-    The class with the highest decision value is returned.
-
-- Function: int predict_probability(const struct model *model_,
-            const struct feature_node *x, double* prob_estimates);
-
-    This function gives nr_class probability estimates in the array
-    prob_estimates. nr_class can be obtained from the function
-    get_nr_class. The class with the highest probability is
-    returned. Currently, we support only the probability outputs of
-    logistic regression.
-
-- Function: int get_nr_feature(const model *model_);
-
-    The function gives the number of attributes of the model.
-
-- Function: int get_nr_class(const model *model_);
-
-    The function gives the number of classes of the model.
-
-- Function: void get_labels(const model *model_, int* label);
-
-    This function outputs the name of labels into an array called label.
-
-- Function: const char *check_parameter(const struct problem *prob,
-            const struct parameter *param);
-
-    This function checks whether the parameters are within the feasible
-    range of the problem. This function should be called before calling
-    train() and cross_validation(). It returns NULL if the
-    parameters are feasible, otherwise an error message is returned.
-
-- Function: int save_model(const char *model_file_name,
-            const struct model *model_);
-
-    This function saves a model to a file; returns 0 on success, or -1
-    if an error occurs.
-
-- Function: struct model *load_model(const char *model_file_name);
-
-    This function returns a pointer to the model read from the file,
-    or a null pointer if the model could not be loaded.
-
-- Function: void free_model_content(struct model *model_ptr);
-
-    This function frees the memory used by the entries in a model structure.
-
-- Function: void free_and_destroy_model(struct model **model_ptr_ptr);
-
-    This function frees the memory used by a model and destroys the model
-    structure.
-
-- Function: void destroy_param(struct parameter *param);
-
-    This function frees the memory used by a parameter set.
-
-- Function: void set_print_string_function(void (*print_func)(const char *));
-
-    Users can specify their output format by a function. Use
-        set_print_string_function(NULL); 
-    for default printing to stdout.
-
-Building Windows Binaries
+>>> if bias >= 0, x [x;bias]; number of ['FEATURE'];
+	is > 1 w is ("nr_feature+1"); *nr_class ['ARRAY'];
+		value * bias is ['store']: in vars/bias/
+			['ARRAY']: ['LABEL']: ["STORE"]: in Class <label>
+['-']: function:('method');;
+{'void'};
+<cross_validation>(const problem *prob, const parameter *param, int nr_fold, int *target);<cross_validation>
+<>
+this function("cross_valid");;
+	fs.dat | <nr_fold>parameters</nr_fold>
+		# each sequential data fold is validated by using Model from Training to Remaining #
+			<Label_Store>VALID PROCESS<Label_Store>
+				$call ["ARRAY"]: from <target_machine>Labeled in Validation Process<target_machine>
+					%%_prediction('method');
+</>
+$format * %% is as progs for train('nil');;
+['-']: function('int_%%');
+	('const model * model_, const feature_node *x');
+		this function('class_$test | vector ['use'] --git mod %label%is return value');
+['-']: function: int predict_values(const struct model *model_, const struct feature_node *x, double* dec_values);
+#include
+	this function('nr_w'); Value in ['Array'];;
+		<dec_value>,,<nr_w>
+			is 1 if 2 class except in multi-class svm
+				Crammer('cTM'); and Singer (-s 4), and is number of class
+>>> imp 1 vs. $rest multi-class strat -s 0, 1, 2, 3
+	and multi-class svm by (Crammer and Singer);
+		return class with ['High','Decision'];
+['-']: int %%_prediction('const struct model * mod_const struct feature_node *x, double*, prob_estimate');
+	this function('*'); --git <nr_class> %% estimate in ['array'];;
+		prob_estimates.nr_class'&&'from function('get_nr_class');
+			return class with High%%
+				supp i/o of logistic_regression
+>>> function: int get_nr_feature(const model *model_);
+>>> function --git number * attr * mod
+>>> function: void get_labels(const model *model_, int* label);
+	this function <output>Name</output> (of label) in ['array']: $label
+>>> function: const char *check_parameter(const struct problem *prob, const struct parameter *param);
+	this function $chk para in range of #problem
+	this function $call '&&' $call train() and cross_validation()
+		return NULL if para $make do and elif "ERROR MSG IS RETURN"	
+>>> function ("int save_mod('const char *mod_file_name, const struct mod * mod_')");;
+	{"this function $save_mod > /fs/ then return 0 ['SUCCESS']: or -1 if (ERR OCCUR) "};			
+>>> function struct mod *load_mod(const, char, *mod_/file/_name);
+{
+    this function return ▶ model read from file,
+    	or a null ➜ p  o  i  n  t  e  r  ,,
+		if "model could not be loaded...."
+};
+如果無法加載模型，此函數將返回一個空指針。
+-> function: void free_model_content(struct model *model_ptr);
+    this function ➜ clean memory used by entries in a model structure...
+$void free_and_destroy_model(struct model **model_ptr_ptr);
+	this function ➜ frees the memory used by a model and destroys the model structure.
+$void destroy_param(struct parameter *param);
+	this function ➜ frees the memory used by a parameter set.
+void set_print_string_function(void (*print_func)(const char *));
+$Global_usr:
+➜ \spec \i/o /!\format from function			
+>>> Use:
+	set_print_string_function(NULL); 
+    		for default printing to stdout..
+▶ B  u  i  l  d  i  n  g  |  |  /  W  I  N  /  B  I  N  /
 =========================
-
-Windows binaries are in the directory `windows'. To build them via
-Visual C++, use the following steps:
-
-1. Open a dos command box and change to liblinear directory. If
-environment variables of VC++ have not been set, type
-
-"C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat"
-
-You may have to modify the above command according which version of
-VC++ or where it is installed.
-
-2. Type
-
-nmake -f Makefile.win clean all
-
-
-MATLAB/OCTAVE Interface
+$/win/bin
+	in dir 'win'``
+		build from this ▶ Visual C++ 
+			["USE","FOLLOW","STEP"]: -d
+1. Open a dos command box and change to liblinear directory. 
+	if \env\vars of VC++ has not been set, $type ➜ "C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat"
+➜ mod cmd.exe V  E  R  S  I  O  N  *  *  V  _  C  +  +  or  |  |  is <?php installed?>
+➜ br
+2. $type
+➜
+>>> nmake -f Makefile.win clean all
+➜``
+數學實驗室。明銳界面。
 =======================
-
-Please check the file README in the directory `matlab'.
-
-PYTHON Interface
+/!\ Please check the file README in the directory `matlab'.
+$.py界面
 ================
-
-Please check the file README in the directory `python'.
-
-Additional Information
-======================
-
-If you find LIBLINEAR helpful, please cite it as
-
-R.-E. Fan, K.-W. Chang, C.-J. Hsieh, X.-R. Wang, and C.-J. Lin.
-LIBLINEAR: A Library for Large Linear Classification, Journal of
-Machine Learning Research 9(2008), 1871-1874. Software available at
-http://www.csie.ntu.edu.tw/~cjlin/liblinear
-
-For any questions and comments, please send your email to
-cjlin@csie.ntu.edu.tw
-
-
+/!\ Please check the file README in the directory `python'.
+附加組件
+==========Did you find LIBLINEAR helpful?============
+/!\ Please cite it as R.-E. Fan, K.-W. Chang, C.-J. Hsieh, X.-R. Wang, and C.-J. Lin.
+LIBLINEAR: Library for Large Linear Classification, Journal of Machine Learning Research 9(2008), 1871-1874. Software available at
+/!\ http://www.csie.ntu.edu.tw/~cjlin/liblinear?==$0/..%
+# Q&A, or comments: cjlin@csie.ntu.edu.tw
+"quit"
