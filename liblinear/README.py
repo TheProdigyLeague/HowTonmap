@@ -1,7 +1,7 @@
 >>>  import liblinear.pkg for ['SOLVER',"REGEX","LINEAR","CLASS"];
         {"current support for l2-regular logistic regression and l2-loss support vector class and l1-loss support vector class"};
                 and L1-REGULAR, L2-LOSS --supp
-                        ["VECTOR","CLASS"]: ('logistic reression'); 
+                        ["VECTOR","CLASS"]: ('logistic regression'); 
                                         this docs /usage/*LIBLINEAR
 >>> ["QUICK START"]: Sections && 對於開發人員
         $chk libs/usage.c from section ➜ learn integrate \LIBLINEAR in 軟件
