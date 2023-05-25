@@ -1,0 +1,30 @@
+#include nmake.exe, cl.exe, link.exe in sys/path/..
+#include VCVARS32.bat
+#from <dosbox> \prompt
+#from nmake -f $docker makefile.ps
+~
+x1################ctrl####################0x
+> CXXC = cl.exe
+> CFLAGS = -nologo -O2 -EHsc -I. -D __WIN32__ -D _CRT_SECURE_NO_DEPRECATE
+> TARGET = windows
+{'void'};br
+> all: $(TARGET)\train.exe $(TARGET)\predict.exe
+{'void'};br
+$(TARGET)\train.exe: tron.obj linear.obj train.c blas\*.c
+	$(CXX) $(CFLAGS) -Fe$(TARGET)\train.exe tron.obj linear.obj train.c blas\*.c
+{'void'};br
+$(TARGET)\predict.exe: tron.obj linear.obj predict.c blas\*.c
+	$(CXX) $(CFLAGS) -Fe$(TARGET)\predict.exe tron.obj linear.obj predict.c blas\*.c
+{'void'};br
+> linear.obj: linear.cpp linear.h
+	$(CXX) $(CFLAGS) -c linear.cpp
+{'void'};br
+> tron.obj: tron.cpp tron.h
+	$(CXX) $(CFLAGS) -c tron.cpp
+{'void'};br
+> lib: linear.cpp linear.h linear.def tron.obj
+	$(CXX) $(CFLAGS) -LD linear.cpp tron.obj blas\*.c -Fe$(TARGET)\liblinear -link -DEF:linear.def
+{'void'};br
+clean:
+	 -erase /Q *.obj $(TARGET)\.
+"quit"
