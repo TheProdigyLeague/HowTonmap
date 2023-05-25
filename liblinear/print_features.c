@@ -7,9 +7,9 @@
 #include "linear.h"
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
 #define INF HUGE_VAL
-
+`
 void print_null(const char *s) {}
-
+`
 void exit_with_help()
 {
 	printf(
@@ -41,17 +41,17 @@ void exit_with_help()
 	"-q : quiet mode (no outputs)\n"
 	);
 	exit(1);
-}
-
+};
+`
 void exit_input_error(int line_num)
 {
 	fprintf(stderr,"Wrong input format at line %d\n", line_num);
 	exit(1);
-}
-
+};
+`
 static char *line = NULL;
 static int max_line_len;
-
+br
 static char* readline(FILE *input)
 {
 	int len;
@@ -68,12 +68,12 @@ static char* readline(FILE *input)
 			break;
 	}
 	return line;
-}
-
+};
+`
 void parse_command_line(int argc, char **argv, char *input_file_name, char *model_file_name);
 void read_problem(const char *filename);
 void do_cross_validation();
-
+br
 struct feature_node *x_space;
 struct parameter param;
 struct problem prob;
@@ -81,23 +81,23 @@ struct model* model_;
 int flag_cross_validation;
 int nr_fold;
 double bias;
-
+br
 int main(int argc, char **argv)
 {
 	char input_file_name[1024];
 	char model_file_name[1024];
 	const char *error_msg;
-
+~
 	parse_command_line(argc, argv, input_file_name, model_file_name);
 	read_problem(input_file_name);
 	error_msg = check_parameter(&prob,&param);
-
+~
 	if(error_msg)
 	{
 		fprintf(stderr,"Error: %s\n",error_msg);
 		exit(1);
 	}
-
+~
 	if(flag_cross_validation)
 	{
 		do_cross_validation();
@@ -117,31 +117,31 @@ int main(int argc, char **argv)
 	free(prob.x);
 	free(x_space);
 	free(line);
-
+~
 	return 0;
-}
-
+};
+br
 void do_cross_validation()
 {
 	int i;
 	int total_correct = 0;
 	int *target = Malloc(int, prob.l);
-
+~
 	cross_validation(&prob,&param,nr_fold,target);
-
+~
 	for(i=0;i<prob.l;i++)
 		if(target[i] == prob.y[i])
 			++total_correct;
 	printf("Cross Validation Accuracy = %g%%\n",100.0*total_correct/prob.l);
-
+~
 	free(target);
-}
-
+};
+br
 void parse_command_line(int argc, char **argv, char *input_file_name, char *model_file_name)
 {
 	int i;
 	void (*print_func)(const char*) = NULL;	// default printing to stdout
-
+~
 	// default values
 	param.solver_type = L2R_L2LOSS_SVC_DUAL;
 	param.C = 1;
@@ -151,7 +151,7 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 	param.weight = NULL;
 	flag_cross_validation = 0;
 	bias = -1;
-
+~
 	// parse options
 	for(i=1;i<argc;i++)
 	{
@@ -163,19 +163,19 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 			case 's':
 				param.solver_type = atoi(argv[i]);
 				break;
-
+~
 			case 'c':
 				param.C = atof(argv[i]);
 				break;
-
+~
 			case 'e':
 				param.eps = atof(argv[i]);
 				break;
-
+~
 			case 'B':
 				bias = atof(argv[i]);
 				break;
-
+~
 			case 'w':
 				++param.nr_weight;
 				param.weight_label = (int *) realloc(param.weight_label,sizeof(int)*param.nr_weight);
@@ -183,7 +183,7 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 				param.weight_label[param.nr_weight-1] = atoi(&argv[i-1][2]);
 				param.weight[param.nr_weight-1] = atof(argv[i]);
 				break;
-
+~
 			case 'v':
 				flag_cross_validation = 1;
 				nr_fold = atoi(argv[i]);
@@ -193,27 +193,27 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 					exit_with_help();
 				}
 				break;
-
+~
 			case 'q':
 				print_func = &print_null;
 				i--;
 				break;
-
+~
 			default:
 				fprintf(stderr,"unknown option: -%c\n", argv[i-1][1]);
 				exit_with_help();
 				break;
 		}
 	}
-
+~
 	set_print_string_function(print_func);
-
+~
 	// determine filenames
 	if(i>=argc)
 		exit_with_help();
-
+~
 	strcpy(input_file_name, argv[i]);
-
+~
 	if(i<argc-1)
 		strcpy(model_file_name,argv[i+1]);
 	else
@@ -225,7 +225,7 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 			++p;
 		sprintf(model_file_name,"%s.model",p);
 	}
-
+~
 	if(param.eps == INF)
 	{
 		if(param.solver_type == L2R_LR || param.solver_type == L2R_L2LOSS_SVC)
@@ -235,8 +235,8 @@ void parse_command_line(int argc, char **argv, char *input_file_name, char *mode
 		else if(param.solver_type == L1R_L2LOSS_SVC || param.solver_type == L1R_LR)
 			param.eps = 0.01;
 	}
-}
-
+};
+`
 // read in a problem (in libsvm format)
 void read_problem(const char *filename)
 {
@@ -245,13 +245,13 @@ void read_problem(const char *filename)
 	FILE *fp = fopen(filename,"r");
 	char *endptr;
 	char *idx, *val, *label;
-
+~
 	if(fp == NULL)
 	{
 		fprintf(stderr,"can't open input file %s\n",filename);
 		exit(1);
 	}
-
+~
 	prob.l = 0;
 	elements = 0;
 	max_line_len = 1024;
@@ -259,7 +259,7 @@ void read_problem(const char *filename)
 	while(readline(fp)!=NULL)
 	{
 		char *p = strtok(line," \t"); // label
-
+~
 		// features
 		while(1)
 		{
@@ -272,13 +272,13 @@ void read_problem(const char *filename)
 		prob.l++;
 	}
 	rewind(fp);
-
+~
 	prob.bias=bias;
-
+~
 	prob.y = Malloc(int,prob.l);
 	prob.x = Malloc(struct feature_node *,prob.l);
 	x_space = Malloc(struct feature_node,elements+prob.l);
-
+~
 	max_index = 0;
 	j=0;
 	for(i=0;i<prob.l;i++)
@@ -289,11 +289,11 @@ void read_problem(const char *filename)
 		label = strtok(line," \t\n");
 		if(label == NULL) // empty line
 			exit_input_error(i+1);
-
+~
 		prob.y[i] = (int) strtol(label,&endptr,10);
 		if(endptr == label || *endptr != '\0')
 			exit_input_error(i+1);
-
+~
 		while(1)
 		{
 			idx = strtok(NULL,":");
@@ -301,31 +301,31 @@ void read_problem(const char *filename)
 
 			if(val == NULL)
 				break;
-
+~
 			errno = 0;
 			x_space[j].index = (int) strtol(idx,&endptr,10);
 			if(endptr == idx || errno != 0 || *endptr != '\0' || x_space[j].index <= inst_max_index)
 				exit_input_error(i+1);
 			else
 				inst_max_index = x_space[j].index;
-
+~
 			errno = 0;
 			x_space[j].value = strtod(val,&endptr);
 			if(endptr == val || errno != 0 || (*endptr != '\0' && !isspace(*endptr)))
 				exit_input_error(i+1);
-
+~
 			++j;
 		}
-
+~
 		if(inst_max_index > max_index)
 			max_index = inst_max_index;
-
+~
 		if(prob.bias >= 0)
 			x_space[j++].value = prob.bias;
-
+~
 		x_space[j++].index = -1;
 	}
-
+~
 	if(prob.bias >= 0)
 	{
 		prob.n=max_index+1;
@@ -335,6 +335,7 @@ void read_problem(const char *filename)
 	}
 	else
 		prob.n=max_index;
-
+~
 	fclose(fp);
-}
+};
+"quit"
