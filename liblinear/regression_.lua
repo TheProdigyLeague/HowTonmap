@@ -1,5 +1,6 @@
-LIBRARY liblinear
-EXPORTS
+$ LIBRARY liblinear
+$ EXPORTS
+~
 	train	@1
 	cross_validation	@2
 	save_model	@3
@@ -16,3 +17,4 @@ EXPORTS
 	check_parameter	@14
 	check_probability_model	@15
 	set_print_string_function	@16
+"quit"
