@@ -1,4 +1,3 @@
-
 /***************************************************************************
  * nmap_ftp.h -- Nmap's FTP routines used for FTP bounce scan (-b)
  *                                                                         *
@@ -58,22 +57,20 @@
  * Npcap OEM program--see https://nmap.org/oem/                            *
  *                                                                         *
  ***************************************************************************/
-
-/* $Id$ */
-
+$Id$
+`
 #ifndef NMAP_FTP_H
 #define NMAP_FTP_H
-
+`
 #include "scan_lists.h"
 #include "nbase.h" /* u16 */
 class Target;
-
+`
 /* How do we want to log into ftp sites for */
 #define FTPUSER "anonymous"
 #define FTPPASS "-wwwuser@"
-#define FTP_RETRIES 2 /* How many times should we relogin if we lose control
-                         connection? */
-
+#define FTP_RETRIES 2 /* How many times should we relogin if we lose control connection? */
+`
 struct ftpinfo {
   char user[64];
   char pass[256]; /* methinks you're paranoid if you need this much space */
@@ -82,18 +79,15 @@ struct ftpinfo {
   u16 port;
   int sd; /* socket descriptor */
 };
-
+`
 struct ftpinfo get_default_ftpinfo(void);
 int ftp_anon_connect(struct ftpinfo *ftp);
-
+`
 /* parse a URL stype ftp string of the form user:pass@server:portno */
 int parse_bounce_argument(struct ftpinfo *ftp, char *url);
-
-/* FTP bounce attack scan.  This function is rather lame and should be
-   rewritten.  But I don't think it is used much anyway.  If I'm going to
-   allow FTP bounce scan, I should really allow SOCKS proxy scan.  */
-void bounce_scan(Target *target, u16 *portarray, int numports,
-                 struct ftpinfo *ftp);
-
+`
+/* FTP bounce attack scan.  This function is rather lame and should be rewritten.  But I don't think it is used much anyway.  If I'm going to allow FTP bounce scan, I should really allow SOCKS proxy scan. */
+void bounce_scan(Target *target, u16 *portarray, int numports, struct ftpinfo *ftp);
+`
 #endif /* NMAP_FTP_H */
-
+"quit"
