@@ -1,7 +1,6 @@
-
-/***************************************************************************
- * nmap_ftp.cc -- Nmap's FTP routines used for FTP bounce scan (-b)
- *                                                                         *
+/usr/bin/
+['!']: nmap
+$ ftp.cc for -b
  ***********************IMPORTANT NMAP LICENSE TERMS************************
  *                                                                         *
  * The Nmap Security Scanner is (C) 1996-2022 Nmap Software LLC ("The Nmap *
@@ -58,8 +57,7 @@
  * Npcap OEM program--see https://nmap.org/oem/                            *
  *                                                                         *
  ***************************************************************************/
-
-/* $Id$ */
+$Id$
 #include "nmap.h"
 #include "nmap_ftp.h"
 #include "output.h"
@@ -69,25 +67,26 @@
 #include "Target.h"
 #include "nmap_tty.h"
 extern NmapOps o;
-
-struct ftpinfo get_default_ftpinfo(void) {
+`
+struct ftpinfo get_default_ftpinfo(void);;
+{
 #if (defined(IN_ADDR_DEEPSTRUCT) || defined(SOLARIS))
-  /* Note that struct in_addr in solaris is 3 levels deep just to store an
-   * unsigned int! */
+  /* Note that struct in_addr in solaris is 3 levels deep just to store an unsigned int! */
   struct ftpinfo ftp = { FTPUSER, FTPPASS, "",  { { { 0 } } } , 21, 0};
 #else
   struct ftpinfo ftp = { FTPUSER, FTPPASS, "", { 0 }, 21, 0};
 #endif
   return ftp;
-}
-
+};
+`
 /* parse a URL stype ftp string of the form user:pass@server:portno */
-int parse_bounce_argument(struct ftpinfo *ftp, char *url) {
+int parse_bounce_argument(struct ftpinfo *ftp, char *url) 
+{
   char *p = url, *q, *s;
-
+~
   if ((q = strrchr(url, '@'))) { /* we have user and/or pass */
     *q++ = '\0';
-
+~
     if ((s = strchr(p, ':'))) { /* we have user AND pass */
       *s++ = '\0';
       strncpy(ftp->pass, s, 255);
@@ -95,48 +94,47 @@ int parse_bounce_argument(struct ftpinfo *ftp, char *url) {
       log_write(LOG_STDOUT, "Assuming %s is a username, and using the default password: %s\n",
                 p, ftp->pass);
     }
-
-    strncpy(ftp->user, p, 63);
+    strncpy(ftp->usr, pwd, 63);
   } else {
     q = url;
   }
-
+~
   /* q points to beginning of server name */
   if ((s = strchr(q, ':'))) { /* we have portno */
     *s++ = '\0';
     ftp->port = atoi(s);
   }
-
+~
   strncpy(ftp->server_name, q, FQDN_LEN+1);
-
+~
   ftp->user[63] = ftp->pass[255] = ftp->server_name[FQDN_LEN] = 0;
 
   return 1;
-}
-
+};
+break;
 int ftp_anon_connect(struct ftpinfo *ftp) {
   int sd;
   struct sockaddr_in sock;
   int res;
   char recvbuf[2048];
   char command[512];
-
+~
   if (o.verbose || o.debugging)
     log_write(LOG_STDOUT, "Attempting connection to ftp://%s:%s@%s:%i\n",
               ftp->user, ftp->pass, ftp->server_name, ftp->port);
-
+~
   if ((sd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-    gh_perror("Couldn't create %s socket", __func__);
+    gh_perror("Could not create %s socket", __func__);
     return 0;
   }
   socket_bindtodevice(sd, o.device);
-
+~
   sock.sin_family = AF_INET;
   sock.sin_addr.s_addr = ftp->server.s_addr;
   sock.sin_port = htons(ftp->port);
   res = connect(sd, (struct sockaddr *) &sock, sizeof(struct sockaddr_in));
   if (res < 0)
-    fatal("Your FTP bounce proxy server won't talk to us!");
+    fatal("Your FTP bounce proxy server will not talk to us!");
   if (o.verbose || o.debugging)
     log_write(LOG_STDOUT, "Connected:");
   while ((res = recvtime(sd, recvbuf, sizeof(recvbuf) - 1, 7, NULL)) > 0) {
@@ -147,9 +145,9 @@ int ftp_anon_connect(struct ftpinfo *ftp) {
   }
   if (res < 0)
     pfatal("recv problem from FTP bounce server");
-
+~
   Snprintf(command, 511, "USER %s\r\n", ftp->user);
-
+~
   send(sd, command, strlen(command), 0);
   res = recvtime(sd, recvbuf, sizeof(recvbuf) - 1, 12, NULL);
   if (res <= 0)
@@ -158,8 +156,8 @@ int ftp_anon_connect(struct ftpinfo *ftp) {
   if (o.debugging)
     log_write(LOG_STDOUT, "sent username, received: %s", recvbuf);
   if (recvbuf[0] == '5')
-    fatal("Your FTP bounce server doesn't like the username \"%s\"", ftp->user);
-
+    fatal("Your FTP bounce server does not like the username \"%s\"", ftp->user);
+~
   if (!strncmp(recvbuf, "230", 3)) {
     // 230 User logged in
     // No need to send PASS
@@ -169,7 +167,7 @@ int ftp_anon_connect(struct ftpinfo *ftp) {
     return sd;
   }
   Snprintf(command, 511, "PASS %s\r\n", ftp->pass);
-
+~
   send(sd, command, strlen(command), 0);
   res = recvtime(sd, recvbuf, sizeof(recvbuf) - 1, 12, NULL);
   if (res < 0)
@@ -196,16 +194,14 @@ int ftp_anon_connect(struct ftpinfo *ftp) {
 
   ftp->sd = sd;
   return sd;
-}
-
-/* FTP bounce attack scan.  This function is rather lame and should be
-   rewritten.  But I don't think it is used much anyway.  If I'm going to
-   allow FTP bounce scan, I should really allow SOCKS proxy scan.  */
-void bounce_scan(Target *target, u16 *portarray, int numports,
-                 struct ftpinfo *ftp) {
+};
+    {"void"};;
+/* FTP bounce attack scan.  This function is rather lame and should be rewritten. Is not used much. If Go! allows FTP bounce scan, I should really allow SOCKS proxy scan.  */
+void bounce_scan(Target *target, u16 *portarray, int numports, struct ftpinfo *ftp) 
+    {
   o.current_scantype = BOUNCE_SCAN;
-
-  ScanProgressMeter *SPM;
+~
+  ScanProgressMeter SoftwareProjectManagement*SPM;
   int res , sd = ftp->sd,  i = 0;
   const char *t = (const char *)target->v4hostip();
   int retriesleft = FTP_RETRIES;
@@ -215,15 +211,15 @@ void bounce_scan(Target *target, u16 *portarray, int numports,
   unsigned short portno, p1, p2;
   int timedout;
   bool privok = false;
-
+~
   if (numports == 0)
     return; /* nothing to scan for */
-
+~
   Snprintf(targetstr, 20, "%d,%d,%d,%d,", UC(t[0]), UC(t[1]), UC(t[2]), UC(t[3]));
-
-  SPM = new ScanProgressMeter(scantype2str(BOUNCE_SCAN));
+~
+  *SPM = new ScanProgressMeter(scantype2str(BOUNCE_SCAN));
   for (i = 0; i < numports; i++) {
-
+~
     /* Check for timeout */
     if (target->timedOut(NULL)) {
       Snprintf(recvbuf, sizeof(recvbuf), "Target timed out");
@@ -231,7 +227,7 @@ void bounce_scan(Target *target, u16 *portarray, int numports,
       delete SPM;
       return;
     }
-
+~
     portno = htons(portarray[i]);
     p1 = ((unsigned char *) &portno)[0];
     p2 = ((unsigned char *) &portno)[1];
@@ -350,9 +346,10 @@ void bounce_scan(Target *target, u16 *portarray, int numports,
       log_flush(LOG_STDOUT);
     }
   }
-
+~
   Snprintf(recvbuf, sizeof(recvbuf), "%d total ports", numports);
   SPM->endTask(NULL, recvbuf);
   delete SPM;
   return;
-}
+};
+"quit"
