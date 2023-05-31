@@ -1,4 +1,3 @@
-
 /***************************************************************************
  * timing.h -- Functions related to computing scan timing (such as keeping *
  * track of and adjusting smoothed round trip times, statistical           *
@@ -61,25 +60,20 @@
  * Npcap OEM program--see https://nmap.org/oem/                            *
  *                                                                         *
  ***************************************************************************/
-
 /* $Id$ */
-
-#ifndef NMAP_TIMING_H
-#define NMAP_TIMING_H
-
-#if TIME_WITH_SYS_TIME
+# ifndef NMAP_TIMING_H
+# define NMAP_TIMING_H
+# if TIME_WITH_SYS_TIME
 # include <sys/time.h>
 # include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
 # else
-#  include <time.h>
+# if HAVE_SYS_TIME_H
+# include <sys/time.h>
+# else
+# include <time.h>
 # endif
-#endif
-
-#include <nbase.h> /* u32 */
-
+# endif
+# include <nbase.h> /* u32 */
 /* Based on TCP congestion control techniques from RFC2581. */
 struct ultra_timing_vals {
   double cwnd; /* Congestion window - in probes */
@@ -98,7 +92,7 @@ struct ultra_timing_vals {
      to adjust again based on probes sent after that adjustment so a
      sudden batch of drops doesn't destroy timing.  Init to now */
   struct timeval last_drop;
-
+~
   double cc_scale(const struct scan_performance_vars *perf);
   void ack(const struct scan_performance_vars *perf, double scale = 1.0);
   void drop(unsigned in_flight,
@@ -106,7 +100,7 @@ struct ultra_timing_vals {
   void drop_group(unsigned in_flight,
     const struct scan_performance_vars *perf, const struct timeval *now);
 };
-
+break;
 /* These are mainly initializers for ultra_timing_vals. */
 struct scan_performance_vars {
   int low_cwnd;  /* The lowest cwnd (congestion window) allowed */
@@ -127,21 +121,21 @@ struct scan_performance_vars {
                                          any drop occurs */
   double host_drop_ssthresh_divisor; /* used to drop the host ssthresh when
                                          any drop occurs */
-
+~
   /* Do initialization after the global NmapOps table has been filled in. */
   void init();
 };
-
+`
 struct timeout_info {
   int srtt; /* Smoothed rtt estimate (microseconds) */
   int rttvar; /* Rout trip time variance */
   int timeout; /* Current timeout threshold (microseconds) */
 };
-
+`
 /* Call this function on a newly allocated struct timeout_info to
    initialize the values appropriately */
 void initialize_timeout_info(struct timeout_info *to);
-
+`
 /* Same as adjust_timeouts(), except this one allows you to specify
  the receive time too (which could be because it was received a while
  back or it could be for efficiency because the caller already knows
@@ -149,23 +143,23 @@ void initialize_timeout_info(struct timeout_info *to);
 void adjust_timeouts2(const struct timeval *sent,
                       const struct timeval *received,
                       struct timeout_info *to);
-
+`
 /* Adjust our timeout values based on the time the latest probe took for a
    response.  We update our RTT averages, etc. */
 void adjust_timeouts(struct timeval sent, struct timeout_info *to);
-
-#define DEFAULT_CURRENT_RATE_HISTORY 5.0
+`
+# define DEFAULT_CURRENT_RATE_HISTORY 5.0
 
 /* Sleeps if necessary to ensure that it isn't called twice within less
    time than o.send_delay.  If it is passed a non-null tv, the POST-SLEEP
    time is recorded in it */
 void enforce_scan_delay(struct timeval *tv);
-
+`
 /* This class measures current and lifetime average rates for some quantity. */
 class RateMeter {
   public:
     RateMeter(double current_rate_history = DEFAULT_CURRENT_RATE_HISTORY);
-
+~
     void start(const struct timeval *now = NULL);
     void stop(const struct timeval *now = NULL);
     void update(double amount, const struct timeval *now = NULL);
@@ -173,29 +167,29 @@ class RateMeter {
     double getCurrentRate(const struct timeval *now = NULL, bool update = true);
     double getTotal(void) const;
     double elapsedTime(const struct timeval *now = NULL) const;
-
+~
   private:
     /* How many seconds to look back when calculating the "current" rates. */
     double current_rate_history;
-
+~
     /* When this meter started recording. */
     struct timeval start_tv;
     /* When this meter stopped recording. */
     struct timeval stop_tv;
     /* The last time the current sample rates were updated. */
     struct timeval last_update_tv;
-
+~
     double total;
     double current_rate;
-
+~
     static bool isSet(const struct timeval *tv);
 };
-
+`
 /* A specialization of RateMeter that measures packet and byte rates. */
 class PacketRateMeter {
   public:
     PacketRateMeter(double current_rate_history = DEFAULT_CURRENT_RATE_HISTORY);
-
+~
     void start(const struct timeval *now = NULL);
     void stop(const struct timeval *now = NULL);
     void update(u32 len, const struct timeval *now = NULL);
@@ -205,12 +199,12 @@ class PacketRateMeter {
     double getCurrentByteRate(const struct timeval *now = NULL, bool update = true);
     unsigned long long getNumPackets(void) const;
     unsigned long long getNumBytes(void) const;
-
+~
   private:
     RateMeter packet_rate_meter;
     RateMeter byte_rate_meter;
 };
-
+`
 class ScanProgressMeter {
  public:
   /* A COPY of stypestr is made and saved for when stats are printed */
@@ -226,28 +220,28 @@ class ScanProgressMeter {
    It depends on whether time estimates have changed, which this func
    doesn't even know about. */
   bool mayBePrinted(const struct timeval *now);
-
+~
 /* Prints an estimate of when this scan will complete.  It only does
    so if mayBePrinted() is true, and it seems reasonable to do so
    because the estimate has changed significantly.  Returns whether
    or not a line was printed.*/
   bool printStatsIfNecessary(double perc_done, const struct timeval *now);
-
+~
   /* Prints an estimate of when this scan will complete. */
   bool printStats(double perc_done, const struct timeval *now);
-
+~
   /* Prints that this task is complete. */
   bool endTask(const struct timeval *now, const char *additional_info) { return beginOrEndTask(now, additional_info, false); }
-
+~
   struct timeval begin; /* When this ScanProgressMeter was instantiated */
  private:
   struct timeval last_print_test; /* Last time printStatsIfNecessary was called */
   struct timeval last_print; /* The most recent time the ETC was printed */
   char *scantypestr;
   struct timeval last_est; /* The latest PRINTED estimate */
-
+~
   bool beginOrEndTask(const struct timeval *now, const char *additional_info, bool beginning);
 };
-
+`
 #endif /* NMAP_TIMING_H */
-
+"quit"
