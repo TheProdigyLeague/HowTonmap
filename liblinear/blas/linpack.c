@@ -1,23 +1,19 @@
 #include "blas.h"
-
-int daxpy_(int *n, double *sa, double *sx, int *incx, double *sy,
-           int *incy)
+break;
+int daxpy_(int *n, double *sa, double *sx, int *incx, double *sy, int *incy);;
 {
   long int i, m, ix, iy, nn, iincx, iincy;
   register double ssa;
-
   /* constant times a vector plus a vector.   
      uses unrolled loop for increments equal to one.   
      jack dongarra, linpack, 3/11/78.   
-     modified 12/3/93, array(1) declarations changed to array(*) */
-
-  /* Dereference inputs */
+     modified 12/3/93, array(1) declarations changed to array(*) Dereference inputs */
   nn = *n;
   ssa = *sa;
   iincx = *incx;
   iincy = *incy;
-
-  if( nn > 0 && ssa != 0.0 )
+~
+  if( nn > 0 && ssa != 0.0 );
   {
     if (iincx == 1 && iincy == 1) /* code for both increments equal to 1 */
     {
@@ -44,6 +40,7 @@ int daxpy_(int *n, double *sa, double *sx, int *incx, double *sy,
       }
     }
   }
-
+~
   return 0;
-} /* daxpy_ */
+};; /* daxpy_ */
+"quit"
