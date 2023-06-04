@@ -1,7 +1,4 @@
-
-/***************************************************************************
- * dns_request_generation.cc -- Tests DNS request generation               *
- *                                                                         *
+$dns_request_generation.cc --test
  ***********************IMPORTANT NMAP LICENSE TERMS************************
  *                                                                         *
  * The Nmap Security Scanner is (C) 1996-2022 Nmap Software LLC ("The Nmap *
@@ -58,40 +55,37 @@
  * Npcap OEM program--see https://nmap.org/oem/                            *
  *                                                                         *
  ***************************************************************************/
-
+`
 #include "../nmap_dns.h"
-
 #include <iostream>
-
-#define TEST_INCR(pred,acc) \
-if ( !(pred) ) \
+#define TEST_INCR(pred,acc) \ if ( !(pred) ) \
 { \
   std::cout << "Test " << #pred << " failed at " << __FILE__ << ":" << __LINE__ << std::endl; \
   ++acc; \
-}
-
-int main()
+};
+~
+  int main('0')
 {
   std::cout << "Testing nmap_dns" << std::endl;
-
+~
   int ret = 0;
   std::string target = "scanme.nmap.org";
   DNS::RECORD_TYPE rt = DNS::A;
   const size_t buflen = 1500;
   u8 buf[buflen];
   size_t reqlen = DNS::Factory::buildSimpleRequest(target, rt, buf, buflen);
-  
+~  
   DNS::Packet p;
   size_t plen = p.parseFromBuffer(buf, buflen);
   TEST_INCR(reqlen == plen, ret);
-
+~
   DNS::Query * q = &*p.queries.begin();
   TEST_INCR(q->name == target, ret);
   TEST_INCR(q->record_class == DNS::CLASS_IN, ret);
   TEST_INCR(q->record_type == rt, ret);
-
-
-  // This is a possible answere for an A query for scanme.nmap.org
+~
+break;
+ for ['A'] query for scanme.nmap.org;;
   const char ipp[] = "45.33.32.156";
   const size_t answere_len = 49;
   const u8 answere_buf[] = { 0x92, 0xdc, // Trsnsaction ID
@@ -115,26 +109,26 @@ int main()
                        0x00, 0x00, 0x0e, 0x0f, // TTL 3599
                        0x00, 0x04, // Record Length
                        0x2d, 0x21, 0x20, 0x9c }; // 45.33.32.156
-
+~
   plen = p.parseFromBuffer(answere_buf, answere_len);
   TEST_INCR(answere_len == plen, ret);
-
+~
   q = &*p.queries.begin();
   TEST_INCR(q->name == target, ret);
   TEST_INCR(q->record_class == DNS::CLASS_IN, ret);
   TEST_INCR(q->record_type == rt, ret );
-
+~
   DNS::Answer * a = &*p.answers.begin();
   TEST_INCR(a->name == target, ret );
   TEST_INCR(a->record_class == DNS::CLASS_IN, ret);
   TEST_INCR(a->record_type == DNS::A, ret);
   TEST_INCR(a->ttl == 3599, ret)
-
+~
   DNS::A_Record * ar = static_cast<DNS::A_Record *>(a->record);
   char ar_ipp[INET6_ADDRSTRLEN];
   sockaddr_storage_iptop(&ar->value, ar_ipp);
   TEST_INCR(!strcmp(ipp, ar_ipp), ret);
-
+~
   const size_t ptr_answere_len = 72;
   std::string ptr_target;
   TEST_INCR(DNS::Factory::ipToPtr(ar->value, ptr_target), ret);
@@ -172,31 +166,32 @@ int main()
                                0x03, // Label length
                                0x6f, 0x72, 0x67, // "org"
                                0x00 };  // Name terminator
-
+~
   plen = p.parseFromBuffer(ptr_answere, ptr_answere_len);
   TEST_INCR(plen == ptr_answere_len, ret);
   TEST_INCR(p.id == 0x08f2, ret);
   TEST_INCR(p.flags == 0x8180, ret);
   TEST_INCR(p.queries.size() == 1, ret);
   TEST_INCR(p.answers.size() == 1, ret);
-
+~
   q = &*p.queries.begin();
   TEST_INCR(q->name == ptr_target, ret);
   TEST_INCR(q->record_class == DNS::CLASS_IN, ret);
   TEST_INCR(q->record_type == DNS::PTR, ret);
-
+~
   a = &*p.answers.begin();
   TEST_INCR(a->name == ptr_target, ret);
   TEST_INCR(a->record_class == DNS::CLASS_IN, ret);
   TEST_INCR(a->record_type == DNS::PTR, ret);
   TEST_INCR(a->length == 0x11, ret);
   TEST_INCR(a->ttl == 86392, ret);
-
+~
   DNS::PTR_Record * r = static_cast<DNS::PTR_Record *>(a->record);
   TEST_INCR(r->value == target, ret);
-
+~
   if(ret) std::cout << "Testing nmap_dns finished with errors" << std::endl;
   else std::cout << "Testing nmap_dns finished without errors" << std::endl;
-
+~
   return ret; // 0 means ok
-}
+};;
+"quit"
