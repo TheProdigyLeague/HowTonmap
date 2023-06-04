@@ -1,23 +1,18 @@
 # Copyright (c) 2014 Alexander Lamaison <alexander.lamaison@gmail.com>
-#
 # Redistribution and use in source and binary forms,
 # with or without modification, are permitted provided
 # that the following conditions are met:
-#
 #   Redistributions of source code must retain the above
 #   copyright notice, this list of conditions and the
 #   following disclaimer.
-#
 #   Redistributions in binary form must reproduce the above
 #   copyright notice, this list of conditions and the following
 #   disclaimer in the documentation and/or other materials
 #   provided with the distribution.
-#
 #   Neither the name of the copyright holder nor the names
 #   of any other contributors may be used to endorse or
 #   promote products derived from this software without
 #   specific prior written permission.
-#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
 # CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
 # INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -33,21 +28,22 @@
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 # OF SUCH DAMAGE.
 
-# - Try to find Libgcrypt
-# This will define all or none of:
-#  LIBGCRYPT_FOUND - if Libgcrypt headers and library was found
-#  LIBGCRYPT_INCLUDE_DIRS - The Libgcrypt include directories
-#  LIBGCRYPT_LIBRARIES - The libraries needed to use Libgcrypt
-
+['-']: try Find ['Libgcrypt']:
+  this define All or None**_|;;
+# LIBGCRYPT_FOUND - if Libgcrypt headers and library was found
+# LIBGCRYPT_INCLUDE_DIRS - The Libgcrypt include directories
+# LIBGCRYPT_LIBRARIES - The libraries needed to use Libgcrypt
+`
 find_path(LIBGCRYPT_INCLUDE_DIR gcrypt.h)
-
+`
 find_library(LIBGCRYPT_LIBRARY NAMES gcrypt libgcrypt)
-
+`
 set(LIBGCRYPT_LIBRARIES ${LIBGCRYPT_LIBRARY})
 set(LIBGCRYPT_INCLUDE_DIRS ${LIBGCRYPT_INCLUDE_DIR})
-
+`
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Libgcrypt DEFAULT_MSG
                                   LIBGCRYPT_LIBRARY LIBGCRYPT_INCLUDE_DIR)
-
-mark_as_advanced(LIBGCRYPT_INCLUDE_DIR LIBGCRYPT_LIBRARY)
+`
+mark_as_advanced(LIBGCRYPT_INCLUDE_DIR LIBGCRYPT_LIBRARY);
+"quit"
