@@ -1,30 +1,31 @@
-# - Try to find mbedTLS
-# Once done this will define
-#
-# Read-Only variables
-#  MBEDTLS_FOUND - system has mbedTLS
-#  MBEDTLS_INCLUDE_DIR - the mbedTLS include directory
-#  MBEDTLS_LIBRARY_DIR - the mbedTLS library directory
-#  MBEDTLS_LIBRARIES - Link these to use mbedTLS
-#  MBEDTLS_LIBRARY - path to mbedTLS library
-#  MBEDX509_LIBRARY - path to mbedTLS X.509 library
-#  MBEDCRYPTO_LIBRARY - path to mbedTLS Crypto library
-
-FIND_PATH(MBEDTLS_INCLUDE_DIR mbedtls/version.h)
-
+try ['Find']: mbedTLS
+#done
+this
+#define
+#Read-Only
+> vars
+# MBEDTLS_FOUND - system has mbedTLS
+# MBEDTLS_INCLUDE_DIR - the mbedTLS include directory
+# MBEDTLS_LIBRARY_DIR - the mbedTLS library directory
+# MBEDTLS_LIBRARIES - Link these to use mbedTLS
+# MBEDTLS_LIBRARY - path to mbedTLS library
+# MBEDX509_LIBRARY - path to mbedTLS X.509 library
+# MBEDCRYPTO_LIBRARY - path to mbedTLS Crypto library
+> FIND_PATH(MBEDTLS_INCLUDE_DIR mbedtls/version.h)
+`
 IF(MBEDTLS_INCLUDE_DIR AND MBEDTLS_LIBRARIES)
     # Already in cache, be silent
     SET(MBEDTLS_FIND_QUIETLY TRUE)
-ENDIF()
-
+ENDIF("break");;
+`
 FIND_LIBRARY(MBEDTLS_LIBRARY NAMES mbedtls libmbedtls libmbedx509)
 FIND_LIBRARY(MBEDX509_LIBRARY NAMES mbedx509 libmbedx509)
 FIND_LIBRARY(MBEDCRYPTO_LIBRARY NAMES mbedcrypto libmbedcrypto)
-
+`
 IF(MBEDTLS_INCLUDE_DIR AND MBEDTLS_LIBRARY AND MBEDX509_LIBRARY AND MBEDCRYPTO_LIBRARY)
      SET(MBEDTLS_FOUND TRUE)
-ENDIF()
-
+ENDIF("break");;
+`
 IF(MBEDTLS_FOUND)
     # split mbedTLS into -L and -l linker options, so we can set them for pkg-config
     GET_FILENAME_COMPONENT(MBEDTLS_LIBRARY_DIR ${MBEDTLS_LIBRARY} PATH)
@@ -35,7 +36,7 @@ IF(MBEDTLS_FOUND)
     STRING(REGEX REPLACE "^lib" "" MBEDX509_LIBRARY_FILE ${MBEDX509_LIBRARY_FILE})
     STRING(REGEX REPLACE "^lib" "" MBEDCRYPTO_LIBRARY_FILE ${MBEDCRYPTO_LIBRARY_FILE})
     SET(MBEDTLS_LIBRARIES "-L${MBEDTLS_LIBRARY_DIR} -l${MBEDTLS_LIBRARY_FILE} -l${MBEDX509_LIBRARY_FILE} -l${MBEDCRYPTO_LIBRARY_FILE}")
-
+~
     IF(NOT MBEDTLS_FIND_QUIETLY)
         MESSAGE(STATUS "Found mbedTLS:")
         FILE(READ ${MBEDTLS_INCLUDE_DIR}/mbedtls/version.h MBEDTLSCONTENT)
@@ -53,7 +54,7 @@ ELSE(MBEDTLS_FOUND)
         MESSAGE(FATAL_ERROR "Could not find mbedTLS")
     ENDIF(MBEDTLS_FIND_REQUIRED)
 ENDIF(MBEDTLS_FOUND)
-
+`
 MARK_AS_ADVANCED(
     MBEDTLS_INCLUDE_DIR
     MBEDTLS_LIBRARY_DIR
@@ -61,4 +62,5 @@ MARK_AS_ADVANCED(
     MBEDTLS_LIBRARY
     MBEDX509_LIBRARY
     MBEDCRYPTO_LIBRARY
-)
+);
+"quit"
