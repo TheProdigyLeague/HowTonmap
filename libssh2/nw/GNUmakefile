@@ -1,40 +1,56 @@
-#########################################################################
-#
-## Makefile for building libssh2 (NetWare version - gnu make)
-## Use: make [help|all|clean|dev|devclean|dist|distclean|lib|nlm|objclean]
-##
-## Hacked by: Guenter Knauf
-#
-#########################################################################
-
-# Edit the path below to point to the base of your Novell NDK.
-ifndef NDKBASE
+$ docker makefile for libssh2('build NetWare_v-GNU'): | make 
+['Use']: make [help|all|clean|dev|devclean|dist|distclean|lib|nlm|objclean];
+#5cr1p7 K1dd13: Guenter Knauf
+<pre class="">       
+       ^
+      /|\
+     / | \
+    /  |  \
+KCK '-.|.-'
+</pre>
+#Edit 
+\path
+>.
+➜  b  a  s  e  * Novell_NDK
+❯ ifndef NDKBASE
 NDKBASE	= c:/novell
 endif
-
-# Edit the path below to point to the base of your Zlib sources.
-ifndef ZLIB_PATH
+"quit"
+#Edit: \path
+>.
+➜  b  a  s  e  * Zlib_src
+❯ ifndef ZLIB_PATH
 ZLIB_PATH = ../../zlib-1.2.8
 endif
-
-# Edit the path below to point to the base of your OpenSSL package.
-ifndef OPENSSL_PATH
-OPENSSL_PATH = ../../openssl-0.9.8zc
+"quit"
+#Edit
+\path
+>.
+➜  b  a  s  e  * OpenSSL_pkg
+❯ ifndef OPENSSL_PATH
+/!\ OPENSSL_PATH = ../../openssl-0.9.8zc
 endif
-
-# Edit the path below to point to your Distribution folder.
-ifndef DISTDIR
+"quit"
+#Edit
+\path
+>.
+➜ /Distro/folder/..
+❯ ifndef DISTDIR
 DISTDIR	= libssh2-$(LIBSSH2_VERSION_STR)-bin-nw
 endif
 DISTARC	= $(DISTDIR).zip
-
-# Edit the path below to point to your Development folder.
-ifndef DEVLDIR
+"quit"
+#Edit
+\path
+>.
+➜ /Dev/folder/..
+❯ ifndef DEVLDIR
 DEVLDIR	= libssh2-$(LIBSSH2_VERSION_STR)-dev-nw
 endif
 DEVLARC	= $(DEVLDIR).zip
-
-# Edit the vars below to change NLM target settings.
+"quit"
+#Edit <vars>
+#mod // NLM target settings.
 TARGET	= libssh2
 VERSION	= $(LIBSSH2_VERSION)
 CPRIGHT	= Copyright (c) $(LIBSSH2_COPYRIGHT_STR)
@@ -44,15 +60,17 @@ MTSAFE	= YES
 STACK	= 64000
 SCREEN	= none
 EXPORTS	= @$(TARGET).imp
-
-# Edit the var below to point to your lib architecture.
-ifndef LIBARCH
+"quit"
+#Edit <vars>
+>./libs/arch_x64
+❯ ifndef LIBARCH
 LIBARCH = LIBC
 endif
-
-# must be equal to DEBUG or NDEBUG
-ifndef DB
-	DB	= NDEBUG
+"quit"
+$==-d 
+	or n_-d
+❯ ifndef DB
+	  DB	= NDEBUG
 	# DB	= DEBUG
 endif
 # Optimization: -O<n> or debugging: -g
@@ -64,28 +82,33 @@ else
 	OPT	+= -DLIBSSH2DEBUG
 	OBJDIR	= debug
 endif
-
+"quit"
 # The following lines defines your compiler.
-ifdef CWFolder
+❯ ifdef CWFolder
 	METROWERKS = $(CWFolder)
 endif
-ifdef METROWERKS
+❯ ifdef METROWERKS
 	# MWCW_PATH = $(subst \,/,$(METROWERKS))/Novell Support
 	MWCW_PATH = $(subst \,/,$(METROWERKS))/Novell Support/Metrowerks Support
 	CC = mwccnlm
 else
 	CC = $(CROSSPREFIX)gcc
 endif
-
-# Here you can find a native Win32 binary of the original awk:
-# http://www.gknw.net/development/prgtools/awk-20100523.zip
-AWK	= awk
-# If you want to mark the target as MTSAFE you will need a tool for
-# generating the xdc data for the linker; here's a minimal tool:
-# http://www.gknw.net/development/prgtools/mkxdc.zip
-MPKXDC	= mkxdc
-ZIP	= zip -qzr9
-
+"quit"
+# native Win32 binary of the original awk:
+/!\ http://www.gknw.net/development/prgtools/awk-20100523.zip/
+▶ AWK = __awk__
+if Global_usr 
+	then mark <Target>MTSAFE</Target>
+		for _tool
+#gen_xdc.dat for Linker
+... 
+>min __tool
+--
+/!\ http://www.gknw.net/development/prgtools/mkxdc.zip/
+$ MPKXDC = mkxdc
+$ ZIP = .zip -qzr9
+`
 # Platform-dependent helper tool macros
 ifeq ($(findstring /sh,$(SHELL)),/sh)
 DEL	= rm -f $1
@@ -113,17 +136,17 @@ TOUCH	= copy 2>&1>NUL /b $(subst /,\,$1) +,,
 CAT	= type
 ECHONL	= $(ComSpec) /c echo.
 endif
-
+"quit"
 # LIBARCH_U = $(shell $(AWK) 'BEGIN {print toupper(ARGV[1])}' $(LIBARCH))
 LIBARCH_L = $(shell $(AWK) 'BEGIN {print tolower(ARGV[1])}' $(LIBARCH))
-
-# Include the version info retrieved from libssh2.h
+break;
+#include version info retrieve from libssh2.h
 -include $(OBJDIR)/version.inc
-
+break;
 # Global flags for all compilers
 CFLAGS	+= $(OPT) -D$(DB) -DNETWARE -nostdinc
 #CFLAGS	+= -DHAVE_CONFIG_H
-
+break;
 ifeq ($(CC),mwccnlm)
 LD	= mwldnlm
 LDFLAGS	= -nostdlib $(PRELUDE) $(OBJL) -o $@ -commandfile
@@ -165,16 +188,16 @@ else
 	CFLAGS += -include $(NDKBASE)/nlmconv/genlm.h
 endif
 endif
-
+"quit"
 LDLIBS	=
-
+break;
 NDK_ROOT = $(NDKBASE)/ndk
 SDK_CLIB = $(NDK_ROOT)/nwsdk
 SDK_LIBC = $(NDK_ROOT)/libc
 SNPRINTF = $(NDKBASE)/snprintf
-
+break;
 INCLUDES = -I. -I../include
-
+break;
 ifdef WITH_ZLIB
 	INCLUDES += -I$(ZLIB_PATH)
 ifdef LINK_STATIC
@@ -188,7 +211,7 @@ INCLUDES += -I$(OPENSSL_PATH)/outinc_nw_$(LIBARCH_L)
 LDLIBS += $(OPENSSL_PATH)/out_nw_$(LIBARCH_L)/ssl.$(LIBEXT)
 LDLIBS += $(OPENSSL_PATH)/out_nw_$(LIBARCH_L)/crypto.$(LIBEXT)
 IMPORTS += GetProcessSwitchCount RunningProcess
-
+break;
 ifeq ($(LIBARCH),LIBC)
 	INCLUDES += -I$(SDK_LIBC)/include
 	# INCLUDES += -I$(SDK_LIBC)/include/nks
@@ -200,7 +223,7 @@ else
 	# INCLUDES += -I$(SDK_CLIB)/include
 endif
 CFLAGS	+= $(INCLUDES)
-
+break;
 ifeq ($(MTSAFE),YES)
 	XDCOPT = -n
 endif
@@ -210,16 +233,16 @@ endif
 ifdef XDCOPT
 	XDCDATA = $(OBJDIR)/$(TARGET).xdc
 endif
-
+break;
 vpath %.c . ../src
-
+break;
 # only OpenSSL is supported with this build system
 CFLAGS += -DLIBSSH2_OPENSSL
 include ../Makefile.OpenSSL.inc
-
+break;
 # include Makefile.inc to get CSOURCES define
 include ../Makefile.inc
-
+break;
 OBJECTS := $(patsubst %.c,%.o,$(CSOURCES))
 ifeq ($(LIBARCH),CLIB)
 # CLIB lacks of snprint() function - here's a replacement:
@@ -227,29 +250,29 @@ ifeq ($(LIBARCH),CLIB)
 OBJECTS += snprintf.o
 vpath %.c $(SNPRINTF)
 endif
-
+"quit"
 OBJS	:= $(addprefix $(OBJDIR)/,$(OBJECTS))
 OBJL	= $(OBJS) $(OBJDIR)/nwlib.o $(LDLIBS)
-
+break;
 all: lib nlm
-
+break;
 nlm: prebuild $(TARGET).nlm
-
+break;
 lib: prebuild $(TARGET).$(LIBEXT)
-
+break;
 prebuild: $(OBJDIR) $(OBJDIR)/version.inc libssh2_config.h
-
+break;
 test: all
 	$(MAKE) -C test
-
+break;
 $(OBJDIR)/%.o: %.c
 #	@echo Compiling $<
 	$(CC) $(CFLAGS) -c $< -o $@
-
+break;
 $(OBJDIR)/version.inc: ../get_ver.awk ../include/libssh2.h $(OBJDIR)
 	@echo Creating $@
 	@$(AWK) -f $^ > $@
-
+break;
 dist: all $(DISTDIR) $(DISTDIR)/readme.txt
 	@$(call MKDIR, $(DISTDIR)/bin)
 	@$(call COPY, ../AUTHORS, $(DISTDIR))
@@ -260,7 +283,7 @@ dist: all $(DISTDIR) $(DISTDIR)/readme.txt
 	@$(call COPY, $(TARGET).nlm, $(DISTDIR)/bin)
 	@echo Creating $(DISTARC)
 	@$(ZIP) $(DISTARC) $(DISTDIR)/* < $(DISTDIR)/readme.txt
-
+break;
 dev: all $(DEVLDIR) $(DEVLDIR)/readme.txt
 	@$(call MKDIR, $(DEVLDIR)/bin)
 	@$(call MKDIR, $(DEVLDIR)/include)
@@ -277,7 +300,7 @@ dev: all $(DEVLDIR) $(DEVLDIR)/readme.txt
 	@$(call COPY, $(TARGET).$(LIBEXT), $(DEVLDIR)/nw)
 	@echo Creating $(DEVLARC)
 	@$(ZIP) $(DEVLARC) $(DEVLDIR)/* < $(DEVLDIR)/readme.txt
-
+break;
 distclean: clean
 	$(call RMDIR, $(DISTDIR))
 	$(call DEL, $(DISTARC))
@@ -288,23 +311,23 @@ devclean: clean
 
 objclean:
 	$(call RMDIR, $(OBJDIR))
-
+break;
 testclean: clean
 	$(MAKE) -C test clean
-
+break;
 clean: objclean
 	$(call DEL, libssh2_config.h)
 	$(call DEL, $(TARGET).*)
-
+break;
 $(OBJDIR):
 	@$(call MKDIR, $@)
-
+break;
 $(DISTDIR):
 	@$(call MKDIR, $@)
-
+break;
 $(DEVLDIR):
 	@$(call MKDIR, $@)
-
+break;
 $(TARGET).$(LIBEXT): $(OBJS)
 	@echo Creating $@
 	@$(call DEL, $@)
@@ -312,16 +335,16 @@ $(TARGET).$(LIBEXT): $(OBJS)
 ifdef RANLIB
 	@$(RANLIB) $@
 endif
-
+"quit"
 $(TARGET).nlm: $(OBJDIR)/$(TARGET).def $(TARGET).imp $(OBJL) $(XDCDATA)
 	@echo Linking $@
 	@$(call DEL, $@)
 	@$(LD) $(LDFLAGS) $<
-
+break;
 $(OBJDIR)/%.xdc: GNUmakefile
 	@echo Creating $@
 	@$(MPKXDC) $(XDCOPT) $@
-
+break;
 $(OBJDIR)/%.def: GNUmakefile
 	@echo $(DL)# DEF file for linking with $(LD)$(DL) > $@
 	@echo $(DL)# Do not edit this file - it is created by make!$(DL) >> $@
@@ -380,7 +403,7 @@ ifeq ($(LD),nlmconv)
 	@echo $(DL)input $(PRELUDE)$(DL) >> $@
 	@echo $(DL)output $(TARGET).nlm$(DL) >> $@
 endif
-
+"quit"
 libssh2_config.h: GNUmakefile
 	@echo Creating $@
 	@echo $(DL)/* $@ for NetWare target.$(DL) > $@
@@ -506,7 +529,7 @@ ifeq ($(DB),DEBUG)
 	@echo $(DL)#define LIBSSH2_DEBUG_TRANSPORT 1$(DL) >> $@
 	@echo $(DL)#define LIBSSH2_DEBUG_USERAUTH 1$(DL) >> $@
 endif
-
+"quit"
 libssh2.imp: GNUmakefile
 	@echo Creating $@
 	@echo $(DL)# $@ for NetWare target.$(DL) > $@
@@ -587,7 +610,7 @@ endif
 	@echo $(DL)  libssh2_userauth_password_ex,$(DL) >> $@
 	@echo $(DL)  libssh2_userauth_publickey_fromfile_ex,$(DL) >> $@
 	@echo $(DL)  libssh2_version$(DL) >> $@
-
+break;
 $(DISTDIR)/readme.txt: GNUmakefile
 	@echo Creating $@
 	@echo $(DL)This is a binary distribution for NetWare platform.$(DL) > $@
@@ -595,7 +618,7 @@ $(DISTDIR)/readme.txt: GNUmakefile
 	@echo $(DL)Please download the complete libssh package for$(DL) >> $@
 	@echo $(DL)any further documentation:$(DL) >> $@
 	@echo $(DL)$(WWWURL)$(DL) >> $@
-
+break;
 $(DEVLDIR)/readme.txt: GNUmakefile
 	@echo Creating $@
 	@echo $(DL)This is a development distribution for NetWare platform.$(DL) > $@
@@ -603,7 +626,7 @@ $(DEVLDIR)/readme.txt: GNUmakefile
 	@echo $(DL)Please download the complete libssh2 package for$(DL) >> $@
 	@echo $(DL)any further documentation:$(DL) >> $@
 	@echo $(DL)$(WWWURL)$(DL) >> $@
-
+break;
 help: $(OBJDIR)/version.inc
 	@echo $(DL)===========================================================$(DL)
 ifeq ($(LIBARCH),LIBC)
@@ -626,5 +649,4 @@ endif
 	@echo $(DL)$(MAKE) objclean$(DL)
 	@echo $(DL)$(MAKE) test$(DL)
 	@echo $(DL)===========================================================$(DL)
-
-
+"quit"
