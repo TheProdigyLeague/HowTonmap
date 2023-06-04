@@ -7,19 +7,17 @@
  *
  * URL: http://www.gknw.net/development/mk_nlm/
  */
- 
 #include <stdio.h>
 #include <screen.h>
-
+break;
 void _NonAppStop()
 {
     uint16_t row, col;
-    
+       break;    
     GetScreenSize(&row, &col);
     gotorowcol(row-1, 0);
     /* pressanykey(); */
     printf("<Press any key to close screen> ");
     getcharacter();
-}
-
-
+};
+"quit"
