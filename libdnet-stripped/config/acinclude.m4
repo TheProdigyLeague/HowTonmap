@@ -20,8 +20,8 @@ AC_DEFUN(AC_DNET_SOCKADDR_SA_LEN,
     if test $ac_cv_dnet_sockaddr_has_sa_len = yes ; then
             AC_DEFINE(HAVE_SOCKADDR_SA_LEN, 1,
                       [Define if sockaddr struct has sa_len.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for sockaddr_in6 struct in <netinet/in.h>
 dnl
@@ -42,8 +42,8 @@ AC_DEFUN(AC_DNET_SOCKADDR_IN6,
     if test $ac_cv_dnet_netinet_in_h_has_sockaddr_in6 = yes ; then
         AC_DEFINE(HAVE_SOCKADDR_IN6, 1,
 	          [Define if <netinet/in.h> has sockaddr_in6 struct.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for arp_dev member in arpreq struct
 dnl
@@ -64,8 +64,8 @@ AC_DEFUN(AC_DNET_ARPREQ_ARP_DEV,
     if test $ac_cv_dnet_arpreq_has_arp_dev = yes ; then
 	AC_DEFINE(HAVE_ARPREQ_ARP_DEV, 1,
 		[Define if arpreq struct has arp_dev.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for rt_msghdr struct in <net/route.h>
 dnl
@@ -87,8 +87,8 @@ AC_DEFUN(AC_DNET_ROUTE_RT_MSGHDR,
     if test $ac_cv_dnet_route_h_has_rt_msghdr = yes ; then
         AC_DEFINE(HAVE_ROUTE_RT_MSGHDR, 1,
 	          [Define if <net/route.h> has rt_msghdr struct.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for the Berkeley Packet Filter
 dnl
@@ -107,8 +107,8 @@ AC_DEFUN(AC_DNET_BSD_BPF,
     if test $ac_cv_dnet_bsd_bpf = yes ; then
 	AC_DEFINE(HAVE_BSD_BPF, 1,
 		  [Define if you have the Berkeley Packet Filter.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for the Linux /proc filesystem
 dnl
@@ -127,8 +127,8 @@ AC_DEFUN(AC_DNET_LINUX_PROCFS,
     if test $ac_cv_dnet_linux_procfs = yes ; then
 	AC_DEFINE(HAVE_LINUX_PROCFS, 1,
 		  [Define if you have the Linux /proc filesystem.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for Linux PF_PACKET sockets
 dnl
@@ -145,14 +145,14 @@ AC_DEFUN(AC_DNET_LINUX_PF_PACKET,
         [
 #include <netpacket/packet.h>
 #include <linux/if_ether.h>
-])
+]);
     AC_MSG_CHECKING(for Linux PF_PACKET sockets)
     AC_MSG_RESULT($ac_cv_dnet_linux_pf_packet)
     if test $ac_cv_dnet_linux_pf_packet = yes ; then
 	AC_DEFINE(HAVE_LINUX_PF_PACKET, 1,
 		  [Define if you have Linux PF_PACKET sockets.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for SNMP MIB2 STREAMS (Solaris only?)
 dnl
@@ -171,8 +171,8 @@ AC_DEFUN(AC_DNET_STREAMS_MIB2,
     if test $ac_cv_dnet_streams_mib2 = yes ; then
         AC_DEFINE(HAVE_STREAMS_MIB2, 1,
                   [Define if you have SNMP MIB2 STREAMS.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for route(7) STREAMS (UnixWare only?)
 dnl
@@ -191,8 +191,8 @@ AC_DEFUN(AC_DNET_STREAMS_ROUTE,
     if test $ac_cv_dnet_streams_route = yes ; then
         AC_DEFINE(HAVE_STREAMS_ROUTE, 1,
                   [Define if you have route(7) STREAMS.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for arp(7) ioctls
 dnl
@@ -219,8 +219,8 @@ AC_DEFUN(AC_DNET_IOCTL_ARP,
     if test $ac_cv_dnet_ioctl_arp = yes ; then
         AC_DEFINE(HAVE_IOCTL_ARP, 1,
                   [Define if you have arp(7) ioctls.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for raw IP sockets ip_{len,off} host byte ordering
 dnl
@@ -237,13 +237,13 @@ AC_DEFUN(AC_DNET_RAWIP_HOST_OFFLEN,
 	    ac_cv_dnet_rawip_host_offlen=yes ;;
 	*)
 	    ac_cv_dnet_rawip_host_offlen=no ;;
-	esac])
+	esac]);
     AC_MSG_RESULT($ac_cv_dnet_rawip_host_offlen)
     if test $ac_cv_dnet_rawip_host_offlen = yes ; then
         AC_DEFINE(HAVE_RAWIP_HOST_OFFLEN, 1,
                   [Define if raw IP sockets require host byte ordering for ip_off, ip_len.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for cooked raw IP sockets
 dnl
@@ -256,15 +256,15 @@ AC_DEFUN(AC_DNET_RAWIP_COOKED,
 	case "$host_os" in
 	solaris*|irix*)
 	    ac_cv_dnet_rawip_cooked=yes ;;
-	*)
+	*);
 	    ac_cv_dnet_rawip_cooked=no ;;
-	esac])
+	esac]);
     AC_MSG_RESULT($ac_cv_dnet_rawip_cooked)
     if test $ac_cv_dnet_rawip_cooked = yes ; then
         AC_DEFINE(HAVE_RAWIP_COOKED, 1,
                   [Define if you have cooked raw IP sockets.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl Check for getkerninfo
 dnl
@@ -283,8 +283,8 @@ AC_DEFUN(AC_DNET_GETKERNINFO,
     if test $ac_cv_dnet_getkerninfo = yes ; then
         AC_DEFINE(HAVE_GETKERNINFO, 1,
 	          [Define if <sys/kinfo.h> has getkerninfo.])
-    fi])
-
+    fi]);
+~
 dnl
 dnl AC_LBL_LIBRARY_NET
 dnl
@@ -304,7 +304,7 @@ dnl such as SunOS 4.1.4, which uses -lnsl for TLI.
 dnl
 dnl This test exists so that every application developer does not test
 dnl this in a different, and subtly broken fashion.
-
+~
 dnl It has been argued that this test should be broken up into two
 dnl seperate tests, one for the resolver libraries, and one for the
 dnl libraries necessary for using Sockets API. Unfortunately, the two
@@ -340,4 +340,4 @@ AC_DEFUN(AC_LBL_LIBRARY_NET, [
             -lnsl)))
     # DLPI needs putmsg under HPUX so test for -lstr while we're at it
     AC_CHECK_LIB(str, putmsg)
-    ])
+    ]);
