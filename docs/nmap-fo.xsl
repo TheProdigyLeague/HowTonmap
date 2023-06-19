@@ -951,10 +951,7 @@ Traceroute Information
 	</fo:table-body>
 
 </fo:table>
-
 </xsl:if>
-
 </xsl:template>
 <!-- ............................................................ -->
-
 </xsl:stylesheet>

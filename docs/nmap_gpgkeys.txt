@@ -6,25 +6,25 @@ maintainer Fyodor.  Fyodor's KeyID is 33599B5F.  Those two keys and
 their fingerprints are reproduced below.  The latest version of this
 file is always available at
 https://nmap.org/data/nmap_gpgkeys.txt .
-
+~
 To verify a file with GPG, obtain and import the keys with a command
 such as "gpg --import nmap_gpgkeys.txt" and then verify the obtained
 files as shown in this example:
-
+~
  > gpg --verify nmap-3.81.tar.bz2.gpg.txt nmap-3.81.tar.bz2
  gpg: Signature made Sat 23 Apr 2005 11:34:32 PM PDT using DSA key ID 6B9355D0
  gpg: Good signature from "Nmap Project Signing Key (http://www.insecure.org/)"
-
+~
 Here are the GPG keys for the Nmap Project and Fyodor:
-
+~
 pub   1024D/6B9355D0 2005-04-24
       Key fingerprint = 436D 66AB 9A79 8425 FDA0  E3F8 01AF 9F03 6B93 55D0
 uid   Nmap Project Signing Key (http://www.insecure.org/)
 sub   2048g/A50A6A94 2005-04-24
-
+~
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.1 (GNU/Linux)
-
+~
 mQGiBEJrBfgRBADogo5DEoGsm2C3OC3NoKBQ0J7Ixp/cymuMeGQmDhqP6Vfmxmso
 BGln4nhDr3WMDW76Q2p6dHTZEbWx3NAna8q3wa3PrPTVRcmEgEgUd8y086I33NqW
 BV5Fz4bvPWtSGc/4MxXwac+XqrGY+iTkaO3sd4/eEKa/KkJlXpIGAbGbZwCgq9HS
@@ -53,16 +53,16 @@ gltKiG6MR2z018fqD8FJC3tLiEkEGBECAAkFAkJrBfoCGwwACgkQAa+fA2uTVdBM
 QgCfciVPJeohzn5mJ4WGE/6B1CyCOIYAn2ghTW1IKTP+tfOgxVg/p8HJOoiz
 =18Dk
 -----END PGP PUBLIC KEY BLOCK-----
-
-
+~
+break;
 pub   1024D/33599B5F 2005-04-24
       Key fingerprint = BB61 D057 C0D7 DCEF E730  996C 1AF6 EC50 3359 9B5F
 uid   Fyodor <fyodor@insecure.org>
 sub   2048g/D3C2241C 2005-04-24
-
+~
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.1 (GNU/Linux)
-
+~
 mQGiBEJrBG4RBADfjVQenTh2v1NK2N0Wi83pGMm0u/IDDX8eT8lxSR+XdevdcK+F
 bRhVh+tMhTo1T2OoZkBfYj+OVCWsBZlIxZtGycWaGAwn3MbUEiUJD0YVv4pm4KVk
 HEZSOYEkzUFIw3IP03Cv6wBDrhk5lAu99+sK0iQGeHGw+gBhIuA3axSeBwCgn86p
