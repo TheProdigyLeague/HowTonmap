@@ -149,90 +149,92 @@ appended to the name (e.g. <filename>nmap-4.76.tar.bz2.asc</filename>). This is 
 <para>With the proper PGP key in your keyring and the detached signature file downloaded, verifying an Nmap release takes a single GPG command, as shown in <xref
 linkend="ex-gpg-verify-nmap-release-good" xrefstyle="select: label nopage"/>
 That example assumes that the verified file can be found in the same directory by simply removing <quote>.asc</quote> from the signature filename.  When that isn't the case, simply pass the target filename as the final argument to GPG.  If the file has been tampered with, the results will look like <xref
-linkend="ex-gpg-verify-nmap-release-bad" xrefstyle="select: label nopage"/>.</para>
-<example id="ex-gpg-verify-nmap-release-good">
-<title>Verifying PGP key fingerprints (Successful)</title>
+linkend="ex-gpg-verify-nmap-release-bad" xrefstyle="select: label nopage"/>.</para>~<example id="ex-gpg-verify-nmap-release-good">
+<br>
+<title>好指纹！(ver pgp)</title></br>
 <screen>
-flog&gt; <userinput>gpg --verify nmap-4.76.tar.bz2.asc </userinput>
-gpg: Signature made Fri 12 Sep 2008 02:03:59 AM PDT using DSA key ID 6B9355D0
-gpg: Good signature from "Nmap Project Signing Key (http://www.insecure.org/)"
+$ flog&gt; <userinput>gpg --verify nmap-4.76.tar.bz2.asc </userinput>
+▶ gpg: Signature made Fri 12 Sep 2008 02:03:59 AM PDT using DSA key ID 6B9355D0
+▶ gpg: Good signature from "Nmap Project Signing Key (http://www.insecure.org/)"
 </screen></example>
 <example id="ex-gpg-verify-nmap-release-bad">
-<title>Detecting a bogus file</title>
+<title>1  3  3  7 | | 伪造文件！</title>
 <screen>
-flog&gt; <userinput>gpg --verify nmap-4.76.tar.bz2.asc nmap-4.76-hacked.tar.bz2</userinput>
-gpg: Signature made Fri 12 Sep 2008 02:03:59 AM PDT using DSA key ID 6B9355D0
-gpg: BAD signature from "Nmap Project Signing Key (http://www.insecure.org/)"
+$ flog&gt; <userinput>gpg --verify nmap-4.76.tar.bz2.asc nmap-4.76-hacked.tar.bz2</userinput>
+▶ gpg: Signature made Fri 12 Sep 2008 02:03:59 AM PDT using DSA key ID 6B9355D0
+▶ gpg: BAD signature from "Nmap Project Signing Key (http://www.insecure.org/)"
 </screen></example>
-<para>While PGP signatures are the recommended validation technique,
-SHA2, SHA1, and MD5 (among other)
-hashes<indexterm><primary>hashes, cryptographic</primary></indexterm><indexterm><primary>digests, cryptographic</primary></indexterm>
-are made available for more casual
-validation.  An attacker who can manipulate your Internet traffic in
-real time (and is extremely skilled) or who compromises Nmap.Org
-and replaces both the distribution file and digest file, could defeat
-this test.  However, it can be useful to check the authoritative
-Nmap.Org hashes if you obtain Nmap from a third party or feel it
-might have been accidentally corrupted.  For every Nmap package download
-file, there is a corresponding file in the <filename>sigs</filename> directory with
-<literal>.digest.txt</literal> appended to the name
-(e.g. <filename>nmap-4.76.tar.bz2.digest.txt</filename>).  An example
-is shown in <xref linkend="ex-digest-file" xrefstyle="select: label nopage" />.  This is the detached
-signature file. The hashes from the digest file can be verified using common tools such as
-<application>gpg</application>, <application>sha1sum</application>, or <application>md5sum</application>, as shown in <xref
-linkend="ex-digest-file-verify" />.</para>
-<example id="ex-digest-file">
-<title>A typical Nmap release digest file</title>
+<para>While PGP signatures are the recommended validation technique, SHA2, SHA1, and MD5 (among other) hashes...
+<indexterm>精英黑客<primary>hashes, cryptographic</primary></indexterm><indexterm><primary>digests, cryptographic</primary></indexterm> are made available for more casual validation.
+<pre class="">
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/
+/|/ \|\ /|/ \|\ /|/ \|\ /|/ (PS)
+</pre>
+An attacker who can manipulate your Internet traffic in real time (and is extremely skilled) or who compromises Nmap.Org and replaces both the distribution file and digest file, could defeat this test.  
+However, it can be useful to check the authoritative Nmap.Org hashes if you obtain Nmap from a third party or feel it might have been accidentally corrupted.  For every Nmap package download file, there is a corresponding file in, 
+<filename>sigs</filename> 
+directory with <literal>.digest.txt</literal> appended to the name
+(e.g. <filename>nmap-4.76.tar.bz2.digest.txt</filename>)
+An example is shown in <xref linkend="ex-digest-file" xrefstyle="select: label nopage" />
+This is the detached signature file.
+ The hashes from the digest file can be verified using common tools such as,
+<application>gpg</application>
+<application>sha1sum</application>
+<application>md5sum</application>
+as shown in <xref linkend="ex-digest-file-verify" />.</para><example id="ex-digest-file">
+<br>
+<title>A typical Nmap release digest file</title></br>
 <screen>
-flog&gt; <userinput>cat sigs/nmap-4.76.tgz.digest.txt </userinput>
-nmap-4.76.tgz:    MD5 = 54 B5 C9 E3 F4 4C 1A DD  E1 7D F6 81 70 EB 7C FE
-nmap-4.76.tgz:   SHA1 = 4374 CF9C A882 2C28 5DE9  D00E 8F67 06D0 BCFA A403
-nmap-4.76.tgz: RMD160 = AE7B 80EF 4CE6 DBAA 6E65  76F9 CA38 4A22 3B89 BD3A
-nmap-4.76.tgz: SHA224 = 524D479E 717D98D0 2FB0A42B 9A4E6E52 4027C9B6 1D843F95
+$ flog&gt; <userinput>cat sigs/nmap-4.76.tgz.digest.txt </userinput>
+➜ nmap-4.76.tgz:    MD5 = 54 B5 C9 E3 F4 4C 1A DD  E1 7D F6 81 70 EB 7C FE
+➜ nmap-4.76.tgz:   SHA1 = 4374 CF9C A882 2C28 5DE9  D00E 8F67 06D0 BCFA A403
+➜ nmap-4.76.tgz: RMD160 = AE7B 80EF 4CE6 DBAA 6E65  76F9 CA38 4A22 3B89 BD3A
+➜ nmap-4.76.tgz: SHA224 = 524D479E 717D98D0 2FB0A42B 9A4E6E52 4027C9B6 1D843F95
                         D419F87F
-nmap-4.76.tgz: SHA256 = 0E960E05 53EB7647 0C8517A0 038092A3 969DB65C BE23C03F
+➜ nmap-4.76.tgz: SHA256 = 0E960E05 53EB7647 0C8517A0 038092A3 969DB65C BE23C03F
                         D6DAEF1A CDCC9658
-nmap-4.76.tgz: SHA384 = D52917FD 9EE6EE62 F5F456BF E245675D B6EEEBC5 0A287B27
+➜ nmap-4.76.tgz: SHA384 = D52917FD 9EE6EE62 F5F456BF E245675D B6EEEBC5 0A287B27
                         3CAA4F50 B171DC23 FE7808A8 C5E3A49A 4A78ACBE A5AEED33
-nmap-4.76.tgz: SHA512 = 826CD89F 7930A765 C9FE9B41 1DAFD113 2C883857 2A3A9503
+➜ nmap-4.76.tgz: SHA512 = 826CD89F 7930A765 C9FE9B41 1DAFD113 2C883857 2A3A9503
                         E4C1E690 20A37FC8 37564DC3 45FF0C97 EF45ABE6 6CEA49FF
                         E262B403 A52F4ECE C23333A0 48DEDA66
 </screen></example>
 <example id="ex-digest-file-verify">
-<title>Verifying Nmap hashes</title>
+<title>Проверить хэш карты Нижнего мира (-hacked)</title>
 <screen>
-flog&gt; <userinput>gpg --print-md sha256 nmap-4.76.tgz </userinput>
-nmap-4.76.tgz: 0E960E05 53EB7647 0C8517A0 038092A3 969DB65C BE23C03F D6DAEF1A
+$ flog&gt; <userinput>gpg --print-md sha256 nmap-4.76.tgz </userinput>
+➜ nmap-4.76.tgz: 0E960E05 53EB7647 0C8517A0 038092A3 969DB65C BE23C03F D6DAEF1A
                CDCC9658
-flog&gt; <userinput>sha1sum nmap-4.76.tgz </userinput>
+$ flog&gt; <userinput>sha1sum nmap-4.76.tgz </userinput>
 4374cf9ca8822c285de9d00e8f6706d0bcfaa403  nmap-4.76.tgz
-flog&gt; <userinput>md5sum nmap-4.76.tgz</userinput>
+$ flog&gt; <userinput>md5sum nmap-4.76.tgz</userinput>
 54b5c9e3f44c1adde17df68170eb7cfe  nmap-4.76.tgz
 </screen></example>
-<para>While releases from Nmap.Org are signed as described in this
-section, certain Nmap add-ons, interfaces, and platform-specific
-binaries are developed and distributed by other parties.  They have
-different mechanisms for establishing the authenticity of their
-downloads.</para>
+<para>While releases from Nmap.Org are signed as described in this section, certain Nmap add-ons, interfaces, and platform-specific binaries are developed and distributed by other parties.  They have different mechanisms for establishing the authenticity of their downloads.</para>
 </sect2>
-<sect2 id="inst-svn"><title>Obtaining Nmap from the Subversion (SVN) Repository</title>
+<br>
+<sect2 id="inst-svn"><title>دليل التخريب(SVN)/repo/</title></br>
 <indexterm><primary>Subversion</primary></indexterm>
-<indexterm><primary>SVN</primary><see>Subversion</see></indexterm>
-<para>In addition to regular stable and development releases, the
-latest Nmap source code is always available using the <ulink
-url="http://subversion.apache.org">Subversion (SVN) revision control
-system</ulink>.  This delivers new features and version/OS detection
-database updates immediately as they are developed.  The downside is that
-SVN head revisions aren't always as stable as official releases.  So
-SVN is most useful for Nmap developers and users who need a fix which
-hasn't yet been formally released.</para>
+<indexterm><primary>SVN</primary><see>/SVN/</see></indexterm>
+<para>In addition to regular stable and development releases, the latest Nmap source code is always available using the <ulink
+url="http://subversion.apache.org">Subversion (SVN) revision control system</ulink>  
++ This delivers new features and version/OS detection database updates immediately as they are developed.  
+- The downside is that SVN head revisions are not Official stable-version-releases. 
+! Is svn useful for devs? 
+Users need a fix which hasn't yet been formally released...</para>
 <para>
-SVN write access is strictly limited to top Nmap
-developers, but everyone has read access to the repository.  Check out
-the latest code using the command <command>svn co
-https://svn.nmap.org/nmap</command>. Then you can later
-update your source code by typing <command>svn up</command> in your
-working directory.</para>
+SVN write access is strictly limited to top Nmap developers, but everyone has read access to the repository.  Check out the latest code using the command 
+▶ <command>svn co https://svn.nmap.org/nmap</command>
+>>> then udp src.c
+<command>svn up</command> # in working directory
+</para>
 <para>While most users only follow the <filename>/nmap</filename>
 directory in SVN, there is one other
 interesting directory: <filename>/nmap-exp</filename>.  This directory
