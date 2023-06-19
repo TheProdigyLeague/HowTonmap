@@ -2,42 +2,40 @@
 <chapter id="install"><title>C++下界映射器。安装！</title>
 <indexterm class="startofrange" id="install-indexterm"><primary>installation</primary></indexterm>
 <sect1 id="inst-intro"><title>介绍！下界地图</title>
-<para>Nmap can often be installed or upgraded with a single command.
-Most readers will
-use the table of contents to skip
-directly to sections that concern them.  This chapter describes how to install
-Nmap on many platforms, including both source
-code compilation and binary installation methods.  Graphical and
-command-line versions of Nmap are described and contrasted.
-Nmap removal instructions are also provided in case you change your
-mind.</para>
-<sect2 id="inst-already"><title>Testing Whether Nmap is Already Installed</title>
-<indexterm><primary>Nmap</primary><secondary>checking if installed</secondary></indexterm>
-<para>The first step toward obtaining Nmap is to check whether you already
-have it.  Many free operating system distributions (including most
-Linux and BSD systems) come with Nmap packages, although they may not be
-installed by default.  On Unix systems, open a terminal window and try executing the command
-<command>nmap <option>--version</option></command>.
-If Nmap exists and is in your
-<envar>PATH</envar>,<indexterm><primary><envar>PATH</envar> environment variable</primary></indexterm>
-you should see output similar to that in <xref linkend="ex-checking-for-nmap" xrefstyle="select: label nopage" />.</para>
-<indexterm><primary>version number of Nmap</primary><see><option>--version</option></see></indexterm>
+<para>Nmap can be installed or upgraded with a single command.
+- Most readers will use ToC to skip directly to sections that concern them.  This chapter describes how to install
+- Nmap's availability is on many platforms...  
+#include C++ '&&''/bin/
+> Graphical and command-line versions of Nmap are described and contrasted.
+▶ Nmap removal instructions are also provided.
+</para>
+~
+<sect2 id="pre-install"><title>T是否已经安装？</title>
+<indexterm><primary>Nmap</primary><secondary>pre-install</secondary></indexterm>
+<para>Many os distros (including most Linux and BSD systems...) 
+- Comes with Nmap-pkgs, although they may not be installed by default.  
+- On Unix systems: Open Terminal Window and try 
+<command>$ nmap <option> --version </option></command>
+~
+❯ if Nmap exists and is in your<envar>PATH</envar>~
+<indexterm>\<primary>/<envar>PATH</envar>env_var</primary><path/>
+<env_var>C://usrs/bin</env_var></indexterm>
+then, output is,
+➜ <xref linkend="ex-checking-for-nmap" xrefstyle="select: label nopage" />$nmap_command_path</para>
+<indexterm><primary>this version number of Nmap</primary><see><option>--version</option></see></indexterm>
 <example id="ex-checking-for-nmap"><title>Checking for Nmap and determining its version number</title>
 <indexterm><primary><option>--version</option></primary><secondary>example of</secondary></indexterm>
-<!--REMEMBER TO UPDATE TEXT BELOW THE SCREENSHOT WHEN I UPDATE THE SCREENSHOT
-    TO LATEST VERSION -->
+<!--REMEMBER TO UPDATE TEXT BELOW THE SCREENSHOT WHEN I UPDATE THE SCREENSHOT TO LATEST VERSION -->
 <screen>
 felix~&gt; <userinput>nmap --version</userinput>
 ~
-Nmap version 4.76 ( https://nmap.org )
+➜ Nmap version 4.76 ( https://nmap.org )
 felix~&gt;
 </screen></example>
-<para>If Nmap does <emphasis>not</emphasis>
-exist on the system (or if your <envar>PATH</envar> is incorrectly
-set), an error message such as
-<computeroutput>nmap: Command not found</computeroutput> is reported.  As the
-example above shows, Nmap responds to the command by printing its
-version number (here <literal>4.76</literal>).</para>
+<para>If Nmap does <emphasis>not</emphasis> exist on the system (or if your <envar>PATH</envar> is incorrectly set), an error message such as
+<computeroutput>nmap: Command not found</computeroutput> 
+is reported.  
+- As the example above shows, Nmap responds to the command by printing Version number (here <literal>4.76</literal>).</para>
 <para>Even if your system already has a copy of Nmap, you should
 consider upgrading to the latest version available from <ulink
 url="https://nmap.org/download.html" />.<indexterm><primary>downloading</primary></indexterm>
@@ -49,7 +47,21 @@ Nmap output examples in this document may not match the output produced by
 older versions.
 </para>
 </sect2>
-<sect2 id="inst-interfaces"><title>Command-line and Graphical Interfaces</title>
+<sect2 id="inst-interfaces"><title>命令行</title>
+<pre class="ascii">
+ ___________________________________  
+| _____ |   | ___ | ___ ___ | |   | |
+| |   | |_| |__ | |_| __|____ | | | |
+| | | |_________|__ |______ |___|_| |
+| |_|   | _______ |______ |   | ____|
+| ___ | |____ | |______ | |_| |____ |
+|___|_|____ | |   ___ | |________ | |
+|   ________| | |__ | |______ | | | |
+| | | ________| | __|____ | | | __| |
+|_| |__ |   | __|__ | ____| | |_| __|
+|   ____| | |____ | |__ |   |__ |__ |
+| |_______|_______|___|___|___|_____|~gui
+</pre>
 <para>Nmap has traditionally been a command-line tool run from
 a Unix shell or (more recently) Windows command prompt.  This allows
 experts to quickly execute a command that does exactly what they want
@@ -57,21 +69,19 @@ without having to maneuver through a bunch of configuration panels and
 scattered option fields.  This also makes Nmap easier to script and
 enables easy sharing of useful commands among the user
 community.</para>
-<para>One downside of the command-line approach is that it can be
-intimidating for new and infrequent users.
-Nmap offers more than a hundred
-command-line options, although many are obscure features or debugging
+<para>One downside of the command-line approach is that it can be intimidating for new and infrequent users.
+Nmap offers more than a hundred command-line options, although many are obscure features or debugging
 controls that most users can ignore.  Many graphical frontends have been
-created for those users who prefer a GUI interface.  Nmap has traditionally included a simple GUI for Unix named <application>NmapFE</application><indexterm><primary>NmapFE</primary></indexterm>, but that was replaced in 2007 by Zenmap,
-which we have been developing since 2005.  Zenmap is far more powerful and effective than NmapFE, particularly in results viewing.  Zenmap's tab-based interface lets you search and sort
-results, and also browse them in several ways (host details, raw Nmap
-output, and ports/hosts).  It works on Linux, Windows, Mac
-OS X, and other platforms.  Zenmap is covered in depth in <xref linkend="zenmap"/>.  The rest of this book focuses on command-line Nmap invocations.
-Once you understand how the
-command-line options work and can interpret the output, using Zenmap or
-the other available Nmap GUIs is easy.  Nmap's options work the same way
-whether you choose them from radio buttons and menus or type them at a
-command-line.
+created for those users who prefer a GUI interface.  
+Nmap has traditionally included a simple GUI for Unix aptly named 
+<application>NmapFE</application><indexterm><primary>NmapFE</primary></indexterm>, but that was replaced in 2007 by Zenmap, which we have been developing since 2005.  
++ Zenmap is far more powerful and effective than NmapFE, particularly in results viewing.  
++ Zenmap's tab-based interface lets you search and sort results, and also browse them in several ways (host details, raw Nmap output, and ports/hosts).
+It works on Linux, Windows, Mac OS X, and other platforms.  
++ Zenmap is covered in depth in <xref linkend="zenmap"/>.  
+- The rest of this book focuses on command-line Nmap invocations.
+- Once you understand how the command-line options work and can interpret the output, using Zenmap or the other available Nmap GUIs is easy.
++ Nmap's options work the same way whether you choose them from radio buttons and menus or type them at a command-line.
 </para>
 </sect2>
 <sect2 id="inst-download"><title>Downloading Nmap</title>
@@ -112,36 +122,33 @@ Nmap Project Signing Key,<indexterm><primary>Nmap Project Signing Key</primary><
 which can be obtained from the major keyservers or <ulink
 url="https://svn.nmap.org/nmap/docs/nmap_gpgkeys.txt"/>.  My key is
 included in that file too.  The keys can be imported with the command
-<command>gpg --import nmap_gpgkeys.txt</command>.  You only need to do
-this once, then you can verify all future Nmap releases from that
-machine.  Before trusting the
-keys, verify that the fingerprints match the values shown in <xref
+❯ <command>gpg --import nmap_gpgkeys.txt</command>
+- You only need to do this once, then you can verify all future Nmap releases from that
+machine.  
+- Before trusting the keys, verify that the fingerprints match the values shown in <xref
 linkend="ex-check-gpg-keys" xrefstyle="select: label nopage"/>.</para>
 <example id="ex-check-gpg-keys">
-<title>Verifying the Nmap and Fyodor PGP Key Fingerprints</title>
+<br>
+<title>Verifying the Nmap and Fyodor PGP Key Fingerprints</title></br>
 <screen>
-flog~&gt; <userinput>gpg --fingerprint nmap fyodor</userinput>
-pub 1024D/33599B5F 2005-04-24
+$ flog~&gt; <userinput>gpg --fingerprint Nmap(c(tm)) fyodor</userinput>
+❯ pub 1024D/33599B5F 2005-04-24
     Key fingerprint = BB61 D057 C0D7 DCEF E730 996C 1AF6 EC50 3359 9B5F
 uid                Fyodor &lt;fyodor@insecure.org&gt;
-sub 2048g/D3C2241C 2005-04-24
+❯ sub 2048g/D3C2241C 2005-04-24
 ~
-pub 1024D/6B9355D0 2005-04-24
+❯ pub 1024D/6B9355D0 2005-04-24
     Key fingerprint = 436D 66AB 9A79 8425 FDA0 E3F8 01AF 9F03 6B93 55D0
 uid                Nmap Project Signing Key (https://insecure.org/)
-sub 2048g/A50A6A94 2005-04-24
+❯ sub 2048g/A50A6A94 2005-04-24
 </screen></example>
-<para>For every Nmap package download file
-(e.g. <filename>nmap-4.76.tar.bz2</filename> and
-<filename>nmap-4.76-win32.zip</filename>), there is a corresponding
-file in the <filename>sigs</filename> directory with <literal>.asc</literal> appended
-to the name (e.g. <filename>nmap-4.76.tar.bz2.asc</filename>).
-This is the detached signature file.</para>
-<para>With the proper PGP key in your keyring and the detached
-signature file downloaded, verifying an Nmap release takes a single
-GPG command, as shown in <xref
-linkend="ex-gpg-verify-nmap-release-good" xrefstyle="select: label nopage"/>.  That example assumes that the verified file can be found in the same directory by simply removing <quote>.asc</quote> from the signature filename.  When that isn't the case, simply pass the target filename as the final argument to GPG.  If the file has been
-tampered with, the results will look like <xref
+<para>For every Nmap package download file 
+(e.g. <filename>nmap-4.76.tar.bz2</filename> and <filename>nmap-4.76-win32.zip</filename>)
+there is a corresponding file in <filename>sigs</filename> directory with <literal>.asc</literal> 
+appended to the name (e.g. <filename>nmap-4.76.tar.bz2.asc</filename>). This is the detached signature file.</para>
+<para>With the proper PGP key in your keyring and the detached signature file downloaded, verifying an Nmap release takes a single GPG command, as shown in <xref
+linkend="ex-gpg-verify-nmap-release-good" xrefstyle="select: label nopage"/>
+That example assumes that the verified file can be found in the same directory by simply removing <quote>.asc</quote> from the signature filename.  When that isn't the case, simply pass the target filename as the final argument to GPG.  If the file has been tampered with, the results will look like <xref
 linkend="ex-gpg-verify-nmap-release-bad" xrefstyle="select: label nopage"/>.</para>
 <example id="ex-gpg-verify-nmap-release-good">
 <title>Verifying PGP key fingerprints (Successful)</title>
