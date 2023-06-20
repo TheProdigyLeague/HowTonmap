@@ -235,22 +235,20 @@ SVN write access is strictly limited to top Nmap developers, but everyone has re
 >>> then udp src.c
 <command>svn up</command> # in working directory
 </para>
-<para>While most users only follow the <filename>/nmap</filename>
-directory in SVN, there is one other
-interesting directory: <filename>/nmap-exp</filename>.  This directory
-contains <emphasis>experimental</emphasis> Nmap branches which Nmap
-developers create when they wish to try new things without
-destabilizing Nmap proper.  When developers feel that an experimental
-branch is ready for wider-scale testing, they will generally email the
-location to the <citetitle>nmap-dev</citetitle> mailing list.</para>
+<para>While most users only follow:
+<filename>/nmap</filename>
+directory in SVN, there is one other interesting directory: 
+<filename>/nmap-exp</filename>
+This directory contains <emphasis>experimental</emphasis>
+Nmap branches which Nmap developers create when they wish to try new things without destabilizing.
+Nmap developers feel that an experimental branch is ready for wider-scale testing, they will generally email the location
+<citetitle>nmap-dev</citetitle> mailing list.</para>
 <para>Once Nmap is checked out, you can build it from source code just as you would with the Nmap tarball (described later in this chapter).</para>
-<para>If you would like real-time (or digested) notification and diffs by email when any
-changes are made to Nmap, sign up for the nmap-svn mailing
-list at <ulink
-url="https://nmap.org/mailman/listinfo/svn"/>.</para>
+<para>If you would like real-time (or digested) notification and diffs by email when any changes are made to Nmap, sign up for the nmap-svn mailing list at <ulink
+url="https://nmap.org/mailman/listinfo/svn"/>..</para>
 </sect2>
 </sect1>
-<sect1 id="inst-source"><title>Linux/Unix Compilation and Installation from Source Code</title> 
+<sect1 id="inst-source"><title>Linux/Unix Compilation and Installation from Source Code</title>
 <indexterm><primary>Unix, installing on</primary></indexterm>
 <indexterm><primary>Linux</primary><secondary>compiling on</secondary></indexterm>
 <indexterm><primary>installation</primary><secondary>from source code</secondary></indexterm>
