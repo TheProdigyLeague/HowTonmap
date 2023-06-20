@@ -230,61 +230,57 @@ url="http://subversion.apache.org">Subversion (SVN) revision control system</uli
 ! Is svn useful for devs? 
 Users need a fix which hasn't yet been formally released...</para>
 <para>
-SVN write access is strictly limited to top Nmap developers, but everyone has read access to the repository.  Check out the latest code using the command 
+SVN write access is strictly limited to top Nmap developers:
 ▶ <command>svn co https://svn.nmap.org/nmap</command>
 >>> then udp src.c
 <command>svn up</command> # in working directory
 </para>
-<para>While most users only follow:
-<filename>/nmap</filename>
-directory in SVN, there is one other interesting directory: 
+>>> while user
+<filename>/nmap/</filename>
+>>> dir in /svn/ is /dir/int/
 <filename>/nmap-exp</filename>
-This directory contains <emphasis>experimental</emphasis>
-Nmap branches which Nmap developers create when they wish to try new things without destabilizing.
-Nmap developers feel that an experimental branch is ready for wider-scale testing, they will generally email the location
-<citetitle>nmap-dev</citetitle> mailing list.</para>
-<para>Once Nmap is checked out, you can build it from source code just as you would with the Nmap tarball (described later in this chapter).</para>
-<para>If you would like real-time (or digested) notification and diffs by email when any changes are made to Nmap, sign up for the nmap-svn mailing list at <ulink
-url="https://nmap.org/mailman/listinfo/svn"/>..</para>
-</sect2>
-</sect1>
+>>> this /dir/
+<emphasis>experimental</emphasis>
+▶ nmap branches which Nmap developers create when they wish to try new things without destabilizing
+▶ nmap developers feel that an experimental branch is ready for wider-scale testing, they will generally email the location
+<citetitle>nmap-dev</citetitle>mailing list.</para>
+▶ nmap build from src.c 
+▶ nmap.tar (described later in this chapter)
+<para>Real-time (or digested) notification and diffs by email when any changes are made to Nmap 
+Sign up for the nmap-svn mailing list at <ulink url="https://nmap.org/mailman/listinfo/svn"/>..</para></sect2></sect1>
 <sect1 id="inst-source"><title>Linux/Unix Compilation and Installation from Source Code</title>
 <indexterm><primary>Unix, installing on</primary></indexterm>
 <indexterm><primary>Linux</primary><secondary>compiling on</secondary></indexterm>
 <indexterm><primary>installation</primary><secondary>from source code</secondary></indexterm>
 <indexterm><primary>source code</primary></indexterm>
 <indexterm><primary>compilation</primary></indexterm>
-<para>
-<indexterm><primary>source code</primary><secondary>advantages of</secondary></indexterm>
-While binary packages
-(discussed in later sections) are available for most platforms, compilation and
-installation from source code is the traditional and most powerful way
-to install Nmap.  This ensures that the
-latest version is available and allows Nmap
-to adapt to the library availability and directory structure of your
-system.  For example, Nmap uses the
-OpenSSL cryptography libraries for version detection when
-available, but most binary packages do not include this
-functionality.  On the other hand, binary packages are generally
-quicker and easier to install, and allow for consistent management
-(installation, removal, upgrading, etc.) of all packaged software on the system.</para>
+<para><indexterm><primary>source code</primary><secondary>advantages of</secondary></indexterm>
+> While binary packages (discussed in later sections) are available for most platforms, compilation and installation from source code is the traditional and most powerful way to install Nmap.
+> This ensures that the latest version is available and allows Nmap to adapt to the library availability and directory structure of your system.
+> For example, Nmap uses the OpenSSL cryptography libraries for version detection when available, but most binary packages do not include this functionality.
+> On the other hand, binary packages are generally quicker and easier to install, and allow for consistent management (installation, removal, upgrading, etc.) of all packaged software on the system.</para>
 <para>Source installation is usually a painless process&mdash;the build system is designed to auto-detect as much as possible.  Here are the steps required for a default install:</para>
 <orderedlist>
 <listitem><para>Download the latest version of Nmap in .tar.bz2 (bzip2 compression) or .tgz (gzip compression) format from <ulink url="https://nmap.org/download.html" />.</para></listitem>
 <listitem><para>Decompress the downloaded tarball with a command such as:</para>
-<para><command>bzip2 -cd nmap-<replaceable>VERSION</replaceable>.tar.bz2 | tar xvf -</command></para>
-<para>With GNU tar, the simpler command <command>tar xvjf
-nmap-<replaceable>VERSION</replaceable>.tar.bz2</command> does the
-trick.  If you downloaded the .tgz version, replace
-<application>bzip2</application> with <application>gzip</application>
-in the decompression command.</para></listitem>
-<listitem><para>Change into the newly created directory: <command>cd nmap-<replaceable>VERSION</replaceable></command></para></listitem>
-<listitem><para>Configure the build system: <command>./configure</command></para>
-<para>If the configuration succeeds, an ASCII art dragon appears to congratulate you on successful configuration and warn you to be careful, as shown in <xref linkend="ex-configure-success" xrefstyle="select: label nopage"/>.</para>
+<para>
+<command>bzip2 -cd nmap-<replaceable>VERSION</replaceable>.tar.bz2 | tar xvf -</command>
+</para>
+<para>With GNU tar, the simpler command 
+<command>tar xvjf nmap-<replaceable>バージョン</replaceable>.tar.bz2</command>
+- If you downloaded the .tgz version, replace
+<application>bzip2</application> with <application>gzip</application>in decompression command.</para></listitem>
+<listitem><para>Change into newly created directory: 
+<command>cd nmap-<replaceable>バージョン</replaceable></command></para></listitem>
+<listitem><para>Config build sys:
+<command>./configure</command></para>
+<para>Конфигурация выполнена успешно 
++ ASCII Art Dragon appears! 
+~ as shown in <xref linkend="ex-configure-success" xrefstyle="select: label nopage"/>.,,</para>
 <example id="ex-configure-success">
-<title>Successful configuration screen</title>
+<title>Successful Configuration Screen</title>
 <screen>
-flog~/nmap> <userinput>./configure</userinput>
+$ flog~/nmap> ~ <userinput>./configure</userinput>
 <![CDATA[checking build system type... x86_64-unknown-linux-gnu
 [hundreds of lines cut]
 configure: creating ./config.status
@@ -305,52 +301,59 @@ config.status: nsock_config.h is unchanged
    '  (__/                                               /              \/
                                                        /                  \
              NMAP IS A POWERFUL TOOL -- USE CAREFULLY AND RESPONSIBLY
-Configuration complete.  Type make (or gmake on some *BSD machines) to compile.
-]]>...</screen></example>
-</listitem>
-<listitem><para>Build Nmap (and the Zenmap GUI if its requirements are met):
+Configuration complete.  Type make (or gmake on some *BSD machines) to compile.]]>...</screen></example></listitem>
+<listitem><para>Build Nmap (and Zenmap GUI if its requirements are met):
 <command>make</command></para>
-<para>Note that GNU Make is required.  On BSD-derived Unix systems,
-this is often installed as <emphasis>gmake</emphasis>.  So if
-<command>make</command> returns a bunch of errors such as
-<quote><literal>Makefile, line 1: Need an
-operator</literal></quote>, try running <command>gmake</command> instead.</para>
-</listitem>
-<listitem><para>Become a privileged user for system-wide install: <command>su root</command></para>
+<para>Note: that GNU Make is required. On BSD-derived Unix systems, this is often installed: 
+<emphasis>gmake</emphasis>
+>>> if 
+<command>make</command> 
+➜ return error: <quote><literal>Makefile, line 1: Need an operator</literal></quote>
+➜ try running<command>gmake</command></para></listitem>
+<listitem><para>Become a privileged user for system-wide install:
+<command>su root</command></para>
 <para>This step may be skipped if you only have an unprivileged shell
 account on the system.  In that case, you will likely need to pass
 the <option>--prefix</option> option to <literal>configure</literal>
 in step four as described in the next section.</para>
 </listitem>
-<listitem><para>Install Nmap, support files, docs, etc.: <command>make install</command></para>
-<para>Congratulations!  Nmap is now installed as <filename>/usr/local/bin/nmap</filename>!  Run it with no arguments for a quick help screen.</para>
-</listitem>
-</orderedlist>
-<para>As you can see above, a simple source compilation and install
-consists of little more than running <command>./configure;make;make
-install</command> as root.  However, there are a number of options available to <application>configure</application> that affect the way Nmap is built.</para>
-<sect2 id="inst-configure"><title>Configure Directives</title>
+<listitem><para>Install Nmap, support files, docs, etc.: 
+<command>make install</command></para>
+<para>Поздравления 
+❯ nmap is now installed !!! 
+<filename>/usr/local/bin/nmap</filename>
+<screen>
+> \Run 
+> no args 
+> for 'Quick Help' 
+</screen></para></listitem></orderedlist>
+<para>source compilation and install:
+> run ++ <command>./configure;make;make,,:root~#$__install</command>
+- <application>config</application>/nmap/build</para>
+~
+<sect2 id="inst-configure"><title>निर्देश कॉन्फ़िगर करें</title>
 <indexterm><primary>configure directives</primary></indexterm>
 <para>Most of the Unix build options are controlled by the <literal>configure</literal> script, as used in step number four above.  There are dozens of command-line parameters and environmental variables which affect the way Nmap is built.  Run <command>./configure --help</command> for a huge list with brief descriptions.  These are not applicable to building Nmap on Windows.  Here are the options which are either specific to Nmap or particularly important:</para>
 <variablelist>
 <varlistentry><term><option>--prefix=<replaceable>directoryname</replaceable></option></term>
-<listitem><para>This option, which is standard to the
-<application>configure</application> scripts of most software,
-determines where Nmap and its components
-are installed.  By default, the prefix is
-<filename>/usr/local</filename>, meaning that
-<application>nmap</application> is installed in <filename>/usr/local/bin</filename>, the
-man page (<filename>nmap.1</filename>) is installed in
-<filename>/usr/local/man/man1</filename>, and the data files
-(<filename>nmap-os-db</filename>,
-<filename>nmap-services</filename>, <filename>nmap-service-probes</filename>,
-etc.) are installed under <filename>/usr/local/share/nmap</filename>.
-If you only wish to change the path of certain components, use the
-options <option>--bindir</option>, <option>--datadir</option>, and/or
-<option>--mandir</option>.  An example usage of
-<option>--prefix</option> would be to install
-Nmap in my account as an unprivileged user.
-I would run <command>./configure --prefix=<replaceable>/home/fyodor</replaceable></command>.  Nmap creates subdirectories like <filename>/home/fyodor/man/man1</filename> in the install stage if they do not already exist.</para></listitem></varlistentry>
+<listitem><para>This option, which is standard to the <application>configure</application> scripts of most software, determines where Nmap and its components are installed.  By default, the prefix is
+<filename>/usr/local</filename>
+<application>nmap</application> is installed in <filename>/usr/local/bin</filename>
+❯ man page (<filename>nmap.1</filename>) is installed in
+<filename>/usr/local/man/man1</filename>, '&&' <fs class="dat">डेटा फाइल</fs>
+(<filename>nmap-os-db</filename>\n
+<filename>nmap-services</filename>,,;;
+<filename>nmap-service-probes</filename>break;<br>etc.)
+are installed under <filename>/usr/local/share/nmap</filename>Et Al.
+- if only to change path of components:
+<option>--bindir</option>,,
+<option>--datadir</option>
+<option>--mandir</option> 
+<option>--prefix</option> 
++ An example usage would be to install
+❯ nmap --prefix nmap in /usr/acc/h4ck3d!/..$
+<br></br></br>
+<command>./configure --prefix=<replaceable>/home/fyodor</replaceable></command>.  Nmap creates subdirectories like <filename>/home/fyodor/man/man1</filename> in the install stage if they do not already exist.</para></listitem></varlistentry>
 <varlistentry><term><option>--without-zenmap</option></term>
 <listitem><indexterm><primary>Zenmap</primary><secondary>disabling</secondary></indexterm><para>This option prevents the Zenmap graphical frontend from being installed.  Normally the build system checks your system for requirements such as the Python scripting language and then installs Zenmap if they are all available.</para></listitem></varlistentry>
 <varlistentry><term><option>--with-openssl=<replaceable>directoryname</replaceable></option></term>
