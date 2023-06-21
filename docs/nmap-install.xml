@@ -415,25 +415,32 @@ and the include files to be in <filename><replaceable>directoryname</replaceable
 - For important library and header files.
 - This should never be necessary, except that some people put such libraries in 
 <filename>/usr/local</filename> 
-Without configuring their compiler to find them.  
-If you are one of those people, use this option.
-</para></listitem></varlistentry>
-</variablelist>
-</sect2>
-<sect2 id="inst-env"><title>Environment Variables</title>
-<indexterm><primary>environment variables</primary><secondary>in configuration</secondary></indexterm>
-<para>The <filename>configure</filename> script is sensitive to several environment variables. These are some of those variables and their effects.</para>
+Without configuring their compiler to find them. If you are one of those people, use this option<
+</para></listitem></varlistentry></variablelist></sect2>
+<br>,,</br>
+<sect2 id="inst-env"><title>/env/var/</title>
+<indexterm><primary>environment variables</primary>
+<secondary>in configuration</secondary></indexterm>
+<para> ➜ in /.config/env/vars/../</para>
+<filename>configure</filename>
+<br>
+➜ script is sensitive to several environment variables.
+➜ These are some of those variables and their effects.
+</br>
 <variablelist>
 <varlistentry>
-<term>
+<term>暗号 | CFLAGS | CXXFLAGS | LDFLAGS _;;""
 <indexterm><primary><envar>CFLAGS</envar></primary></indexterm>
 <indexterm><primary><envar>CXXFLAGS</envar></primary></indexterm>
 <indexterm><primary><envar>LDFLAGS</envar></primary></indexterm>
-<envar>CFLAGS</envar></term><term><envar>CXXFLAGS</envar></term><term>LDFLAGS</term>
-<listitem><para>Extra options to pass to the C compiler, C++ compiler, and linker, respectively. Because parts of Nmap are written in C and others in C++, it's best to use both <envar>CFLAGS</envar> and <envar>CXXFLAGS</envar> if you're going to use one of them.</para></listitem>
-</varlistentry>
-<varlistentry>
-<term>
+<envar>CFLAGS</envar></term>
+<term><envar>CXXFLAGS</envar></term><term>LDFLAGS</term>
+<listitem><para>pass-the-hash+ options...
+C compiler, C++ compiler, and linker,,
+- Because, parts of Nmap are written in C and others in C++.
++ it's best to use both 
+<envar>CFLAGS</envar> '&&' <envar>CXXFLAGS</envar></para>usage</listitem></varlistentry>
+<varlistentry><term>
 <indexterm><primary><envar>LINGUAS</envar> environment variable</primary></indexterm>
 <indexterm><primary>translations</primary><secondary>of manual pages</secondary></indexterm>
 <indexterm><primary>foreign languages</primary><see>translations</see></indexterm>
