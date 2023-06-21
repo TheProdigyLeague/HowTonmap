@@ -353,26 +353,71 @@ are installed under <filename>/usr/local/share/nmap</filename>Et Al.
 + An example usage would be to install
 ❯ nmap --prefix nmap in /usr/acc/h4ck3d!/..$
 <br></br></br>
-<command>./configure --prefix=<replaceable>/home/fyodor</replaceable></command>.  Nmap creates subdirectories like <filename>/home/fyodor/man/man1</filename> in the install stage if they do not already exist.</para></listitem></varlistentry>
+<command>./configure --prefix=<replaceable>/home/fyodor</replaceable></command>
+['!']: Nmap creates subdirectories
+<filename>/home/fyodor/man/man1</filename> 
+in Install Stage if they do not already exist...</para></listitem></varlistentry>
 <varlistentry><term><option>--without-zenmap</option></term>
-<listitem><indexterm><primary>Zenmap</primary><secondary>disabling</secondary></indexterm><para>This option prevents the Zenmap graphical frontend from being installed.  Normally the build system checks your system for requirements such as the Python scripting language and then installs Zenmap if they are all available.</para></listitem></varlistentry>
+<listitem><indexterm><primary>Zenmap</primary><secondary>disabling</secondary></indexterm>
+(disabled GUI...)
+<para>यह विकल्प ज़ेनमैप ग्राफिकल फ्रंटेंड को स्थापित होने से रोकता है। आम तौर पर बिल्ड सिस्टम आपके सिस्टम को पायथन स्क्रिप्टिंग भाषा जैसी आवश्यकताओं के लिए जाँचता है और यदि वे सभी उपलब्ध हैं तो ज़ेनमैप स्थापित करता है।</para></listitem></varlistentry>
 <varlistentry><term><option>--with-openssl=<replaceable>directoryname</replaceable></option></term>
 <listitem>
 <indexterm><primary>OpenSSL</primary><secondary>disabling</secondary></indexterm>
-<para>The version detection system and Nmap Scripting Engine are able to probe SSL-encrypted services using the free OpenSSL libraries.  Normally the Nmap build system looks for these libraries on your system and include this capability if they are found.  If they are in a location your compiler does not search for by default, but you still want them to be used, specify <option>--with-openssl=<replaceable>directoryname</replaceable></option>.  Nmap then looks in <replaceable>directoryname</replaceable>/libs for the OpenSSL libraries themselves and <replaceable>directoryname</replaceable>/include for the necessary header files.  Specify <option>--without-openssl</option> to disable SSL entirely.</para>
+<para>The version detection system and Nmap Scripting Engine are able to probe SSL-encrypted services using OpenSSL libraries. 
++ Normally, Nmap build system looks for these libraries on your system and include this capability if they are found.  
++ If they are in a location your compiler does not search for by default, you still want them to be used.
+<option>--with-openssl=<replaceable>directoryname</replaceable></option>
+Nmap then looks in,,
+<replaceable>directoryname</replaceable>/libs for the OpenSSL libraries themselves,,
+<replaceable>directoryname</replaceable>/include for necessary header files.
+<option>--without-openssl</option> to disable SSL entirely.</para>
 <indexterm><primary>OpenSSL</primary><secondary>packages required for</secondary></indexterm>
-<para>Some distributions ship with user OpenSSL libraries that allow running programs, but not the developer files needed to compile them. Without these developer packages, Nmap will not have OpenSSL support. On Debian-based systems<indexterm><primary>Debian</primary></indexterm>, install the <literal>libssl-dev</literal> package.<indexterm><primary><literal>libssl-dev</literal> package</primary></indexterm> On Red Hat&ndash;based systems,<indexterm><primary>Red Hat</primary></indexterm> install <literal>openssl-devel</literal>.<indexterm><primary><literal>openssl-devel</literal></primary></indexterm>
-</para>
-</listitem></varlistentry>
+<para>Some distributions ship with user OpenSSL libraries that allow running programs, but not the developer files needed to compile them. Without these developer packages, Nmap will not have OpenSSL support. On Debian-based systems<indexterm><primary>Debian</primary></indexterm>install<literal>libssl-dev</literal>package.<indexterm><primary><literal>libssl-dev</literal>package</primary></indexterm>_Red_Hat&ndash;based systems,<indexterm><primary>Red-Hat</primary></indexterm> 
+| install || <literal>openssl-devel</literal>
+<indexterm><primary><literal>openssl-devel</literal></primary></indexterm></para></listitem></varlistentry>
 <varlistentry><term><option>--with-libpcap=<replaceable>directoryname</replaceable></option></term>
-<listitem><para>Nmap uses the <ulink url="http://www.tcpdump.org">Libpcap library</ulink> for capturing raw IP packets.  Nmap normally looks for an existing copy of Libpcap on your system and uses that if the version number and platform is appropriate.  Otherwise Nmap includes its own recent copy of Libpcap (with some local modifications described in <filename>libpcap/NMAP_MODIFICATIONS</filename> in the Nmap source directory).  If you wish to force Nmap to link with your own Libpcap, pass the option <option>--with-libpcap=<replaceable>directoryname</replaceable></option> to <application>configure</application>.  Nmap then expects the Libpcap library to be in <filename><replaceable>directoryname</replaceable>/lib/libpcap.a</filename> and the include files to be in <filename><replaceable>directoryname</replaceable>/include</filename>.  Nmap will always use the version of Libpcap included in its tarball if you specify <option>--with-libpcap=included</option>.
-</para></listitem></varlistentry>
+<listitem><para>Nmap uses<ulink url="http://www.tcpdump.org">Libpcap library</ulink> for capturing raw IP packets.  Nmap normally looks for an existing copy of Libpcap on your system and uses that if the version number and platform is appropriate.  Otherwise Nmap includes its own recent copy of Libpcap (with some local modifications described in <filename>libpcap/NMAP_MODIFICATIONS</filename>and in the Nmap source directory).
+- If you wish, force Nmap to link your own Libpcap, then
+<pass-the-hash><option>--with-libpcap=dir_name</option></pass-the-hash>
+❯ <application>configure</application>
+❯ nmap then expects Libpcap library to be in fs
+<filename><replaceable>directoryname</replaceable>/lib/libpcap.a/</filename>
+and #include \files to be in
+<filename><replaceable>directoryname</replaceable>/include</filename>
+❯ Nmap will always use version of Libpcap included in its tarball
+<option>--with-libpcap=included</option></para></listitem></varlistentry>
 <varlistentry><term><option>--with-libpcre=<replaceable>directoryname</replaceable></option></term>
-<listitem><para>PCRE is a Perl-compatible regular expression library available from <ulink url="http://www.pcre.org" />.  Nmap normally looks for a copy on your system, and then falls back to its own copy if that fails.  If your PCRE library is not in your compiler's standard search path, Nmap probably will not find it.  In that case you can tell Nmap where it can be found by specifying the option <option>--with-libpcre=<replaceable>directoryname</replaceable></option> to <application>configure</application>.  Nmap then expects the library files to be in <filename><replaceable>directoryname</replaceable>/lib</filename> and the include files to be in <filename><replaceable>directoryname</replaceable>/include</filename>.  In some cases, you may wish to use the PCRE libraries included with Nmap in preference to those already on your system.  In that case, specify <option>--with-libpcre=included</option>.</para></listitem></varlistentry>
+<listitem><para>PCRE is a Perl-compatible regular expression library available
+<ulink url="http://www.pcre.org"/>
+<br></br>
+▶ Nmap normally looks for a copy on your system, and then falls back to its own copy if that fails.
+▶ If your PCRE library is not in your compiler's standard search path, Nmap probably will not find it.
+▶ In that case you can tell Nmap where it can be found by specifying the option 
+<option>--with-libpcre=<replaceable>directoryname</replaceable></option>
+<application>configure</application>
+Nmap then expects the library files to be in <filename><replaceable>directoryname</replaceable>/lib</filename> and include files to be in <filename><replaceable>directoryname</replaceable>/include</filename>
+▶ In some cases, you may wish to use the PCRE libraries included with Nmap in preference to those already on your system.
+▶ In that case... 
+<option>--with-libpcre=included</option>.</para></listitem></varlistentry>
 <varlistentry><term><option>--with-libdnet=<replaceable>directoryname</replaceable></option></term>
-<listitem><para>Libdnet is an excellent networking library that Nmap uses for sending raw ethernet frames. The version in the Nmap tree is heavily modified (particularly the Windows code), so the default is to use that included version.  If you wish to use a version already installed on your system instead, specify <option>--with-libdnet=<replaceable>directoryname</replaceable></option>.  Nmap then expects the library files to be in <filename><replaceable>directoryname</replaceable>/lib</filename> and the include files to be in <filename><replaceable>directoryname</replaceable>/include</filename>.</para></listitem></varlistentry>
+<listitem><para>Libdnet is an excellent networking library that Nmap uses for sending raw ethernet frames. 
+- The version in the Nmap tree is heavily modified (particularly the Windows code)
+- So the default is to use that included version.  
+- If you wish to use a version already installed on your system instead, specify <option>--with-libdnet=<replaceable>directoryname</replaceable></option>
+Nmap then expects the library files to be in <filename><replaceable>directoryname</replaceable>/lib</filename> 
+and the include files to be in <filename><replaceable>directoryname</replaceable>
+/include</filename>.</para></listitem></varlistentry>
 <varlistentry><term><literal>--with-localdirs</literal></term>
-<listitem><para>This simple option tells Nmap to look in <filename>/usr/local/lib</filename> and <filename>/usr/local/include</filename> for important library and header files.  This should never be necessary, except that some people put such libraries in <filename>/usr/local</filename> without configuring their compiler to find them.  If you are one of those people, use this option.</para></listitem></varlistentry>
+<listitem><para>This simple option tells Nmap to look in 
+<filename>/usr/local/lib</filename>
+<filename>/usr/local/include</filename> 
+- For important library and header files.
+- This should never be necessary, except that some people put such libraries in 
+<filename>/usr/local</filename> 
+Without configuring their compiler to find them.  
+If you are one of those people, use this option.
+</para></listitem></varlistentry>
 </variablelist>
 </sect2>
 <sect2 id="inst-env"><title>Environment Variables</title>
