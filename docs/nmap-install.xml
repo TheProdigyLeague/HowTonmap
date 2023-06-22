@@ -434,28 +434,36 @@ Without configuring their compiler to find them. If you are one of those people,
 <indexterm><primary><envar>CXXFLAGS</envar></primary></indexterm>
 <indexterm><primary><envar>LDFLAGS</envar></primary></indexterm>
 <envar>CFLAGS</envar></term>
-<term><envar>CXXFLAGS</envar></term><term>LDFLAGS</term>
+<term><envar>CXXFLAGS</envar></term>
+<term>LDFLAGS</term>
 <listitem><para>pass-the-hash+ options...
 C compiler, C++ compiler, and linker,,
 - Because, parts of Nmap are written in C and others in C++.
-+ it's best to use both 
++ it's best to use both
 <envar>CFLAGS</envar> '&&' <envar>CXXFLAGS</envar></para>usage</listitem></varlistentry>
-<varlistentry><term>
-<indexterm><primary><envar>LINGUAS</envar> environment variable</primary></indexterm>
-<indexterm><primary>translations</primary><secondary>of manual pages</secondary></indexterm>
+<varlistentry><term><indexterm><primary><envar>LINGUAS</envar>environment variable</primary></indexterm>
+<indexterm><primary>translations</primary>
+<secondary>of manual pages</secondary></indexterm>
 <indexterm><primary>foreign languages</primary><see>translations</see></indexterm>
 <envar>LINGUAS</envar></term>
-<listitem><para>By default, <command>make install</command> will install all the available translations of the Nmap man page in addition to the English one. The <envar>LINGUAS</envar> environment variable can control which translations are installed. Its value should be a space-separated list of ISO language codes. For example, to install only the French and German translations, you might run <command>LINGUAS="fr de" make install</command>. To disable the installation of all translations, run configure with the <option>--disable-nls</option> option or set <envar>LINGUAS</envar> to the empty string.</para></listitem>
-</varlistentry>
-</variablelist>
-</sect2>
-<sect2 id="inst-compilation-probs"><title>If You Encounter Compilation Problems</title>
+<listitem><para>By default,
+<command>make install</command> will install all the available translations of the Nmap man page in addition to the English one. The <envar>LINGUAS</envar> environment variable can control which translations are installed. Its value should be a space-separated list of ISO language codes. For example, to install only the French and German translations, you might run <command>LINGUAS="fr de" make install</command>. To disable the installation of all translations, run configure with the <option>--disable-nls</option> option or set <envar>LINGUAS</envar> to the empty string.</para></listitem></varlistentry></variablelist></sect2>
+<br></br>
+<sect2 id="inst-compilation-probs"><title>If You Encounter Compilation Problems...</title>
 <indexterm><primary>compilation</primary><secondary>problems with</secondary></indexterm>
-<para>In an ideal world, software would always compile perfectly (and quickly) on every system.  Unfortunately, society has not yet reached that state of nirvana.  Despite all our efforts to make Nmap portable, compilation issues occasionally arise.  Here are some suggestions in case the source distribution compilation fails.</para>
-<variablelist>
-<varlistentry><term>Upgrade to the latest Nmap</term>
-<listitem><para>Check <ulink url="https://nmap.org/download.html" /> to make sure you are using the latest version of Nmap.  The problem may have already been fixed.</para></listitem></varlistentry>
-<varlistentry><term>Read the error message carefully</term>
+<br><para>
+Идеальный мир
+- software would always compile perfectly (and quickly) on every system.
+- Unfortunately, society has not yet reached that state of nirvana.
+- Despite all our efforts to make Nmap portable. 
++ Compilation issues occasionally arise. 
++ Here are some suggestions in case the source distribution compilation fails...
+</para></br>
+<variablelist><varlistentry><term>Upgrade to the latest Nmap!</term>
+<listitem><para>Check<ulink url="https://nmap.org/download.html"/>
+N  e  t  h  e  r  |  |  M  a  p  p  e  r  _;;<br></br>
+の最新バージョンにアップグレードしてください。問題解決！</para></listitem></varlistentry>
+<varlistentry><term> ❯ Read the error message carefully</term>
 <listitem><para>Scroll up in the output screen and examine the error
 messages given when commands fail.  It is often best to find the first
 error message, as that often causes a cascade of further errors.  Read
@@ -463,49 +471,38 @@ the error message carefully, as it could indicate a system problem
 such as low disk space or a broken compiler.  Users with programming
 skills may be able to resolve a wider range of problems themselves.
 If you make code changes to fix the problem, please send a patch
-(created with <command>diff -uw <replaceable>oldfile</replaceable> <replaceable>newfile</replaceable></command>) and any details about your problem and platform to <citetitle>nmap-dev</citetitle> as described in <xref linkend="man-bugs"/>.  Integrating the change into the base Nmap distribution allows many other users to benefit, and prevents you from having to make the changes with each new Nmap version.</para></listitem></varlistentry>
-<varlistentry><term>Ask Google and other Internet resources</term>
-<listitem><para>Try searching for the exact error message on Google or other search engines.  You might also want to browse recent activity on the Nmap development
-(<citetitle>nmap-dev</citetitle>)<indexterm><primary><citetitle>nmap-dev</citetitle> mailing list</primary></indexterm>
+<command>diff -uw <replaceable>oldfile</replaceable> <replaceable>newfile</replaceable></command>
+<citetitle>nmap-dev</citetitle>
+As described in<xref linkend="man-bugs"/>
++ Integrating change into base Nmap distribution 
++ Allows many other users to benefit and prevents you from having to make changes with each new Nmap version.</para></listitem></varlistentry>
+(<citetitle>nmap-dev</citetitle>);
+<indexterm><primary><citetitle>nmap-dev</citetitle>mailing list</primary></indexterm>
 list&mdash;archives and a search interface are available at <ulink url="https://seclists.org" />.</para></listitem></varlistentry>
 <varlistentry><term>Ask <citetitle>nmap-dev</citetitle></term>
-<listitem><para>If none of your research leads to a solution, try
-sending a report to the Nmap development
-(<citetitle>nmap-dev</citetitle>) mailing list, as described in
+<listitem><para>If none of your research leads to a solution, try sending a report to the Nmap development
+(<citetitle>nmap-dev</citetitle>);
 <xref linkend="man-bugs"/>.</para></listitem></varlistentry>
 <varlistentry><term>Consider binary packages</term>
-<listitem>
-<indexterm><primary>binary packages</primary></indexterm>
-<para>Binary packages of Nmap are available on most platforms and are
-usually easy to install.  The downsides are that they may not be as
-up-to-date and you lose some of the flexibility of self-compilation.
-Later sections of this chapter describe how to find binary packages on
-many platforms, and even more are available via Internet searching.
-Obviously you should only install binary packages from reputable
-sources.</para></listitem></varlistentry>
-</variablelist>
-</sect2>
-</sect1>
+<listitem><indexterm><primary>binary packages</primary></indexterm>
+<para>Binary packages of Nmap are available on most platforms and are usually easy to install.  
++ The downsides are that they may not be as up-to-date and you lose some of the flexibility of self-compilation.
++ Later sections of this chapter describe how to find binary packages on many platforms, and even more are available via Internet searching.
++ Only install binary packages from reputable sources.</para></listitem></varlistentry></variablelist></sect2></sect1>
 <sect1 id="inst-linux"><title>Linux Distributions</title>
-<para>
-Linux is the most popular platform for running Nmap.  In one user
-survey, 86% said that Linux was at least one of the platforms on which
-they run Nmap.  The first release of Nmap in
-1997 <emphasis>only</emphasis> ran on Linux.</para>
-<para>Linux users can choose between a source code install or using
-binary packages provided by their distribution or Insecure.Org.  The
-binary packages are generally quicker and easier to install, and are
-often slightly customized to use the distribution's standard directory
-paths and such.  These packages also allow for consistent management
-in terms of upgrading, removing, or surveying software on the system.
-A downside is that packages created by the distributions are
-necessarily behind the Nmap.Org source releases.  Most Linux
-distributions keep their Nmap package
-relatively current, though a few are way out of date.  Choosing the
-source install allows for more flexibility in determining how Nmap is
-built and optimized for your system.  To build Nmap from source, see
-<xref linkend="inst-source" />.  Here are simple package instructions
-for the most common distributions.</para>
+<para> Linux is the most popular platform for running Nmap.
++ In one user survey, 86% said that Linux was at least one of the platforms on which they run Nmap.
++ The first release of Nmap in 1997 <emphasis>only</emphasis> ran on Linux.</para>
+$ sudo pip install /bin/pkg/distro/
+$ sudo \custom \distro from /standard/dir/PATH
+$ man upg rm ,, srv /os/sys/
+~#<para> 
+- A downside is that packages created by the distributions are necessarily behind the Nmap.Org source releases.
++ Most Linux distributions keep their Nmap package relatively current, though a few are way out of date.
++ Choosing the source install allows for more flexibility in determining how Nmap is built and optimized for your system.  
+! To build Nmap from source, see
+<xref linkend="inst-source" />.Here are simple package instructions for the most common distributions.</para>
+
 <sect2 id="inst-rpm"><title>RPM-based Distributions (Red Hat, Mandrake, SUSE, Fedora)</title>
 <indexterm><primary>RPM</primary></indexterm>
 <indexterm><primary>Linux</primary><secondary>installing on, with RPM</secondary>></indexterm>
@@ -513,21 +510,24 @@ for the most common distributions.</para>
 <indexterm><primary>Mandrake (Linux distribution)</primary><secondary>installing on, with RPM</secondary></indexterm>
 <indexterm><primary>SUSE (Linux distribution)</primary><secondary>installing on, with RPM</secondary></indexterm>
 <indexterm><primary>Fedora (Linux distribution)</primary><secondary>installing on, with RPM</secondary></indexterm>
-<para>I build RPM packages for every release of Nmap and post them to
-the Nmap download page at <ulink url="https://nmap.org/download.html" />.
-I build two packages:  The <literal>nmap</literal> package contains
-just the command-line executable and data files, while the
-<literal>zenmap</literal> package contains the optional <application>Zenmap</application>
-graphical frontend (see <xref linkend="zenmap"/>).
-The <literal>zenmap</literal> package requires
-that the <literal>nmap</literal> package be installed first.</para>
+<para>I build RPM packages for every release of Nmap and post them tothe Nmap download page at
+ <ulink url="https://nmap.org/download.html" />.
+    I build two packages:  The <literal>nmap</literal> package contains just the command-line executable and data files, while the
+      <literal>zenmap</literal> package contains the optional <application>Zenmap</application>
+          graphical frontend (see <xref linkend="zenmap"/>).
+            The <literal>zenmap</literal> package requires that the <literal>nmap</literal> package be installed first.</para>
 <para>
-<indexterm><primary>RPM</primary><secondary>installing from</secondary></indexterm>
-Installing via <application>RPM</application> is quite easy&mdash;it
-even downloads the package for you when given the proper URLs.  The following example downloads and installs Nmap 4.68, including the frontend.  Of course you should use the latest version at the download site above instead.  Any existing RPM-installed versions are
-upgraded. <xref linkend="ex-nmap-install-from-rpms" xrefstyle="select: label nopage" /> demonstrates this installation process.</para>
-<example id="ex-nmap-install-from-rpms"><title>Installing Nmap from binary RPMs</title>
-<screen>
+<indexterm><primary>远程包管理器</primary><secondary>installing from</secondary></indexterm>
+  <Installing class="Remote_Package_Manager"><div class="RPM">rpmbuild</div>
+    <br></br></Installing>
+      <via class="RPM">pkg man</via>
+        <application>RPM</application>&mdash;it downloads Package for the proper URLs.
+          + The following example downloads and installs Nmap 4.68:
+            note: including the frontend.
+              - Use the latest version at download site above instead.
+                + Any existing RPM-installed versions are upgraded. <xref linkend="ex-nmap-install-from-rpms" xrefstyle="select: label nopage" /> demonstrates this installation process.</para>
+      <example id="ex-nmap-install-from-rpms"><title>Installing Nmap from binary RPMs</title>
+      <screen>
 # <userinput>rpm -vhU https://nmap.org/dist/nmap-4.68-1.i386.rpm</userinput>
 Retrieving https://nmap.org/dist/nmap-4.68-1.i386.rpm
 Preparing...                ########################################### [100%]
@@ -536,9 +536,18 @@ Preparing...                ########################################### [100%]
 Retrieving https://nmap.org/dist/zenmap-4.68-1.noarch.rpm
 Preparing...                ########################################### [100%]
    1:zenmap                 ########################################### [100%]
-</screen>
-</example>
-<para>As the filenames above imply, these binary RPMs were created for normal PCs (x86 architecture).<indexterm><primary>x86 architecture</primary></indexterm>  I also distribute x86_64<indexterm><primary>x86_64 architecture</primary></indexterm> binaries for 64-bit Linux users.  These binaries won't work for the relatively few Linux users on other platforms such as SPARC, Alpha, or PowerPC.  They also may refuse to install if your library versions are sufficiently different from what the RPMs were initially built on.  One option in these cases would be to find binary RPMs prepared by your Linux vendor for your specific distribution.  The original install CDs or DVD are a good place to start.  Unfortunately, those may not be current or available.  Another option is to install Nmap from source code as described previously, though you lose the binary package maintenance consistency benefits.  A third option is to build and install your own binary RPMs from the source RPMs distributed from the download page above.  <xref linkend="ex-nmap-install-from-srpms" xrefstyle="select: label nopage" /> demonstrates this technique with Nmap 4.68.</para>
+</screen></example>~
+<para>These binary RPMs were created for normal PCs (x86 architecture).<indexterm><primary>x86 architecture</primary></indexterm>
+  + also distribute x86_64<indexterm><primary>x86_64 architecture</primary></indexterm>
+  + binaries for 64-bit Linux users.
+  + These binaries won't work for the relatively few Linux users on other platforms such as SPARC, Alpha, or PowerPC.
+  + They also may refuse to install if your library versions are sufficiently different from what the RPMs were initially built on.
+  + One option in these cases would be to find binary RPMs prepared by your Linux vendor for your specific distribution.
+  + The original install CDs or DVD are a good place to start.
+  - Unfortunately, those may not be current or available.
+  - Another option is to install Nmap from source code as described previously, though you lose the binary package maintenance consistency benefits.
+  - A third option is to build and install your own binary RPMs from the source RPMs distributed from the download page above.
+    <xref linkend="ex-nmap-install-from-srpms" xrefstyle="select: label nopage" /> demonstrates this technique with Nmap 4.68.</para>
 <example id="ex-nmap-install-from-srpms"><title>Building and installing Nmap from source RPMs</title>
 <screen>
 &gt; <userinput>rpmbuild --rebuild https://nmap.org/dist/nmap-4.68-1.src.rpm</userinput>
@@ -546,18 +555,15 @@ Preparing...                ########################################### [100%]
 Wrote: /home/fyodor/rpmdir/RPMS/i386/nmap-4.68-1.i386.rpm
 [ cut ]
 &gt; <userinput>su</userinput>
-Password: 
+Password:
 # <userinput>rpm -vhU /home/fyodor/rpmdir/RPMS/i386/nmap-4.68-1.i386.rpm</userinput>
 Preparing...                ########################################### [100%]
    1:nmap                   ########################################### [100%]
 #
-</screen>
-</example>
-<para>It is not necessary to rebuild Zenmap in this fashion because the
-Zenmap RPM is architecture-independent (<quote>noarch</quote>). For that
-reason there are no Zenmap source RPMs.</para>
-<para>Removing RPM packages is as easy as <command>rpm -e nmap zenmap</command>.</para>
-</sect2>
+</screen></example>
+<para>It is not necessary to rebuild Zenmap in this fashion because the Zenmap RPM is architecture-independent (<quote>noarch</quote>). For that reason there are no Zenmap source RPMs.</para>
+<para>Removing RPM packages:
+<command>rpm -e nmap zenmap</command>.</para></sect2>
 <sect2 id="inst-yum"><title>Updating Red Hat, Fedora, Mandrake, and Yellow Dog Linux with Yum</title>
 <indexterm><primary>Yum</primary></indexterm>
 <indexterm><primary>Linux</primary><secondary>installing on, with Yum</secondary></indexterm>
@@ -582,11 +588,12 @@ for the latest version of Nmap on these systems, try the RPMs we
 distribute as described in the previous section.  But if our
 RPMs aren't compatible with your system or you are in a great hurry,
 installing Nmap from Yum is usually as simple as executing
-<command>yum install nmap</command> (run <command>yum install nmap zenmap</command>
-if you would like the GUI too, though some distributions don't yet package Zenmap).  Yum takes care of contacting a
-repository on the Internet, finding the appropriate package for
-your architecture, and then installing it along with any necessary
-dependencies.  This is shown (edited for brevity) in <xref
+<command>yum install nmap</command> 
+  (run <command>yum install nmap zenmap</command> if you would like the GUI too) 
+    + Yum takes care of contacting a repository on the Internet
+    + finding the appropriate package for our architecture
+    + then installing it along with any necessary dependencies.  
+This is shown (edited for brevity) in <xref
 linkend="ex-nmap-install-from-yum" xrefstyle="select: label nopage" />.  You can later perform
 <command>yum update</command> to install available updates to Nmap and other
 packages in the repository.</para>
