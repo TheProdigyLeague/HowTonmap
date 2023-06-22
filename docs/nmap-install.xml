@@ -753,36 +753,32 @@ in Source Tarball
 <filename>nmap-<replaceable>version</replaceable>-setup.exe</filename>
 (where <replaceable>version</replaceable> is the version number of the specific release).
 ~
+<br>
 Most Nmap users choose this option since it is so easy.
 Another advantage of the self-installer is that it provides the option to install the Zenmap GUI and other tools.
 Simply run the installer file and let it walk you through panels for choosing an install path and installing Npcap.
-The installer was created with the open-source <ulink
-url="http://nsis.sourceforge.io/Main_Page">Nullsoft Scriptable
-Install System</ulink>.  After it completes, read <xref
-linkend="inst-win-exec"/> for instructions on executing Nmap on the
-command-line or through Zenmap.</para> </sect2>
+The installer was created with the open-source 
+<ulink url="http://nsis.sourceforge.io/Main_Page">Nullsoft Scriptable Install System</ulink>.  
+After it completes, read 
+<xref linkend="inst-win-exec"/> for instructions on executing Nmap on the command-line or through Zenmap. </para> </sect2>
+</br>
 <sect2 id="inst-win-zip"><title>Command-line Zip Binaries</title>
 <indexterm><primary>Windows</primary><secondary>zip binaries</secondary></indexterm>
 <note><para>Most users prefer installing Nmap with the self-installer discussed previously.</para></note>
-<para>Every stable Nmap release comes with Windows
-command-line binaries and associated files in a Zip archive.  No
-graphical interface is included, so you need to run
-<literal>nmap.exe</literal> from a DOS/command window.  Or you can
-download and install a superior command shell such as those included
-with the free
-Cygwin<indexterm><primary>Cygwin</primary></indexterm>
-system available from <ulink url="https://www.cygwin.com" />.  Here are the step-by-step instructions for installing and executing the Nmap .zip binaries.</para>
+<para>Every stable Nmap release comes with Windows command-line binaries and associated files in a Zip archive.
+No graphical interface is included, so you need to run
+<literal>nmap.exe</literal> from a DOS/command window. Or you can download and install a superior command shell such as those included with Cygwin
+<indexterm><primary>Cygwin</primary></indexterm>
++ system available from 
+<ulink url="https://www.cygwin.com" />.  ! Here are the step-by-step instructions for installing and executing the Nmap .zip binaries.</para>
+~
 <sect3 id="inst-win-zip-install"><title>Installing the Nmap zip binaries</title>
 <orderedlist>
 <listitem><para>Download the .zip binaries from <ulink url="https://nmap.org/download.html" />.</para></listitem>
-<listitem><para>Extract the zip file into the directory you want
-Nmap to reside in.  An example would be <filename>C:\Program
-Files</filename>.  A directory called
-<filename>nmap-<replaceable>version</replaceable></filename> should be created, which includes
-the Nmap executable and data files.
-</para></listitem>
-<listitem><para>For improved performance, apply the Nmap Registry
-changes discussed previously.</para></listitem>
+<listitem><para>Extract the zip file into the directory you want Nmap to reside in.
+An example would be <filename>C:\Program Files</filename>.  
+A directory called <filename>nmap-<replaceable>version</replaceable></filename> should be created, which includes the Nmap executable and data files. </para></listitem>
+<listitem><para>For improved performance, apply the Nmap Registry changes discussed previously.</para></listitem>
 <listitem><para>Nmap requires the free Npcap packet capture library.
 We include a recent Npcap installer which is available in the zip file
 as <filename>npcap-<replaceable>version</replaceable>.exe</filename>,
