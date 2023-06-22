@@ -593,13 +593,14 @@ installing Nmap from Yum is usually as simple as executing
     + Yum takes care of contacting a repository on the Internet
     + finding the appropriate package for our architecture
     + then installing it along with any necessary dependencies.  
-This is shown (edited for brevity) in <xref
-linkend="ex-nmap-install-from-yum" xrefstyle="select: label nopage" />.  You can later perform
-<command>yum update</command> to install available updates to Nmap and other
-packages in the repository.</para>
-<example id="ex-nmap-install-from-yum"><title>Installing Nmap from a system Yum repository</title>
+$ print("edit"): 
+  <xref linkend="ex-nmap-install-from-yum" xrefstyle="select: label nopage"/>.
+    + You can later perform: 
+      <command>yum update</command> to install available updates to Nmap and other packages in the repository.</para>
+        <example id="ex-nmap-install-from-yum">
+<title>Installing Nmap from a system Yum repository</title>
 <screen>
-flog~# <userinput>yum install nmap</userinput>
+$ flog~# <userinput>yum install nmap</userinput>
 <![CDATA[Setting up Install Process
 Parsing package install arguments
 Resolving Dependencies
@@ -621,17 +622,17 @@ Remove       0 Package(s)
 ~
 Total download size: 1.0 M
 Is this ok [y/N]: y
+...
 Downloading Packages:
-(1/1): nmap-4.52-1.fc8.x8 100% |=========================| 1.0 MB    00:02     
-Running Transaction Test
-Transaction Test Succeeded
-Running Transaction
-  Installing: nmap                         ######################### [1/1] 
+(1/1): nmap-4.52-1.fc8.x8 100% |=========================| 1.0 MB    00:02
+Running Transaction Test...
+Transaction Test Succeed Successfully  !  !  !  _
+Running Transaction...
+  Installing: nmap                         ######################### [1/1]
 Installed: nmap.x86_64 2:4.52-1.fc8
-Complete!
-]]>...</screen>
-</example>
-</sect2>
+Complete Successfully !
+__]]>...</screen>"Quit"</example></sect2>Done!
+~
 <sect2 id="inst-debian"><title>Debian Linux and Derivatives such as Ubuntu</title>
 <indexterm><primary>Linux</primary><secondary>installing on, with <application>apt-get</application></secondary></indexterm>
 <indexterm><primary>Debian, installing on</primary></indexterm>
@@ -640,7 +641,8 @@ Complete!
 <indexterm><primary>Jones, LaMont</primary></indexterm>
 maintaining the Nmap <literal>deb</literal>
 packages, including keeping them reasonably up-to-date.  The proper
-upgrade/install command is <command>apt-get install nmap</command>.
+upgrade/install command is 
+<command>apt-get install nmap</command>.
 <indexterm><primary><application>apt-get</application></primary></indexterm>
 This works for Debian derivatives such as Ubuntu too.  Information on
 the latest Debian <quote>stable</quote> Nmap package is available at <ulink
