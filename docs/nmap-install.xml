@@ -639,120 +639,128 @@ __]]>...</screen>"Quit"</example></sect2>Done!
 <indexterm><primary>Ubuntu, installing on</primary></indexterm>
 <para>LaMont Jones
 <indexterm><primary>Jones, LaMont</primary></indexterm>
-maintaining the Nmap <literal>deb</literal>
-packages, including keeping them reasonably up-to-date.  The proper
-upgrade/install command is 
-<command>apt-get install nmap</command>.
+- maintaining the Nmap <literal>deb</literal> packages, including keeping them reasonably up-to-date.
+  <upg/>
+  <install class="cmd">example</install>
+    <command>apt-get install nmap</command>.
 <indexterm><primary><application>apt-get</application></primary></indexterm>
-This works for Debian derivatives such as Ubuntu too.  Information on
-the latest Debian <quote>stable</quote> Nmap package is available at <ulink
-url="http://packages.debian.org/stable/nmap" /> and the
-development (<quote>unstable</quote>) Nmap and Zenmap packages are available from <ulink
-url="http://packages.debian.org/unstable/nmap" /> and <ulink url="http://packages.debian.org/unstable/zenmap"/>.</para>
-<para>Sometimes Debian's Nmap releases are a year or more behind the current Nmap version.  One option for obtaining the latest release is to compile from source code, as described in <xref linkend="inst-source"/>.  Another option is to download the RPM-format binaries from the Nmap download page, convert them to <literal>deb</literal> packages using the <application>alien</application> command, and then install them using <application>dpkg</application>, as described in the following list:</para>
+➜ This works for Debian derivatives such as Ubuntu too.  Information on the latest Debian <quote>stable</quote> Nmap package is available at
+<ulink url="http://packages.debian.org/stable/nmap"/>
+- and the development (<quote>unstable</quote>) Nmap and Zenmap packages are available from
+<ulink url="http://packages.debian.org/unstable/nmap"/>
+<ulink url="http://packages.debian.org/unstable/zenmap"/>.</para>
+<para>Sometimes Debian's Nmap releases are a year or more behind the current Nmap version.
+One option for obtaining the latest release is to compile from source code, as described in
+<xref linkend="inst-source"/>
+Another option is to download the RPM-format binaries from the Nmap download page, convert them to <literal>deb</literal> packages using
+$ sudo <application>alien</application>
+# and then install them using
+$ sudo install <application>dpkg</application>
+as described in the following list:</para>
 <orderedlist id="install-list-deb">
 <title>Steps for converting Nmap RPM files to Debian/Ubuntu <filename>deb</filename> format for installation on Debian/Ubuntu</title>
-<listitem><para>If you don't have the <application>alien</application> command, install it with a command such as <command>sudo apt-get install alien</command></para></listitem>
-<listitem><para>Download the Nmap RPMs for your platform (x86 or x86-64) from <ulink url="https://nmap.org/download.html"/>.  This description will use <filename>nmap-5.21-1.x86_64.rpm</filename></para></listitem>
+<listitem><para>If you don't have the <application>alien</application> command, install it with a command such as
+<command>sudo apt-get install alien</command></para></listitem>
+<listitem><para>Download the Nmap RPMs for your platform (x86 or x86-64) from 
+<ulink url="https://nmap.org/download.html"/>.  
+> This description will use <filename>nmap-5.21-1.x86_64.rpm</filename></para></listitem>
 <listitem><para>Verify the download integrity as described in <xref linkend="inst-integrity"/>.</para></listitem>
-<listitem><para>Generate a Debian package with a command such as <command>sudo alien nmap-5.21-1.x86_64.rpm</command></para></listitem>
-<listitem><para>Install the Debian package with a command such as <command>sudo dpkg --install nmap_5.21-2_amd64.deb</command></para></listitem>
-<listitem><para>Steps 2&ndash;5 can be repeated for the other Nmap RPMs such as Zenmap, Ncat, and Nping.</para></listitem>
-</orderedlist>
-</sect2>
+<listitem><para>Generate a Debian package with a command such as 
+<command>sudo alien nmap-5.21-1.x86_64.rpm</command></para></listitem>
+<listitem><para>Install the Debian package with a command such as 
+<command>sudo dpkg --install nmap_5.21-2_amd64.deb</command></para></listitem>
+<listitem><para>Steps 2&ndash;5 can be repeated for the other Nmap RPMs such as Zenmap, Ncat, and Nping.</para></listitem></orderedlist></sect2>
+~
 <sect2 id="inst-linux-other"><title>Other Linux Distributions</title>
 <para>There are far too many Linux distributions available to list
 here, but even many of the obscure ones include Nmap in their package
-tree.  If they don't, you can simply compile from source code as
-described in <xref linkend="inst-source" />.
-</para>
-</sect2>
-</sect1>
+tree.  If they don't, you can simply compile from source code as described in 
+<xref linkend="inst-source" />.</para></sect2></sect1>
+~
 <sect1 id="inst-windows"><title>Windows</title>
 <indexterm class="startofrange" id="inst-windows-indexterm"><primary>Windows</primary></indexterm>
 <indexterm><primary>Microsoft Windows</primary><see>Windows</see></indexterm>
+▶ NYSE: MSFT
 <para>While Nmap was once a Unix-only tool, a Windows version was
 released in 2000 and has since become the second most popular Nmap
 platform (behind Linux). Because of this popularity and the fact that
 many Windows users do not have a compiler, binary executables are
 distributed for each major Nmap release.  We support Nmap on Windows 7
-and newer, as well as Windows Server 2008 and newer.  We also maintain
-a  <ulink
-url="https://secwiki.org/w/Nmap/Old_Windows_Releases">guide for users
-who must run Nmap on earlier Windows releases</ulink>.  While it has improved dramatically, the Windows port is not
-quite as efficient as on Unix.  Here are the known limitations:
-</para>
+and newer, as well as Windows Server 2008 and newer.  We also maintain:
+<ulink url="https://secwiki.org/w/Nmap/Old_Windows_Releases"> guide for users who must run Nmap on earlier Windows releases</ulink>.
+While it has improved dramatically, the Windows port is not quite as efficient as on Unix.  Here are the known limitations: </para>
 <indexterm><primary>Windows</primary><secondary>limitations of</secondary></indexterm>
 <itemizedlist>
-<listitem><para>Nmap only supports ethernet interfaces (including most
-802.11 wireless cards and many VPN clients) for raw packet scans.
+<listitem><para>Nmap only supports ethernet interfaces (including most 802.11 wireless cards and many VPN clients) 
+for raw packet scans.
 Unless you use the <option>-sT -Pn</option> options, RAS connections
-(such as PPP dialups) and certain VPN clients are not supported.  This
-support was dropped when Microsoft removed raw TCP/IP socket support
-in Windows XP SP2.  Now Nmap must send lower-level ethernet frames
-instead.</para></listitem>
-<listitem><para>When using Nmap without Npcap, you cannot
-generally scan your own machine from itself (using a
-loopback<indexterm><primary>loopback
-interface</primary></indexterm> IP such as 127.0.0.1 or any of its
-registered IP addresses).  This is a Windows limitation that we
-have worked around in Npcap, which is included in the Windows self-installer.
-Users stuck without a Npcap installation can use a TCP
-connect scan without pinging (<option>-sT -Pn</option>) as that uses
-the high level socket API rather than sending raw
-packets.</para></listitem>
-</itemizedlist>
+(such as PPP dialups) and certain VPN clients are not supported.  
+This support was dropped when Microsoft removed raw TCP/IP socket support in Windows XP SP2.  
+Now Nmap must send lower-level ethernet frames instead.</para></listitem>
+<listitem><para>When using Nmap without Npcap, you cannot generally scan your own machine from itself 
+<br>
+  (using a loopback<indexterm><primary>loopback interface</primary></indexterm> IP such as 127.0.0.1 or any of its registered IP addresses).
+</br>
+~# _ 
+  This is a Windows limitation that we have worked around in Npcap, which is included in the Windows self-installer.
+  ▶ |
+    + Users stuck without a Npcap installation can use a TCP connect scan without pinging 
+      (<option>-sT -Pn</option>) 
+        - as that uses the high level socket API rather than sending raw packets.</para></listitem></itemizedlist>
 <indexterm><primary>Windows</primary><secondary>performance of</secondary></indexterm>
 <para>Scan speeds on Windows are generally comparable to those on
 Unix, though the latter often has a slight performance edge.  One
-exception to this is connect scan (<option>-sT</option>), which is
+exception to this is connect scan 
+(<option>-sT</option>), which is
 often much slower on Windows because of deficiencies in the Windows
-networking API.  This is a shame, since that is the one TCP scan that
-works over all networking types (not just ethernet, like the raw packet scans).
-Connect scan performance can be
-improved substantially by applying the Registry changes in the
-<filename>nmap_performance.reg</filename> file included with Nmap.  By default these changes are applied for you by the Nmap executable installer.  This registry file
-is in the <filename>nmap-<replaceable>version</replaceable></filename>
+networking API.  
+This is a shame, since that is the one TCP scan that works over all networking types 
+(not just ethernet, like the raw packet scans).
+Connect scan performance can be improved substantially by applying the Registry changes in the
+<filename>nmap_performance.reg</filename> file included with Nmap.
+By default these changes are applied for you by the Nmap executable installer.  
+This registry file is in:
+<filename>nmap-<replaceable>version</replaceable></filename>
 directory of the Windows binary zip file, and
 <filename>nmap-<replaceable>version</replaceable>/mswin32</filename>
-in the source tarball (where <replaceable>version</replaceable> is the
-version number of the specific release).  These changes increase
-the number of ephemeral ports reserved for user applications (such as
-Nmap) and reduce the time delay before a closed connection can
-be reused.  Most people simply check the box to apply these changes in the executable Nmap installer, but you can also apply them by double-clicking on
-<filename>nmap_performance.reg</filename>, or by running the command
-<command>regedt32 nmap_performance.reg</command>.  To make the changes by hand, add these three Registry DWORD values to
-<literal>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters</literal>:</para>
+in Source Tarball 
+  (where <replaceable>version</replaceable> is the version number of the specific release).  
++ These changes increase the number of ephemeral ports reserved for user applications (such as Nmap) 
++ Reduce the time delay before a closed connection can be reused.
++ Most people simply check the box to apply these changes in the executable Nmap installer, but you can also apply them by double-clicking on
+<filename>nmap_performance.reg</filename>
+❯ or by running the command
+<command>regedt32 nmap_performance.reg</command>.  
+❯ + these three Registry DWORD values to:
+  <literal>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters</literal>:</para>
 <variablelist>
   <varlistentry><term>MaxUserPort</term>
      <listitem><para>Set a large value such as 65534 (0x0000fffe).  See <ulink url="https://support.microsoft.com/kb/196271">MS KB 196271</ulink>.</para></listitem></varlistentry>
   <varlistentry><term>TCPTimedWaitDelay</term>
      <listitem><para>Set the minimum value (0x0000001e). See <ulink url="https://support.microsoft.com/kb/149532">MS KB 149532</ulink>.</para></listitem></varlistentry>
   <varlistentry><term>StrictTimeWaitSeqCheck</term>
-     <listitem><para>Set to 1 so TCPTimedWaitDelay is checked.</para></listitem></varlistentry>
-</variablelist>
+     <listitem><para>Set to 1 so TCPTimedWaitDelay is checked.</para></listitem></varlistentry></variablelist>
 <note><para>I would like to thank Ryan Permeh<indexterm><primary>Permeh, Ryan</primary></indexterm> of eEye, Andy Lutomirski<indexterm><primary>Lutomirski, Andy</primary></indexterm>, and
   Jens Vogt<indexterm><primary>Vogt, Jens</primary></indexterm> for their hard work on the Nmap Windows port.  For many
   years, Nmap was a Unix-only tool, and it would likely still be that
   way if not for their efforts.</para></note>
-<para>Windows users have three choices for installing
-Nmap, all of which are available from the
-download page at <ulink url="https://nmap.org/download.html" />.</para>
+<para>Windows users have three choices for installing Nmap, all of which are available from the download page
+<ulink url="https://nmap.org/download.html" />.</para>
+~
 <sect2 id="inst-win-exe"><title>Windows Self-installer</title>
 <indexterm><primary>Windows</primary><secondary>self-installer</secondary></indexterm>
-<para>Every Nmap release includes a Windows
-self-installer named
+<para>Every Nmap release includes a Windows self-installer named
 <filename>nmap-<replaceable>version</replaceable>-setup.exe</filename>
-(where <replaceable>version</replaceable> is the version number of the
-specific release).  Most Nmap users choose this option since it is so
-easy.  Another advantage of the self-installer is that it provides the option to install the Zenmap GUI and other tools.  Simply run the installer file and let it walk you through
-panels for choosing an install path and installing Npcap.  The
-installer was created with the open-source <ulink
+(where <replaceable>version</replaceable> is the version number of the specific release).
+~
+Most Nmap users choose this option since it is so easy.
+Another advantage of the self-installer is that it provides the option to install the Zenmap GUI and other tools.
+Simply run the installer file and let it walk you through panels for choosing an install path and installing Npcap.
+The installer was created with the open-source <ulink
 url="http://nsis.sourceforge.io/Main_Page">Nullsoft Scriptable
 Install System</ulink>.  After it completes, read <xref
 linkend="inst-win-exec"/> for instructions on executing Nmap on the
-command-line or through Zenmap.</para>
-</sect2>
+command-line or through Zenmap.</para> </sect2>
 <sect2 id="inst-win-zip"><title>Command-line Zip Binaries</title>
 <indexterm><primary>Windows</primary><secondary>zip binaries</secondary></indexterm>
 <note><para>Most users prefer installing Nmap with the self-installer discussed previously.</para></note>
