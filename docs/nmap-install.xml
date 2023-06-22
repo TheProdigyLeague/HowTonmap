@@ -749,141 +749,171 @@ in Source Tarball
 ~
 <sect2 id="inst-win-exe"><title>Windows Self-installer</title>
 <indexterm><primary>Windows</primary><secondary>self-installer</secondary></indexterm>
-<para>Every Nmap release includes a Windows self-installer named
+  <para>Every Nmap release includes a Windows self-installer named
 <filename>nmap-<replaceable>version</replaceable>-setup.exe</filename>
 (where <replaceable>version</replaceable> is the version number of the specific release).
 ~
 <br>
-Most Nmap users choose this option since it is so easy.
-Another advantage of the self-installer is that it provides the option to install the Zenmap GUI and other tools.
-Simply run the installer file and let it walk you through panels for choosing an install path and installing Npcap.
-The installer was created with the open-source 
-<ulink url="http://nsis.sourceforge.io/Main_Page">Nullsoft Scriptable Install System</ulink>.  
-After it completes, read 
-<xref linkend="inst-win-exec"/> for instructions on executing Nmap on the command-line or through Zenmap. </para> </sect2>
+  Most Nmap users choose this option since it is so easy.
+  Another advantage of the self-installer is that it provides the option to install the Zenmap GUI and other tools.
+  Simply run the installer file and let it walk you through panels for choosing an install path and installing Npcap.
+  + The installer was created with the open-source 
+  <ulink url="http://nsis.sourceforge.io/Main_Page">Nullsoft Scriptable Install System</ulink>.  
+  + After it completes, read 
+  <xref linkend="inst-win-exec"/> for instructions on executing Nmap on the command-line or through Zenmap. </para> </sect2>
 </br>
+~
 <sect2 id="inst-win-zip"><title>Command-line Zip Binaries</title>
-<indexterm><primary>Windows</primary><secondary>zip binaries</secondary></indexterm>
-<note><para>Most users prefer installing Nmap with the self-installer discussed previously.</para></note>
-<para>Every stable Nmap release comes with Windows command-line binaries and associated files in a Zip archive.
-No graphical interface is included, so you need to run
-<literal>nmap.exe</literal> from a DOS/command window. Or you can download and install a superior command shell such as those included with Cygwin
-<indexterm><primary>Cygwin</primary></indexterm>
-+ system available from 
-<ulink url="https://www.cygwin.com" />.  ! Here are the step-by-step instructions for installing and executing the Nmap .zip binaries.</para>
+  <indexterm><primary>Windows</primary><secondary>zip binaries</secondary></indexterm>
+  <note><para>Most users prefer installing Nmap with the self-installer discussed previously.</para></note>
+  <para>Every stable Nmap release comes with Windows command-line binaries and associated files in a Zip archive.
+  + No graphical interface is included, so you need to run
+  <literal>nmap.exe</literal> from a DOS/command window. Or you can download and install a superior command shell such as those included with Cygwin
+  <indexterm><primary>Cygwin</primary></indexterm>
+  + system available from 
+  <ulink url="https://www.cygwin.com" />.  ! Here are the step-by-step instructions for installing and executing the Nmap .zip binaries.</para>
 ~
 <sect3 id="inst-win-zip-install"><title>Installing the Nmap zip binaries</title>
-<orderedlist>
-<listitem><para>Download the .zip binaries from <ulink url="https://nmap.org/download.html" />.</para></listitem>
-<listitem><para>Extract the zip file into the directory you want Nmap to reside in.
-An example would be <filename>C:\Program Files</filename>.  
-A directory called <filename>nmap-<replaceable>version</replaceable></filename> should be created, which includes the Nmap executable and data files. </para></listitem>
+  <orderedlist>
+    <listitem><para>Download the .zip binaries from <ulink url="https://nmap.org/download.html" />.</para></listitem>
+    <listitem><para>Extract the zip file into the directory you want Nmap to reside in.
++ An example would be 
+  <filename>C:\Program Files</filename>.  
++ A directory called 
+  <filename>nmap-<replaceable>version</replaceable></filename> 
+- should be created, which includes the Nmap executable and data files.</para></listitem>
 <listitem><para>For improved performance, apply the Nmap Registry changes discussed previously.</para></listitem>
 <listitem><para>Nmap requires the free Npcap packet capture library.
-We include a recent Npcap installer which is available in the zip file
-as <filename>npcap-<replaceable>version</replaceable>.exe</filename>,
-where <replaceable>version</replaceable> is the Npcap version rather
-than the Nmap version.  Alternatively, you can obtain and install
-the latest version from <ulink url="https://npcap.com" />.
++ We include a recent Npcap installer which is available in the zip file as 
+  #include npcap installer npcap.zip -fs
+    >>> npcap-version.exe 1.2.3.4.5.6.7.8.9.0
+      <filename>npcap-<replaceable>version</replaceable>.exe</filename>where<replaceable>version</replaceable> 
++ Alternatively, you can install Latest Version from <ulink url="https://npcap.com"/>*</para></listitem>
+<listitem><para>Due to the way Nmap is compiled, it requires:
+<ulink role="hidepdf" url="https://aka.ms/vs/16/release/vc_redist.x86.exe">Microsoft Visual C++ Redistributable Package</ulink>
+❯ of runtime components. 
+▶ Many systems already have this installed from other packages
+$ <filename>VC_redist.x86.exe</filename> from zip file
+▶ Pass the <option>/q</option> option to run these installers in quiet (non interactive) mode.</para></listitem>
+<listitem><para>Instructions for executing your compiled Nmap are given in <xref linkend="inst-win-exec"/>.<br></para></listitem></orderedlist></sect3></sect2>
+``
+<sect2 id="inst-win-source"></br><title>ソースコードからコンパイル?!</title>
+  <indexterm><primary>Windows</primary><secondary>compiling on</secondary></indexterm>
+  <para>
+  ▶ Most Windows users prefer to use the Nmap binary self-installer, but compilation from source code is an option
+    note: particularly, if you plan to help with Nmap development.
+  ▶ Compilation requires Microsoft Visual C++ 2019
+    note: which is part of their commercial License
+      <ulink url="https://visualstudio.microsoft.com/vs/">Visual Studio(c(tm))</ulink> suite. 
+  + Any of Visual Studio 2019 editions should work
+  + Including Visual Studio 2019 Community.</para>
+  <pre class="">
+    _  Max
+  _/`  _
+  (_)  (_)
+        +
+  </pre>
+  <para>
+    ➜ Some of Nmap's dependencies on Windows are inconvenient to build. 
+      ['!']: For this reason, precompiled binaries of the dependencies are stored in Subversion, in the directory <filename>/nmap-mswin32-aux</filename>.
+    ➜ When building from source, whether from a source code release or from Subversion, check out <filename>/nmap-mswin32-aux</filename> as described below. </para>
+  <orderedlist id="nmap-install-windows-compile-from-source"><title>W  i  n  d  o  w  s ソースからコンパイルしますか?</title>
+  <listitem>
+  ❯  ~  #
+
+<para>
+  > Download the Windows dependencies from Subversion with the command
+    <command>svn checkout https://svn.nmap.org/nmap-mswin32-aux</command>.
+  - The build files are configured to look for dependencies in this checked-out directory. 
+  - If you want to build the dependencies yourself instead, you will have to reconfigure the Visual Studio project files to point to the alternate directory.
+  </para>
+  </listitem>
+<listitem><para>Decide whether to obtain the Nmap source code by downloading the latest release from nmap.org
+  - or using a Subversion client to retrieve even newer (but less tested) code from our repository. 
+  + These instructions are for web download approach (but using Subversion instead is straightforward.)
+    (see <xref linkend="inst-svn"/>).</para></listitem>
+<listitem><para>Download the latest Nmap source distribution from <ulink url="https://nmap.org/download.html" />.
+~
+['!']: It has Name ~#
+~
+<filename>nmap-<replaceable>version</replaceable>.tar.bz2</filename>
+# or
+<filename>nmap-<replaceable>version</replaceable>.tgz</filename>.
+  + Those are same Tar File Compressed using bzip2 or gzip, respectively.
+  - bzip2-compressed version is smaller.</para></listitem>
+  <listitem><para>Uncompress source code file you just downloaded.
+    + Source code directory:
+      <filename>nmap-mswin32-aux</filename>
+        note: must be in same parent directory.
+    + Recent releases of:
+      <ulink url="https://www.cygwin.com/">Cygwin distribution</ulink><indexterm><primary>Cygwin</primary></indexterm> can handle both
+      <filename>.tar.bz2</filename> and<literal>.tgz</literal> formats.
+      Use the command:
+      <command>tar xvjf nmap-version.tar.bz2</command>
+# or
+      <command>tar xvzf nmap-version.tgz</command>, respectively.
+        Alternatively, the common
+          <application>WinZip</application> application can decompress these files.</para></listitem>
+<listitem><para>Open Visual Studio and Nmap solution file (<filename>nmap-<replaceable>version</replaceable>/mswin32/nmap.sln</filename>).</para></listitem>
+<listitem><para>Right click on <literal>Solution 'nmap'</literal> in Solution Explorer sidebar and choose <guimenuitem>Configuration Manager</guimenuitem>.
+  + Ensure that the active solution configuration is <literal>Release</literal> and then close Configuration Manager.</para></listitem>
+<listitem><para>Build Nmap by pressing <keycap>F7</keycap> or choosing <guimenuitem>Build Solution</guimenuitem> from the GUI.  Nmap should begin compiling, and
+  + end with line: 
+<quote><literal>-- Done ! --</literal></quote> 
+  note: saying that all projects built successfully and there were zero failures.
 </para></listitem>
-<listitem><para>Due to the way Nmap is compiled, it requires the
-<ulink role="hidepdf" url="https://aka.ms/vs/16/release/vc_redist.x86.exe">Microsoft Visual C++ Redistributable Package</ulink> of runtime
-components. Many systems already have this installed from other
-packages, but you should run <filename>VC_redist.x86.exe</filename>
-from the zip file just in case you need it.
-Pass the <option>/q</option> option to run these installers in quiet (non interactive) mode.</para></listitem>
-<listitem><para>Instructions for executing your compiled Nmap are
-given in <xref linkend="inst-win-exec"/>.</para></listitem>
-</orderedlist>
-</sect3>
-</sect2>
-<sect2 id="inst-win-source"><title>Compile from Source Code</title>
-<indexterm><primary>Windows</primary><secondary>compiling on</secondary></indexterm>
-<para>Most Windows users prefer to use the Nmap binary self-installer,
-but compilation from source code is an option, particularly if you plan to help with Nmap development.  Compilation requires
-Microsoft Visual C++ 2019, which is part of their commercial <ulink url="https://visualstudio.microsoft.com/vs/">Visual Studio</ulink>
-suite. Any of the Visual Studio 2019 editions should work, including the free
-Visual Studio 2019 Community.</para>
-<para>
-Some of Nmap's dependencies on Windows are inconvenient to build. For
-this reason, precompiled binaries of the dependencies are stored in
-Subversion, in the directory <filename>/nmap-mswin32-aux</filename>.
-When building from source, whether from a source code release or from
-Subversion, check out <filename>/nmap-mswin32-aux</filename> as
-described below.
-</para>
-<orderedlist id="nmap-install-windows-compile-from-source"><title>Compiling Nmap on Windows from Source</title>
-<listitem>
-<para>
-Download the Windows dependencies from Subversion with the command
-<command>svn checkout https://svn.nmap.org/nmap-mswin32-aux</command>.
-The build files are configured to look for dependencies in this
-checked-out directory. If you want to build the dependencies yourself
-instead, you will have to reconfigure the Visual Studio project files to
-point to the alternate directory.
-</para>
-</listitem>
-<listitem><para>Decide whether to obtain the Nmap source code by downloading the latest release from nmap.org, or using a Subversion client to retrieve even newer (but less tested) code from our repository.  These instructions are for the web download approach, but using Subversion instead is straightforward (see <xref linkend="inst-svn"/>).</para></listitem>
-<listitem><para>Download the latest Nmap source distribution from <ulink url="https://nmap.org/download.html" />.  It has the name
-<filename>nmap-<replaceable>version</replaceable>.tar.bz2</filename> or
-<filename>nmap-<replaceable>version</replaceable>.tgz</filename>.  Those are the same tar file compressed using bzip2 or gzip, respectively.  The bzip2-compressed version is smaller.</para></listitem>
-<listitem><para>Uncompress the source code file you just downloaded. The
-source code directory and the <filename>nmap-mswin32-aux</filename> must
-be in the same parent directory.
-Recent releases of the free <ulink url="https://www.cygwin.com/">Cygwin distribution</ulink><indexterm><primary>Cygwin</primary></indexterm> can handle both the <filename>.tar.bz2</filename> and <literal>.tgz</literal> formats.  Use the command <command>tar xvjf nmap-version.tar.bz2</command> or <command>tar xvzf nmap-version.tgz</command>, respectively.  Alternatively, the common <application>WinZip</application> application can decompress these files.</para></listitem>
-<listitem><para>Open Visual Studio and the Nmap solution file (<filename>nmap-<replaceable>version</replaceable>/mswin32/nmap.sln</filename>).</para></listitem>
-<listitem><para>Right click on <literal>Solution 'nmap'</literal> in the Solution Explorer sidebar and choose <guimenuitem>Configuration Manager</guimenuitem>.  Ensure that the active solution configuration is <literal>Release</literal> and then close the Configuration Manager.</para></listitem>
-<listitem><para>Build Nmap by pressing <keycap>F7</keycap> or choosing <guimenuitem>Build
-Solution</guimenuitem> from the GUI.  Nmap should begin compiling, and
-end with the line <quote><literal>-- Done --</literal></quote> saying
-that all projects built successfully and there were zero
-failures.</para></listitem>
-<listitem><para>The executable and data files can be found in <filename>nmap-<replaceable>version</replaceable>/mswin32/Release/</filename>.  You can copy them to a preferred directory as long as they are all kept together.</para></listitem>
-<listitem><para>Ensure that you have Npcap installed.  You can obtain it by
-installing our binary self-installer or executing
-<filename>npcap-<replaceable>version</replaceable>.exe</filename> from
-our zip package.  Alternatively, you can obtain the official installer at
-<ulink url="https://npcap.com"/>.</para></listitem>
-<listitem><para>Instructions for executing your compiled Nmap are
-given in the next section.</para></listitem>
-</orderedlist>
-<para>If you wish to build an Nmap executable Windows
-installer or Zenmap executable,
-see <ulink url="https://svn.nmap.org/nmap/docs/win32-installer-zenmap-buildguide.txt"><filename>docs/win32-installer-zenmap-buildguide.txt</filename></ulink> in the Nmap SVN repository.</para>
-<para>Many people have asked whether Nmap can be compiled with the
-<application>gcc</application>/<application>g++</application> included
-with Cygwin or other compilers.  Some users have reported success with
-this, but we don't maintain instructions for building Nmap under
-Cygwin.</para>
-</sect2>
+~ 
+<listitem><para>['FIND','Executable','Files','data','Files']:
+  <filename>nmap-<replaceable>version</replaceable>/mswin32/Release/</filename>.
+    + You can copy them to a preferred directory as long as they are all kept together.</para></listitem>
+<listitem><para>التقاط الحزمة السفلى 
+    + You can obtain it by installing our binary self-installer or executing
+  <filename>npcap-<replaceable>version</replaceable>.exe</filename> 
+>>> from .zip --pkg  
+      note: @Official_Installer
+    <ulink url="https://npcap.com"/>.</para></listitem>
+<listitem><para>संकलन करने के निर्देश</para></listitem>("nmap.exe","compile",next)</orderedlist>
+  <para>If you wish to build an Nmap executable Windows installer or Zenmap executable
+    ▶ see <ulink url="https://svn.nmap.org/nmap/docs/win32-installer-zenmap-buildguide.txt">
+      <filename>docs/win32-installer-zenmap-buildguide.txt</filename></ulink> 
+      ❯ in Nmap SVN repository.</para>
+<para>Many people have asked whether Nmap can be compiled with<application>gcc</application>/<application>g++</application> 
+note: included with Cygwin or other compilers...
+note: users have reported success with this, but we do not maintain instructions for building Nmap under Cygwin.</para> </sect2>
+~
 <sect2 id="inst-win-exec"><title>Executing Nmap on Windows</title>
-<indexterm><primary>Windows</primary><secondary>running Nmap on</secondary></indexterm>
-<para>Nmap releases now include the
-<application>Zenmap</application> graphical user interface for Nmap.
-If you used the Nmap installer and left the Zenmap field checked,
-there should be a new Zenmap entry on your desktop and Start Menu.
-Click this to get started.  Zenmap is fully documented in
-<xref linkend="zenmap"/>.  While many users love Zenmap, others prefer
-the traditional command-line approach to executing Nmap.  Here are
-detailed instructions for users who are unfamiliar with command-line
-interfaces:</para>
-<orderedlist>
-<listitem><para>Make sure the user you are logged in as has
-administrative privileges<indexterm><primary>privileged users</primary></indexterm>
-on the computer (user should be a member of the <literal>administrators</literal> group).</para></listitem>
-<listitem><para>Open a command/DOS Window.  Though it can be found in
-the program menu tree, the simplest approach is to choose <guimenu>Start</guimenu> 
--> <guimenuitem>Run</guimenuitem> and type <command>cmd&lt;enter&gt;</command>.  Opening a Cygwin window (if you installed it) by clicking on the Cygwin icon on the desktop works too, although the necessary commands differ slightly from those shown here.</para></listitem>
-<listitem><para>Change to the directory you installed Nmap into.  You can skip this step if Nmap is already in your command path (the Zenmap isntaller adds it there by default).  Otherwise, type the following commands.</para>
+  <indexterm><primary>Windows</primary><secondary>running Nmap on</secondary></indexterm>
+    <para>Nmap releases now include
+      <application>Zenmap</application> graphical user interface for Nmap.
+        If you used Nmap installer and left Zenmap field checked:
+        There should be a new Zenmap entry on Desktop and Start Menu...
+        Click this to get started.
+        Zenmap is fully documented in <xref linkend="zenmap"/>.
+        While many users love Zenmap, others prefer a traditional command-line approach to executing Nmap.
+        Here are detailed instructions for users who are unfamiliar with command-line interfaces:</para>
+        <orderedlist>
+<listitem><para>Make sure the user you are logged in as Has Administrative Privileges<indexterm><primary>privileged users</primary></indexterm> on the computer (user should be a member of the <literal>administrators</literal> group).</para></listitem>
+<listitem><para>Open a command/DOS Window.
+  Though it can be found in /Program/Menu/Tree/ '&&' Simplest approach is to choose <guimenu>[Start]</guimenu> 
+-> <guimenuitem>Run</guimenuitem> [type]:_|
+:root$~#<command>cmd&lt;enter&gt;</command>.Opening a Cygwin window...(if you have installed it...); 
+➜ ['click']: Cygwin.ico%/desktop/..
+  \w for [WORK]: --diff --cmd 'exe' %%
+</para></listitem>
+<listitem><para>Change to Directory you installed Nmap into. 
+  note: You can skip this step too if Nmap is already in your command path:
+    (Zenmap installer adds it there by default) 
+      # Otherwise, type commands.</para>
 <screen>
-<userinput>c:</userinput>
-<userinput>cd "\Program Files (x86)\Nmap"</userinput>
+  <userinput>c:</userinput>
+  <userinput>cd "\Program Files (x86)\Nmap"</userinput>
 </screen>
-<para>On Windows releases prior to Windows 7, specify <filename>\Program Files\Nmap</filename> instead. The directory will also be different if you chose to install Nmap in a non-default location.</para>
-</listitem>
-<listitem><para>Execute <command>nmap.exe</command>.  <xref linkend="fig-windows-cmdshell-exec" xrefstyle="select: label nopage" /> is a screen shot showing a simple example.</para>
-</listitem>
-</orderedlist>
+<para>
+[  W  i  n  d  o  w  s  |  |  V  .  -  7  ]  :  より前の  [  W  i  n  d  o  w  s  ]  :  リリースの場合  (c(tm))
+<filename>\Program Files\Nmap</filename>
+  + directory will also be different if you chose to install Nmap in a non-default location.</para></listitem>
+    <listitem><para>Execute<command>nmap.exe</command>___<xref linkend="fig-windows-cmdshell-exec" xrefstyle="select: label nopage"/> 
+      - is a screen shot showing a simple example.</para></listitem></orderedlist>
 <figure id="fig-windows-cmdshell-exec"><title>Executing Nmap from a Windows command shell</title>
 <mediaobject>
   <imageobject>
@@ -891,93 +921,88 @@ the program menu tree, the simplest approach is to choose <guimenu>Start</guimen
     <imagedata fileref="images/nmap-windows-demo-669x326.png" format="PNG" contentwidth="669" contentdepth="326" />
 </web>
 <print>
-    <imagedata fileref="images/nmap-windows-demo-669x326.png" format="PNG" scale="50" />
-</print>
-  </imageobject>
-</mediaobject>
-</figure>
-<para>If you execute Nmap frequently, you can add the Nmap directory
-(<filename>c:\Program Files (x86)\Nmap</filename> by default) to your command execution path:
-</para>
+    <imagedata fileref="images/nmap-windows-demo-669x326.png" format="PNG" scale="50" /></print>
+  </imageobject></mediaobject></figure>
+<para>If you execute Nmap frequently, you can add Nmap directory`
+  (<filename>c:\Program Files (x86)\Nmap</filename> by default); 
+    to your command execution path:</para>
 <orderedlist>
-	<listitem><para>Open the System Properties window to the Advanced tab by running <literal>SystemPropertiesAdvanced.exe</literal>.
-</para></listitem>
-<listitem><para>Click the <guimenuitem>Environment
-Variables</guimenuitem> button.</para></listitem>
+	<listitem><para>Open System Properties Window
+    > Advanced [tab]
+    running...<literal>SystemPropertiesAdvanced.exe</literal>.</para></listitem>
 <listitem>
-<indexterm><primary><envar>PATH</envar> environment variable</primary><secondary><envar>Path</envar> on Windows</secondary></indexterm>
-<para>
-Choose <literal>Path</literal> from the
-<literal>System variables</literal> section, then hit
-edit.</para></listitem>
-<listitem><para>Add a semi-colon and then your Nmap directory (e.g. <filename>c:\Program Files (x86)\Nmap</filename>) to the end of the value.</para></listitem>
-<listitem><para>Open a new command prompt and you should be able to execute a
-command such as <command>nmap scanme.nmap.org</command> from any directory.</para></listitem>
-</orderedlist>
-</sect2>
-<indexterm class="endofrange" startref="inst-windows-indexterm"/>
-</sect1>
-<sect1 id="inst-macosx"><title>Apple Mac OS X</title>
+  <para>C  L  I  C  K<guimenuitem>Environment%Variables</guimenuitem>button</para></listitem>
+<listitem>
+  <indexterm><primary><envar>PATH</envar>environment_variable</primary><secondary><envar>Path</envar>on_Windows</secondary></indexterm>
+    <para>
+      Choose<literal>Path</literal> from
+        <literal>System variables</literal> section, then edit.</para></listitem>
+<listitem><para>Add a semi-colon and then your Nmap directory (e.g. <filename>c:\Program Files (x86)\Nmap</filename>) to the end of Value.</para></listitem>
+<listitem><para>Open a new command prompt and you should be able to execute a command such as <command>nmap scanme.nmap.org</command> from any directory.</para></listitem></orderedlist></sect2>
+<indexterm class="endofrange" startref="inst-windows-indexterm"/>.</sect1>
+~
+<sect1 id="inst-macosx"><title>アップルマッキントッシュネット！[  X  ]</title>
 <indexterm class="startofrange" id="inst-macosx-indexterm"><primary>Mac OS X</primary></indexterm>
 <indexterm><primary>Apple Mac OS X</primary><see>Mac OS X</see></indexterm>
-<para>Nmap has supported Mac OS X since 2001, and our support has only improved over time. 
-While Mac users can compile Nmap themselves, we also offer an executable installer. Nmap 
-makes use of Jhbuild and gtk-mac-bundler which are used to build other projects for Mac OS X, 
-such as OpenSSL, libapr, libsvn... Nmap is also available through systems such as MacPorts 
-and Fink which package Unix software for Mac OS X.</para>
-<sect2 id="inst-macosx-installer">
-<title>Executable Installer</title>
-<indexterm><primary>Mac OS X</primary><secondary>executable installer</secondary></indexterm>
-<para>The easiest way to install Nmap and Zenmap on Mac OS X is to use
-our installer. The
-<ulink url="https://nmap.org/download.html#macosx">Mac OS X section of
-the Nmap download page</ulink> provides a file named
-<filename>nmap-<replaceable>version</replaceable>.dmg</filename>, where
-<replaceable>version</replaceable> is the version number of the most
-recent release. The
-<filename>.dmg</filename><indexterm><primary sortas="dmg (Mac OS X disk image)"><filename>.dmg</filename> (Mac OS X disk image)</primary></indexterm><indexterm><primary>disk image (Mac OS X)</primary></indexterm>
-file is known as a
-<quote>disk image</quote>. Installation instructions follow:</para>
-<orderedlist>
-<listitem><para>Download the file
-<filename>nmap-<replaceable>version</replaceable>.dmg</filename>.
-Double-click the icon to open it. (Depending on how you downloaded the
-file, it may be opened automatically.)</para></listitem>
-<listitem><para>The contents of the disk image will be displayed. One of
-the files will be a Mac meta-package file named
-<filename>nmap-<replaceable>version</replaceable>.mpkg</filename>.
-Open it to start the installer.
-</para>
-<!-- Apple support page on Gatekeeper: https://support.apple.com/kb/HT5290 -->
 <para>
-<indexterm><primary>Gatekeeper</primary><see>Apple Gatekeeper</see></indexterm>
-<indexterm><primary>Apple Gatekeeper</primary></indexterm>
-On OS X 10.8 and later, you may see a dialog like
-<xref linkend="fig-mac-gatekeeper-blocked" xrefstyle="select: label nopage"/>.
-<figure id="fig-mac-gatekeeper-blocked"><title>Apple Gatekeeper block screen</title>
-<mediaobject>
-  <imageobject>
-    <imagedata fileref="images/apple-gatekeeper-blocked.png"/>
-  </imageobject>
-</mediaobject>
-</figure>
-If this happens, it is necessary to right-click or control-click on the
-<filename>.mpkg</filename> and select <guimenuitem>Open</guimenuitem>,
-as shown in
-<xref linkend="fig-mac-gatekeeper-open" xrefstyle="select: label nopage"/>.
-<figure id="fig-mac-gatekeeper-open"><title>Apple Gatekeeper Open menu</title>
-<mediaobject>
+  Nmap has supported Mac OS X since 2001, and our support has only improved over time.
+    While Mac users can compile themselves
+      + we also offer an executable installer. 
+  Nmap makes use of Jhbuild and gtk-mac-bundler which are used to build other projects for Mac OS X.
+    - OpenSSL, libapr, libsvn...
+  Nmap is also available through systems such as MacPorts(c)
+    '&&' Fink(tm) which package Unix software for Mac OS X.
+</para>
+~
+<sect2 id="inst-macosx-installer">
+  <title>可執行安裝程序</title>
+  <indexterm><primary>Mac OS X</primary><secondary>executable installer</secondary></indexterm>
+    <para>To install Nmap and Zenmap on Mac OS X is to use:
+      <ulink url="https://nmap.org/download.html#macosx">Mac OS X section of the Nmap download page</ulink> provides a file named
+        <filename>nmap-<replaceable>version</replaceable>.dmg</filename>, where
+          <replaceable>version</replaceable> is the version number of the most recent release...
+        <filename>.dmg</filename><indexterm><primary sortas="dmg (Mac OS X disk image)"><filename>.dmg</filename> (Mac OS X disk image)</primary></indexterm><indexterm><primary>disk image (Mac OS X)</primary></indexterm> file is known as a
+            <quote>disk image</quote>.
+              + Installation instructions follow:</para>
+                <orderedlist>
+                  <listitem><para>Download the file
+                      <filename>nmap-<replaceable>version</replaceable>.dmg</filename>.
+                + Double-click the icon to open it. (Depending on how you downloaded the file, it may be opened automatically.)</para></listitem>
+                  <listitem><para>The contents of the disk image will be displayed. One of the files will be a Mac meta-package file named
+          <filename>nmap-<replaceable>version</replaceable>.mpkg</filename>.
+                + Open it to start the installer.
+      </para>
+  <!-- Apple support page on Gatekeeper: https://support.apple.com/kb/HT5290 -->
+  <para>
+    <indexterm><primary>看門人</primary><see>Torhüter des Apfels</see></indexterm>
+    <indexterm><primary>Яблочный привратник</primary></indexterm>
+      note: On OS X 10.8 and later, you may see a dialog like
+        <xref linkend="fig-mac-gatekeeper-blocked" xrefstyle="select: label nopage"/>.
+          <figure id="fig-mac-gatekeeper-blocked">
+            <title>Apple Gatekeeper block screen</title>
+              <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/apple-gatekeeper-blocked.png"/>
+              </imageobject>
+              </mediaobject>
+  </figure>
+  note: If this happens, it is necessary to right-click or control-click
+  <filename>.mpkg</filename> and select <guimenuitem>Open</guimenuitem>,
+  as shown in
+  <xref linkend="fig-mac-gatekeeper-open" xrefstyle="select: label nopage"/>.
+  <figure id="fig-mac-gatekeeper-open"><title>Apple Gatekeeper Open menu</title>
+  <mediaobject>
   <imageobject>
     <imagedata fileref="images/apple-gatekeeper-open.png"/>
-  </imageobject>
-</mediaobject>
+    </imageobject>
+  </mediaobject>
 </figure>
-A dialog similar to the first will appear, this time having an
-<guibutton>Open</guibutton> button (shown in
-<xref linkend="fig-mac-gatekeeper-allowed" xrefstyle="select: label nopage"/>).
-Click the button to continue.
-<figure id="fig-mac-gatekeeper-allowed"><title>Apple Gatekeeper Open screen</title>
-<mediaobject>
+  A dialog similar to the first will appear, this time having an
+  <guibutton>Open</guibutton> button (shown in
+  <xref linkend="fig-mac-gatekeeper-allowed" xrefstyle="select: label nopage"/>).
+  Click the button to continue.
+  <figure id="fig-mac-gatekeeper-allowed"><title>Apple Gatekeeper Open screen</title>
+  <mediaobject>
   <imageobject>
     <imagedata fileref="images/apple-gatekeeper-allowed.png"/>
   </imageobject>
@@ -985,19 +1010,20 @@ Click the button to continue.
 </figure>
 </para>
 </listitem>
-<listitem><para>Follow the instructions in the
-installer. You will be asked for your password since Nmap installs in a system directory.</para></listitem>
-<listitem><para>Once the installer is finished, eject the disk image by
-control-clicking on its icon and selecting
-<guimenuitem>Eject</guimenuitem>. The disk image may now be placed in
-the trash.</para></listitem>
-</orderedlist>
-<para>See the instructions in <xref linkend="inst-macosx-exec"/> for
-help on running Nmap and Zenmap after they are installed.</para>
-<para>The programs installed by the installer will run on Intel Mac OS X 10.5
-(Leopard) or later. Users of earlier versions will have to compile from
-source or use a third-party package.  Instructions for PowerPC (PPC) Mac systems (which Apple ceased selling in 2006) are <ulink url="https://secwiki.org/w/Nmap/Mac_OSX_PPC">available on our wiki</ulink>.</para>
-</sect2>
+  <listitem><para>Follow the instructions in the
+  installer. You will be asked for your password since Nmap installs in a system directory.</para></listitem>
+  <listitem><para>Once the installer is finished, eject the disk image by
+  control-clicking on its icon and selecting
+  <guimenuitem>Eject</guimenuitem>. The disk image may now be placed in
+  the trash.</para></listitem>
+  </orderedlist>
+  <para>See the instructions in <xref linkend="inst-macosx-exec"/> for
+  help on running Nmap and Zenmap after they are installed.</para>
+  <para>The programs installed by the installer will run on Intel Mac OS X 10.5
+  (Leopard) or later. Users of earlier versions will have to compile from
+  source or use a third-party package.  Instructions for PowerPC (PPC) Mac systems (which Apple ceased selling in 2006) are <ulink url="https://secwiki.org/w/Nmap/Mac_OSX_PPC">available on our wiki</ulink>.</para>
+  </sect2>
+
 <sect2 id="inst-macosx-source">
 <indexterm><primary>Mac OS X</primary><secondary>compiling on</secondary></indexterm>
 <title>Compile from Source Code</title>
